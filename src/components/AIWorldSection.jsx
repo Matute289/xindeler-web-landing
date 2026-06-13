@@ -1,25 +1,25 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   MessageSquare, Brain, ScrollText, Heart, Home, Sparkles,
-  MapPin, Clock, Package, Star,
+  MapPin, Package, Star,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 /* ── Arcane rune particles ─────────────────────────────── */
 const RUNES = ['ᚠ', 'ᚢ', 'ᚦ', 'ᚨ', 'ᚱ', 'ᚲ', 'ᚷ', 'ᚹ', 'ᚺ', 'ᚾ', 'ᛁ', 'ᛃ', 'ᛇ', 'ᛈ'];
 
+const PARTICLES = Array.from({ length: 18 }, (_, i) => ({
+  id: i,
+  rune: RUNES[i % RUNES.length],
+  left: `${5 + Math.random() * 90}%`,
+  delay: `${Math.random() * 10}s`,
+  duration: `${8 + Math.random() * 8}s`,
+  size: `${10 + Math.random() * 8}px`,
+}));
+
 function ArcaneParticles() {
-  const particles = useRef(
-    Array.from({ length: 18 }, (_, i) => ({
-      id: i,
-      rune: RUNES[i % RUNES.length],
-      left: `${5 + Math.random() * 90}%`,
-      delay: `${Math.random() * 10}s`,
-      duration: `${8 + Math.random() * 8}s`,
-      size: `${10 + Math.random() * 8}px`,
-    }))
-  ).current;
+  const particles = PARTICLES;
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -56,11 +56,12 @@ function useTypewriter(text, speed = 35, startDelay = 0) {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    setDisplayed('');
-    setDone(false);
+    let interval;
     const start = setTimeout(() => {
+      setDisplayed('');
+      setDone(false);
       let i = 0;
-      const interval = setInterval(() => {
+      interval = setInterval(() => {
         if (i <= text.length) {
           setDisplayed(text.slice(0, i));
           i++;
@@ -69,9 +70,8 @@ function useTypewriter(text, speed = 35, startDelay = 0) {
           setDone(true);
         }
       }, speed);
-      return () => clearInterval(interval);
     }, startDelay);
-    return () => clearTimeout(start);
+    return () => { clearTimeout(start); clearInterval(interval); };
   }, [text, speed, startDelay]);
 
   return { displayed, done };

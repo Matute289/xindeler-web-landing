@@ -93,7 +93,7 @@ export default function UpdatesSection() {
               className="overflow-y-auto space-y-3 pr-2"
               style={{ maxHeight: '420px' }}
             >
-              {updates.map((u, i) => {
+              {updates.map((u) => {
                 const cat  = CATEGORY[u.category] ?? CATEGORY.motor;
                 const type = TYPE[u.type]         ?? TYPE.updated;
 

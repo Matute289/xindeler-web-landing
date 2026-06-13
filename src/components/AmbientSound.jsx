@@ -115,10 +115,12 @@ export default function AmbientSound() {
     };
   }, []);
 
+  const rotateToRef = useRef(null);
+
   const scheduleRotation = useCallback(() => {
     clearTimeout(rotTimerRef.current);
     const delay = SCENE_MIN_MS + Math.random() * (SCENE_MAX_MS - SCENE_MIN_MS);
-    rotTimerRef.current = setTimeout(() => rotateTo(nextIdx()), delay);
+    rotTimerRef.current = setTimeout(() => rotateToRef.current?.(nextIdx()), delay);
   }, []);
 
   const rotateTo = useCallback((newIdx) => {
@@ -163,6 +165,8 @@ export default function AmbientSound() {
       startNew();
     }
   }, [scheduleRotation, attachLoopFade]);
+
+  useEffect(() => { rotateToRef.current = rotateTo; }, [rotateTo]);
 
   // RAF vibration — drives the wrapper div transform based on active scene
   useEffect(() => {
@@ -230,7 +234,7 @@ export default function AmbientSound() {
 
       try {
         await els[startIdx].play();
-      } catch (_) {
+      } catch {
         initialised.current = false;
         setLoading(false);
         return;
