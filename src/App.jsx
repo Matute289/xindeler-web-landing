@@ -8,6 +8,7 @@ import AIWorldSection from './components/AIWorldSection';
 import Roadmap from './components/Roadmap';
 import UpdatesSection from './components/UpdatesSection';
 import WaitlistSection from './components/WaitlistSection';
+import ServerStatusSection from './components/ServerStatusSection';
 import CommunitySection from './components/CommunitySection';
 import DownloadSection from './components/DownloadSection';
 import Footer from './components/Footer';
@@ -35,6 +36,7 @@ export default function App() {
         <Roadmap />
         <UpdatesSection />
         <WaitlistSection />
+        <ServerStatusSection />
         <CommunitySection />
         <GitHubStats />
         <DownloadSection />
