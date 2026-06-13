@@ -15,6 +15,11 @@ dist-ssr
 # Private — local only
 public/xindeler-design-snapshot.json
 
+# Claude / Superpowers — never commit
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
