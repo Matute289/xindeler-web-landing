@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Private — local only
+public/xindeler-design-snapshot.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
