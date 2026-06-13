@@ -7,6 +7,7 @@ import MMORPGVision from './components/MMORPGVision';
 import AIWorldSection from './components/AIWorldSection';
 import Roadmap from './components/Roadmap';
 import UpdatesSection from './components/UpdatesSection';
+import WaitlistSection from './components/WaitlistSection';
 import CommunitySection from './components/CommunitySection';
 import DownloadSection from './components/DownloadSection';
 import Footer from './components/Footer';
@@ -33,6 +34,7 @@ export default function App() {
         <AIWorldSection />
         <Roadmap />
         <UpdatesSection />
+        <WaitlistSection />
         <CommunitySection />
         <GitHubStats />
         <DownloadSection />
