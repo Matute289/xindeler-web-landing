@@ -140,6 +140,34 @@
       "items": ["Persistent servers", "Player economy", "Faction system", "World events"]
     }
   },
+  "githubStats": {
+    "openSource":   "Open Source on GitHub",
+    "title":        "Built by the Community",
+    "stars":        "Stars",
+    "forks":        "Forks",
+    "contributors": "Contributors",
+    "contribution": "contribution",
+    "contributions": "contributions",
+    "viewOnGitHub": "View on GitHub",
+    "contributeTitle": "Want to contribute?",
+    "contributeDesc":  "The project is open to collaborators. Tell us what interests you and we'll get in touch.",
+    "contributeBtn":   "Join the project"
+  },
+  "contribute": {
+    "modalTitle":    "I want to contribute",
+    "name":          "Name",
+    "email":         "Email",
+    "skills":        "Skills / area of interest",
+    "skillsPlaceholder": "e.g. Rust programming, 3D design, narrative writing, testing...",
+    "portfolio":     "GitHub / GitLab / Portfolio",
+    "portfolioPlaceholder": "https://github.com/your-username (optional)",
+    "submit":        "Send",
+    "sending":       "Sending…",
+    "successTitle":  "Thank you!",
+    "successDesc":   "We received your message. Given our limited availability, we'll get back to you within one month.",
+    "errorGeneric":  "Something went wrong. Please try again in a few minutes.",
+    "errorRate":     "Too many attempts. Please wait a moment and try again."
+  },
   "community": {
     "eyebrow": "Get Involved",
     "title": "Join the Community",

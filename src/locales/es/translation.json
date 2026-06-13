@@ -140,6 +140,34 @@
       "items": ["Servidores persistentes", "Economía de jugadores", "Sistema de facciones", "Eventos del mundo"]
     }
   },
+  "githubStats": {
+    "openSource":   "Open Source en GitHub",
+    "title":        "Construido por la Comunidad",
+    "stars":        "Estrellas",
+    "forks":        "Forks",
+    "contributors": "Contribuidores",
+    "contribution": "contribución",
+    "contributions": "contribuciones",
+    "viewOnGitHub": "Ver en GitHub",
+    "contributeTitle": "¿Querés contribuir?",
+    "contributeDesc":  "El proyecto está abierto a colaboradores. Contanos qué te interesa y nos ponemos en contacto.",
+    "contributeBtn":   "Sumarse al proyecto"
+  },
+  "contribute": {
+    "modalTitle":    "Quiero contribuir",
+    "name":          "Nombre",
+    "email":         "Email",
+    "skills":        "Skills / área de interés",
+    "skillsPlaceholder": "Ej: programación en Rust, diseño 3D, narrativa, testing...",
+    "portfolio":     "GitHub / GitLab / Portfolio",
+    "portfolioPlaceholder": "https://github.com/tu-usuario (opcional)",
+    "submit":        "Enviar",
+    "sending":       "Enviando…",
+    "successTitle":  "¡Gracias!",
+    "successDesc":   "Recibimos tu mensaje. Dado nuestra disponibilidad limitada, te respondemos en un máximo de un mes.",
+    "errorGeneric":  "Algo salió mal. Intentá de nuevo en unos minutos.",
+    "errorRate":     "Demasiados intentos. Esperá un rato e intentá de nuevo."
+  },
   "community": {
     "eyebrow": "Participa",
     "title": "Únete a la Comunidad",
