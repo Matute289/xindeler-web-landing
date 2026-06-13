@@ -14,10 +14,12 @@ import LoadingScreen from './components/LoadingScreen';
 import GitHubStats from './components/GitHubStats';
 import EasterEgg from './components/EasterEgg';
 import AmbientSound from './components/AmbientSound';
+import Analytics from './components/Analytics';
 
 export default function App() {
   return (
     <div className="min-h-screen bg-x-dark">
+      <Analytics />
       <LoadingScreen />
       <EasterEgg />
       <AmbientSound />
