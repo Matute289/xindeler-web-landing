@@ -166,6 +166,32 @@
     "communityDriven": "Impulsado por la Comunidad",
     "free": "Gratis para Siempre"
   },
+  "faq": {
+    "eyebrow": "Preguntas Frecuentes",
+    "title": "FAQ",
+    "items": [
+      {
+        "q": "¿Cuándo va a estar disponible el alpha?",
+        "a": "Estamos en desarrollo activo. Unite a la lista de espera para ser de los primeros en enterarte cuando abramos el acceso anticipado."
+      },
+      {
+        "q": "¿Es gratuito?",
+        "a": "Sí, Xindeler será free-to-play. Nuestro compromiso es que el juego base sea siempre accesible sin costo."
+      },
+      {
+        "q": "¿En qué plataformas va a correr?",
+        "a": "Windows, Linux y macOS desde el lanzamiento. El juego está construido en Rust, lo que facilita el soporte multiplataforma nativo."
+      },
+      {
+        "q": "¿Está basado en Veloren?",
+        "a": "Xindeler nació como un fork de Veloren pero ha evolucionado con su propia identidad, lore, sistemas de juego y dirección artística."
+      },
+      {
+        "q": "¿Cómo puedo contribuir?",
+        "a": "El código es open source en GitHub. Podés abrir issues, enviar pull requests o unirte a la comunidad en Discord para participar en el diseño del juego."
+      }
+    ]
+  },
   "footer": {
     "desc": "Un MMORPG de código abierto construido en Rust. Explora, crea, combate y da forma a un mundo vivo junto a miles de aventureros.",
     "community": "Comunidad",
