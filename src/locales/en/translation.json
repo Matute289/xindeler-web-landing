@@ -140,6 +140,19 @@
       "items": ["Persistent servers", "Player economy", "Faction system", "World events"]
     }
   },
+  "githubStats": {
+    "openSource": "Open Source on GitHub",
+    "title": "Built by the Community",
+    "stars": "Stars",
+    "forks": "Forks",
+    "contributors": "Contributors",
+    "contributions": "contribution",
+    "contributions_plural": "contributions",
+    "viewOnGitHub": "View on GitHub",
+    "contributeTitle": "Want to contribute?",
+    "contributeDesc": "The project is open to collaborators. Tell us what interests you and we'll get in touch.",
+    "contributeBtn": "Get in touch"
+  },
   "community": {
     "eyebrow": "Get Involved",
     "title": "Join the Community",

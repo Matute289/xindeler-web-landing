@@ -140,6 +140,19 @@
       "items": ["Servidores persistentes", "Economía de jugadores", "Sistema de facciones", "Eventos del mundo"]
     }
   },
+  "githubStats": {
+    "openSource": "Open Source en GitHub",
+    "title": "Construido por la Comunidad",
+    "stars": "Estrellas",
+    "forks": "Forks",
+    "contributors": "Contribuidores",
+    "contributions": "contribución",
+    "contributions_plural": "contribuciones",
+    "viewOnGitHub": "Ver en GitHub",
+    "contributeTitle": "¿Querés contribuir?",
+    "contributeDesc": "El proyecto está abierto a colaboradores. Contanos qué te interesa y nos ponemos en contacto.",
+    "contributeBtn": "Escribinos"
+  },
   "community": {
     "eyebrow": "Participa",
     "title": "Únete a la Comunidad",
