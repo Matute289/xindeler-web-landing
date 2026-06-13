@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { Mail, CheckCircle2, AlertCircle, Loader2, Users } from 'lucide-react';
 
-const API = 'https://xindeler.greenmountain.dev/api/waitlist';
+const API       = 'https://xindeler.greenmountain.dev/api/waitlist';
+const COUNT_API = 'https://xindeler.greenmountain.dev/api/waitlist/count';
+const MIN_COUNT = 5; // don't show badge until we have real traction
 
 const PLATFORMS = [
   { value: 'windows', label: 'Windows' },
@@ -11,11 +13,11 @@ const PLATFORMS = [
 ];
 
 const SOURCES = [
-  { value: 'github',  label: 'GitHub'           },
-  { value: 'social',  label: 'Redes sociales'   },
-  { value: 'friend',  label: 'Un amigo'         },
-  { value: 'search',  label: 'Búsqueda web'     },
-  { value: 'other',   label: 'Otro'             },
+  { value: 'github',  label: 'GitHub'         },
+  { value: 'social',  label: 'Redes sociales' },
+  { value: 'friend',  label: 'Un amigo'       },
+  { value: 'search',  label: 'Búsqueda web'   },
+  { value: 'other',   label: 'Otro'           },
 ];
 
 function ToggleGroup({ options, value, onChange }) {
@@ -47,6 +49,14 @@ export default function WaitlistSection() {
   const [honeypot, setHoneypot] = useState('');
   const [status,   setStatus]   = useState('idle'); // idle | loading | success | error
   const [errMsg,   setErrMsg]   = useState('');
+  const [count,    setCount]    = useState(null);
+
+  useEffect(() => {
+    fetch(COUNT_API)
+      .then(r => r.json())
+      .then(d => { if (typeof d.count === 'number') setCount(d.count); })
+      .catch(() => {});
+  }, []);
 
   const canSubmit = name.trim() && email.trim() && platform && source && status !== 'loading';
 
@@ -75,12 +85,15 @@ export default function WaitlistSection() {
         return;
       }
 
+      setCount(c => (c !== null ? c + 1 : null));
       setStatus('success');
     } catch {
       setErrMsg('No pudimos conectar con el servidor. Revisá tu conexión.');
       setStatus('error');
     }
   };
+
+  const showCount = count !== null && count >= MIN_COUNT;
 
   return (
     <section id="waitlist" className="py-28 bg-x-dark relative overflow-hidden">
@@ -100,6 +113,21 @@ export default function WaitlistSection() {
           <p className="text-gray-400 mt-5 text-sm max-w-sm mx-auto">
             Sé de los primeros en probar Xindeler. Te avisamos cuando abramos el acceso.
           </p>
+
+          <AnimatePresence>
+            {showCount && (
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="inline-flex items-center gap-2 mt-5 px-4 py-2 rounded-full border border-x-gold/20 bg-x-gold/5"
+              >
+                <Users size={13} className="text-x-gold" />
+                <span className="font-cinzel text-xs text-x-gold">
+                  {count.toLocaleString('es-AR')} personas ya se unieron
+                </span>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
 
         <motion.div
@@ -124,6 +152,11 @@ export default function WaitlistSection() {
                 <p className="text-gray-400 text-sm max-w-xs">
                   Anotamos tu lugar. Cuando abramos el acceso anticipado vas a ser de los primeros en enterarte.
                 </p>
+                {showCount && (
+                  <p className="text-gray-600 text-xs font-cinzel">
+                    Ya somos {count.toLocaleString('es-AR')} en la lista
+                  </p>
+                )}
               </motion.div>
             ) : (
               <motion.form
@@ -134,7 +167,7 @@ export default function WaitlistSection() {
                 className="space-y-6"
               >
                 {/* Honeypot — hidden from humans */}
-                <div className="absolute -left-[9999px] -top-[9999px] aria-hidden" aria-hidden="true">
+                <div className="absolute -left-[9999px] -top-[9999px]" aria-hidden="true">
                   <input
                     tabIndex={-1}
                     autoComplete="off"
