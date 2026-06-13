@@ -1,0 +1,177 @@
+{
+  "nav": {
+    "features": "Features",
+    "world": "World",
+    "vision": "Vision",
+    "aiWorld": "AI World",
+    "roadmap": "Roadmap",
+    "community": "Community",
+    "download": "Download"
+  },
+  "hero": {
+    "eyebrow": "Open Source MMORPG",
+    "tagline": "Built in Rust. Forged in Adventure.",
+    "description": "Xindeler is an open-source MMORPG built in Rust, originally forked from Veloren and evolving into its own persistent online world focused on exploration, combat, crafting and magic.",
+    "btnDownload": "Download",
+    "btnDocs": "Documentation",
+    "btnWiki": "Wiki",
+    "btnGitHub": "GitHub"
+  },
+  "features": {
+    "eyebrow": "Core Gameplay",
+    "title": "Features",
+    "subtitle": "Adventure awaits across every facet of Xindeler's ever-growing world.",
+    "exploration": { "title": "Exploration", "desc": "Discover vast landscapes, ancient ruins and hidden secrets across an ever-expanding world." },
+    "combat":      { "title": "Combat",      "desc": "Master melee, ranged weapons and powerful abilities in fluid real-time battle." },
+    "crafting":    { "title": "Crafting",    "desc": "Gather resources and create equipment, tools and consumables to survive and thrive." },
+    "magic":       { "title": "Magic",       "desc": "Harness arcane forces, master spells and shape the battlefield with mystical powers." },
+    "livingWorld": { "title": "Living World","desc": "Experience a world that evolves through player actions, economies and political changes." },
+    "aiNpcs":      { "title": "AI NPCs",     "desc": "Interact with intelligent NPCs capable of dynamic conversations, opinions and behavior." }
+  },
+  "showcase": {
+    "eyebrow": "Explore the Realm",
+    "title": "World Showcase",
+    "subtitle": "A living world of breathtaking landscapes, ancient ruins and hidden wonders. Click any scene to explore.",
+    "mistyMountains": { "name": "Misty Mountains",       "desc": "Snow-capped peaks stretch to the horizon" },
+    "ancientForest":  { "name": "Ancient Forest",         "desc": "Primeval woodlands shrouded in mist" },
+    "willowdale":     { "name": "Village of Willowdale",  "desc": "A peaceful trading settlement at dusk" },
+    "stonehaven":     { "name": "Stonehaven Castle",      "desc": "Ancient seat of power and intrigue" },
+    "crystalRiver":   { "name": "Crystal River",          "desc": "Life-giving waters through lush valleys" },
+    "darkfire":       { "name": "Darkfire Dungeon",       "desc": "Ancient evil stirs in the deep places" },
+    "arcane":         { "name": "Arcane Sanctum",         "desc": "Source of all magical energy in the realm" },
+    "guild":          { "name": "Adventurers' Guild",     "desc": "Where heroes gather and legends are born" }
+  },
+  "vision": {
+    "eyebrow": "Long-term Vision",
+    "title": "The MMORPG",
+    "titleHighlight": "We Are Building",
+    "desc1": "Xindeler is more than a game — it is a persistent world where every player leaves a mark. We are building the foundations of a universe that breathes, reacts, and evolves through collective action.",
+    "desc2": "Our goal is to create a space where emergent stories replace scripted quests, where economies have weight, and where AI-powered inhabitants make every corner of the world feel alive.",
+    "persistentWorld":    { "title": "Persistent World",        "desc": "A living world that endures across sessions — your actions shape history." },
+    "dynamicEconomy":     { "title": "Dynamic Economy",         "desc": "Player-driven markets where supply, demand and scarcity drive real trade." },
+    "playerCommunities":  { "title": "Player Communities",      "desc": "Guilds, alliances and factions that form the backbone of civilization." },
+    "aiStorytelling":     { "title": "AI-driven Storytelling",  "desc": "Emergent narratives woven from player choices and NPC motivations." },
+    "emergentGameplay":   { "title": "Emergent Gameplay",       "desc": "Unexpected stories arise from the interplay of systems and inhabitants." },
+    "magicSystem":        { "title": "Magic System",            "desc": "Deep, customizable arcane arts with schools of magic and spell crafting." },
+    "factionWarfare":     { "title": "Faction Warfare",         "desc": "Dynamic political landscape where power shifts through conflict and diplomacy." }
+  },
+  "aiWorld": {
+    "badge": "Flagship Feature",
+    "title": "A Living World",
+    "titleHighlight": "Powered by AI",
+    "subtitle": "The people of Xindeler are more than scripted NPCs. They think, remember, form opinions and react to the world around them.",
+    "disclaimer": "AI NPC features are part of our Phase 4 roadmap. We are building the foundation to make every inhabitant of Xindeler feel truly alive.",
+    "dynamicConversations": { "title": "Dynamic Conversations", "desc": "NPCs engage in meaningful dialogue rather than repeating predefined lines." },
+    "persistentMemory":     { "title": "Persistent Memory",     "desc": "Characters remember events, relationships and player interactions over time." },
+    "dynamicQuests":        { "title": "Dynamic Quests",        "desc": "NPCs generate context-sensitive quests based on their needs and circumstances." },
+    "socialRelationships":  { "title": "Social Relationships",  "desc": "NPCs maintain friendships, rivalries, families and complex social bonds." },
+    "livingSettlements":    { "title": "Living Settlements",    "desc": "Villages and cities evolve according to events, economy and player influence." },
+    "emergentStories":      { "title": "Emergent Stories",      "desc": "Unique stories arise naturally from interactions between players, NPCs and the world." },
+    "npc": {
+      "role": "Village Herbalist",
+      "location": "Willowdale",
+      "level": "Lv. 45 NPC",
+      "relationshipLabel": "Relationship",
+      "relationshipValue": "Friendly (+62)",
+      "memoryTitle": "Memory System",
+      "memory1": "Player helped gather moonleaf herbs — 21 days ago",
+      "memory2": "Daughter Lira has fallen gravely ill — 3 days ago",
+      "memory3": "Moonblossom flower grows in northern Frostpine Woods",
+      "questTitle": "Generated Quest",
+      "questBadge": "AI",
+      "questName": "Moonblossom Harvest",
+      "questText": "\"Gather 5 Moonblossom Flowers from Frostpine Woods to help heal Lira.\"",
+      "rewardPotions": "×15 Healing Potions",
+      "rewardRep": "Willowdale Reputation",
+      "detailTrigger": "Trigger",
+      "detailTriggerVal": "Daughter's illness",
+      "detailLocation": "Location",
+      "detailLocationVal": "Frostpine Woods",
+      "detailTime": "Time Limit",
+      "detailTimeVal": "7 in-game days",
+      "detailDiff": "Difficulty",
+      "detailDiffVal": "Moderate"
+    },
+    "dialogue": {
+      "sectionTitle": "Example Interaction",
+      "playerLabel": "Player",
+      "npcLabel": "Elara, Village Herbalist",
+      "playerMsg": "\"Elara, do you know of any rare herbs in the north?\"",
+      "npcMsg": "\"The Moonblossom grows in Frostpine Woods... I know this because my daughter is gravely ill and needs it.\"",
+      "questGenerated": "New Quest Generated",
+      "questName": "— Moonblossom Harvest"
+    }
+  },
+  "roadmap": {
+    "eyebrow": "Development Progress",
+    "title": "Roadmap",
+    "subtitle": "The path from open-source fork to a fully persistent MMORPG world.",
+    "completed": "Completed",
+    "inProgress": "In Progress",
+    "upcoming": "Upcoming",
+    "phase1": {
+      "title": "Infrastructure",
+      "desc": "Core server infrastructure, CI/CD pipeline and establishment of the Xindeler identity.",
+      "items": ["Server setup", "CI/CD pipeline", "Brand identity", "Domain & CDN configuration"]
+    },
+    "phase2": {
+      "title": "Website, Docs & Authentication",
+      "desc": "The public-facing landing page, comprehensive documentation portal, wiki, and the authentication service.",
+      "items": ["Landing page", "Documentation portal", "Wiki system", "Auth service"]
+    },
+    "phase3": {
+      "title": "Magic System",
+      "desc": "A deep and customizable magic framework with schools of magic, spell crafting and arcane progression.",
+      "items": ["Spell framework", "Schools of magic", "Spell crafting UI", "Visual effect system"]
+    },
+    "phase4": {
+      "title": "AI NPC Framework",
+      "desc": "The foundation for AI-driven NPCs with persistent memory, dynamic conversations and contextual behavior.",
+      "items": ["Memory system", "Dialogue engine", "Behavior tree", "Relationship graph"]
+    },
+    "phase5": {
+      "title": "Dynamic Quests",
+      "desc": "Procedural quest generation that creates contextually appropriate missions based on NPC needs and world state.",
+      "items": ["Quest generator", "Context engine", "Reward balancer", "Story threading"]
+    },
+    "phase6": {
+      "title": "Persistent MMORPG World",
+      "desc": "Launching the persistent online world with full multiplayer, economy, factions and a living, evolving universe.",
+      "items": ["Persistent servers", "Player economy", "Faction system", "World events"]
+    }
+  },
+  "community": {
+    "eyebrow": "Get Involved",
+    "title": "Join the Community",
+    "subtitle": "Xindeler is built by the community, for the community. Every contribution makes the world richer.",
+    "github":    { "title": "GitHub",         "desc": "Browse the source code, submit issues and contribute to the project.",              "btn": "View Repository" },
+    "discord":   { "title": "Discord",        "desc": "Join the community, ask questions and meet fellow adventurers.",                    "btn": "Join Server",    "badge": "Coming Soon" },
+    "wiki":      { "title": "Wiki",           "desc": "Explore lore, guides and community knowledge in the Xindeler Wiki.",               "btn": "Browse Wiki" },
+    "docs":      { "title": "Documentation",  "desc": "Technical documentation for players, contributors and server operators.",           "btn": "Read Docs" },
+    "downloads": { "title": "Downloads",      "desc": "Get the latest build of Xindeler for your operating system.",                      "btn": "Download Now" }
+  },
+  "download": {
+    "eyebrow": "Begin Your Journey",
+    "title": "Join the Adventure",
+    "description": "Xindeler is free and open-source. Download the client and start exploring a world that grows with every adventurer who joins.",
+    "windows": "Windows",
+    "linux": "Linux",
+    "macos": "macOS",
+    "windowsSub": "10/11",
+    "linuxSub": "AppImage / .deb",
+    "macosSub": "12+",
+    "launcherNote": "Launcher support with auto-updates is coming soon.",
+    "openSource": "Open Source",
+    "gpl": "GPL Licensed",
+    "communityDriven": "Community Driven",
+    "free": "Free Forever"
+  },
+  "footer": {
+    "desc": "An open-source MMORPG built in Rust. Explore, craft, fight and shape a living world alongside thousands of adventurers.",
+    "community": "Community",
+    "resources": "Resources",
+    "copyright": "© 2025 Xindeler Project — Open Source MMORPG",
+    "forkedFrom": "Originally forked from",
+    "license": "· Licensed under GPL-3.0"
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "nav": {
+    "features": "Características",
+    "world": "Mundo",
+    "vision": "Visión",
+    "aiWorld": "IA en el Mundo",
+    "roadmap": "Hoja de Ruta",
+    "community": "Comunidad",
+    "download": "Descargar"
+  },
+  "hero": {
+    "eyebrow": "MMORPG de Código Abierto",
+    "tagline": "Construido en Rust. Forjado en la Aventura.",
+    "description": "Xindeler es un MMORPG de código abierto construido en Rust, originalmente bifurcado de Veloren y evolucionando hacia su propio mundo persistente en línea centrado en exploración, combate, crafteo y magia.",
+    "btnDownload": "Descargar",
+    "btnDocs": "Documentación",
+    "btnWiki": "Wiki",
+    "btnGitHub": "GitHub"
+  },
+  "features": {
+    "eyebrow": "Jugabilidad Principal",
+    "title": "Características",
+    "subtitle": "La aventura aguarda en cada faceta del mundo en constante crecimiento de Xindeler.",
+    "exploration": { "title": "Exploración",  "desc": "Descubre vastos paisajes, ruinas antiguas y secretos ocultos en un mundo en constante expansión." },
+    "combat":      { "title": "Combate",      "desc": "Domina el combate cuerpo a cuerpo, armas a distancia y habilidades poderosas en batallas en tiempo real." },
+    "crafting":    { "title": "Crafteo",      "desc": "Recolecta recursos y crea equipamiento, herramientas y consumibles para sobrevivir y prosperar." },
+    "magic":       { "title": "Magia",        "desc": "Domina las fuerzas arcanas, aprende hechizos y moldea el campo de batalla con poderes místicos." },
+    "livingWorld": { "title": "Mundo Vivo",   "desc": "Experimenta un mundo que evoluciona a través de las acciones de los jugadores, economías y cambios políticos." },
+    "aiNpcs":      { "title": "NPCs con IA",  "desc": "Interactúa con NPCs inteligentes capaces de conversaciones dinámicas, opiniones y comportamientos." }
+  },
+  "showcase": {
+    "eyebrow": "Explora el Reino",
+    "title": "Escaparate del Mundo",
+    "subtitle": "Un mundo vivo de paisajes impresionantes, ruinas antiguas y maravillas ocultas. Haz clic en cualquier escena para explorar.",
+    "mistyMountains": { "name": "Montañas Neblinosas",    "desc": "Picos nevados que se extienden hasta el horizonte" },
+    "ancientForest":  { "name": "Bosque Antiguo",          "desc": "Bosques primigenios envueltos en niebla" },
+    "willowdale":     { "name": "Aldea de Willowdale",     "desc": "Un tranquilo asentamiento comercial al atardecer" },
+    "stonehaven":     { "name": "Castillo Stonehaven",     "desc": "Sede ancestral del poder y la intriga" },
+    "crystalRiver":   { "name": "Río de Cristal",          "desc": "Aguas que dan vida a través de valles frondosos" },
+    "darkfire":       { "name": "Mazmorra Darkfire",       "desc": "El mal ancestral se agita en las profundidades" },
+    "arcane":         { "name": "Santuario Arcano",        "desc": "Fuente de toda energía mágica del reino" },
+    "guild":          { "name": "Gremio de Aventureros",   "desc": "Donde los héroes se reúnen y nacen las leyendas" }
+  },
+  "vision": {
+    "eyebrow": "Visión a Largo Plazo",
+    "title": "El MMORPG",
+    "titleHighlight": "Que Estamos Construyendo",
+    "desc1": "Xindeler es más que un juego — es un mundo persistente donde cada jugador deja su huella. Estamos construyendo los cimientos de un universo que respira, reacciona y evoluciona a través de la acción colectiva.",
+    "desc2": "Nuestro objetivo es crear un espacio donde las historias emergentes reemplacen las misiones con guión, donde las economías tengan peso, y donde los habitantes impulsados por IA hagan que cada rincón del mundo se sienta vivo.",
+    "persistentWorld":   { "title": "Mundo Persistente",       "desc": "Un mundo vivo que perdura entre sesiones — tus acciones dan forma a la historia." },
+    "dynamicEconomy":    { "title": "Economía Dinámica",        "desc": "Mercados impulsados por jugadores donde la oferta, demanda y escasez rigen el comercio real." },
+    "playerCommunities": { "title": "Comunidades de Jugadores", "desc": "Gremios, alianzas y facciones que forman la columna vertebral de la civilización." },
+    "aiStorytelling":    { "title": "Narrativa con IA",         "desc": "Narrativas emergentes tejidas a partir de las decisiones de los jugadores y las motivaciones de los NPCs." },
+    "emergentGameplay":  { "title": "Jugabilidad Emergente",    "desc": "Historias inesperadas surgen de la interacción entre los sistemas y sus habitantes." },
+    "magicSystem":       { "title": "Sistema de Magia",         "desc": "Artes arcanas profundas y personalizables con escuelas de magia y creación de hechizos." },
+    "factionWarfare":    { "title": "Guerra de Facciones",      "desc": "Panorama político dinámico donde el poder cambia a través del conflicto y la diplomacia." }
+  },
+  "aiWorld": {
+    "badge": "Característica Principal",
+    "title": "Un Mundo Vivo",
+    "titleHighlight": "Impulsado por IA",
+    "subtitle": "Los habitantes de Xindeler son más que NPCs con guión. Piensan, recuerdan, forman opiniones y reaccionan al mundo que los rodea.",
+    "disclaimer": "Las características de NPCs con IA son parte de nuestra Fase 4 del desarrollo. Estamos construyendo la base para que cada habitante de Xindeler se sienta verdaderamente vivo.",
+    "dynamicConversations": { "title": "Conversaciones Dinámicas", "desc": "Los NPCs entablan diálogos significativos en lugar de repetir líneas predefinidas." },
+    "persistentMemory":     { "title": "Memoria Persistente",      "desc": "Los personajes recuerdan eventos, relaciones e interacciones con jugadores a lo largo del tiempo." },
+    "dynamicQuests":        { "title": "Misiones Dinámicas",       "desc": "Los NPCs generan misiones contextuales basadas en sus necesidades y circunstancias." },
+    "socialRelationships":  { "title": "Relaciones Sociales",      "desc": "Los NPCs mantienen amistades, rivalidades, familias y vínculos sociales complejos." },
+    "livingSettlements":    { "title": "Asentamientos Vivos",      "desc": "Las aldeas y ciudades evolucionan según los eventos, la economía y la influencia de los jugadores." },
+    "emergentStories":      { "title": "Historias Emergentes",     "desc": "Historias únicas surgen naturalmente de las interacciones entre jugadores, NPCs y el mundo." },
+    "npc": {
+      "role": "Herborista de la Aldea",
+      "location": "Willowdale",
+      "level": "NPC Nv. 45",
+      "relationshipLabel": "Relación",
+      "relationshipValue": "Amistoso (+62)",
+      "memoryTitle": "Sistema de Memoria",
+      "memory1": "El jugador ayudó a recolectar hierbas moonleaf — hace 21 días",
+      "memory2": "La hija Lira ha caído gravemente enferma — hace 3 días",
+      "memory3": "La flor Moonblossom crece en el norte del Bosque Frostpine",
+      "questTitle": "Misión Generada",
+      "questBadge": "IA",
+      "questName": "Cosecha de Moonblossom",
+      "questText": "\"Recolecta 5 Flores Moonblossom del Bosque Frostpine para ayudar a curar a Lira.\"",
+      "rewardPotions": "×15 Pociones de Curación",
+      "rewardRep": "Reputación en Willowdale",
+      "detailTrigger": "Detonante",
+      "detailTriggerVal": "Enfermedad de la hija",
+      "detailLocation": "Ubicación",
+      "detailLocationVal": "Bosque Frostpine",
+      "detailTime": "Límite de Tiempo",
+      "detailTimeVal": "7 días en el juego",
+      "detailDiff": "Dificultad",
+      "detailDiffVal": "Moderada"
+    },
+    "dialogue": {
+      "sectionTitle": "Ejemplo de Interacción",
+      "playerLabel": "Jugador",
+      "npcLabel": "Elara, Herborista de la Aldea",
+      "playerMsg": "\"Elara, ¿conoces alguna hierba rara en el norte?\"",
+      "npcMsg": "\"La Moonblossom crece en el Bosque Frostpine... Lo sé porque mi hija está gravemente enferma y la necesita.\"",
+      "questGenerated": "Nueva Misión Generada",
+      "questName": "— Cosecha de Moonblossom"
+    }
+  },
+  "roadmap": {
+    "eyebrow": "Progreso del Desarrollo",
+    "title": "Hoja de Ruta",
+    "subtitle": "El camino desde un fork de código abierto hasta un mundo MMORPG completamente persistente.",
+    "completed": "Completado",
+    "inProgress": "En Progreso",
+    "upcoming": "Próximamente",
+    "phase1": {
+      "title": "Infraestructura",
+      "desc": "Infraestructura central del servidor, pipeline CI/CD y establecimiento de identidad Xindeler.",
+      "items": ["Configuración del servidor", "Pipeline CI/CD", "Identidad de marca", "Dominio y CDN"]
+    },
+    "phase2": {
+      "title": "Web, Documentación y Autenticación",
+      "desc": "La landing page pública, portal de documentación completo, wiki y el servicio de autenticación.",
+      "items": ["Landing page", "Portal de documentación", "Sistema wiki", "Servicio de autenticación"]
+    },
+    "phase3": {
+      "title": "Sistema de Magia",
+      "desc": "Un framework de magia profundo y personalizable con escuelas de magia, creación de hechizos y progresión arcana.",
+      "items": ["Framework de hechizos", "Escuelas de magia", "UI de creación de hechizos", "Sistema de efectos visuales"]
+    },
+    "phase4": {
+      "title": "Framework de NPCs con IA",
+      "desc": "La base para NPCs impulsados por IA con memoria persistente, conversaciones dinámicas y comportamiento contextual.",
+      "items": ["Sistema de memoria", "Motor de diálogos", "Árbol de comportamiento", "Grafo de relaciones"]
+    },
+    "phase5": {
+      "title": "Misiones Dinámicas",
+      "desc": "Generación procedural de misiones contextualmente apropiadas basadas en las necesidades de los NPCs y el estado del mundo.",
+      "items": ["Generador de misiones", "Motor de contexto", "Balanceador de recompensas", "Hilos narrativos"]
+    },
+    "phase6": {
+      "title": "Mundo MMORPG Persistente",
+      "desc": "Lanzamiento del mundo en línea persistente con multijugador completo, economía, facciones y un universo vivo y evolutivo.",
+      "items": ["Servidores persistentes", "Economía de jugadores", "Sistema de facciones", "Eventos del mundo"]
+    }
+  },
+  "community": {
+    "eyebrow": "Participa",
+    "title": "Únete a la Comunidad",
+    "subtitle": "Xindeler es construido por la comunidad, para la comunidad. Cada contribución hace el mundo más rico.",
+    "github":    { "title": "GitHub",         "desc": "Explora el código fuente, reporta problemas y contribuye al proyecto.",                        "btn": "Ver Repositorio" },
+    "discord":   { "title": "Discord",        "desc": "Únete a la comunidad, haz preguntas y conoce a otros aventureros.",                            "btn": "Unirse al Servidor", "badge": "Próximamente" },
+    "wiki":      { "title": "Wiki",           "desc": "Explora el lore, guías y conocimiento de la comunidad en el Wiki de Xindeler.",                "btn": "Ver Wiki" },
+    "docs":      { "title": "Documentación",  "desc": "Documentación técnica para jugadores, contribuidores y operadores de servidores.",              "btn": "Leer Documentación" },
+    "downloads": { "title": "Descargas",      "desc": "Obtén la última versión de Xindeler para tu sistema operativo.",                               "btn": "Descargar Ahora" }
+  },
+  "download": {
+    "eyebrow": "Comienza tu Viaje",
+    "title": "Únete a la Aventura",
+    "description": "Xindeler es gratuito y de código abierto. Descarga el cliente y comienza a explorar un mundo que crece con cada aventurero que se une.",
+    "windows": "Windows",
+    "linux": "Linux",
+    "macos": "macOS",
+    "windowsSub": "10/11",
+    "linuxSub": "AppImage / .deb",
+    "macosSub": "12+",
+    "launcherNote": "El soporte del launcher con actualizaciones automáticas llegará pronto.",
+    "openSource": "Código Abierto",
+    "gpl": "Licencia GPL",
+    "communityDriven": "Impulsado por la Comunidad",
+    "free": "Gratis para Siempre"
+  },
+  "footer": {
+    "desc": "Un MMORPG de código abierto construido en Rust. Explora, crea, combate y da forma a un mundo vivo junto a miles de aventureros.",
+    "community": "Comunidad",
+    "resources": "Recursos",
+    "copyright": "© 2025 Proyecto Xindeler — MMORPG de Código Abierto",
+    "forkedFrom": "Originalmente bifurcado de",
+    "license": "· Licenciado bajo GPL-3.0"
+  }
+}

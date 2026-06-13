@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: #06060f;
+    color: #e8d5b7;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    margin: 0;
+  }
+
+  #root { width: 100%; }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #06060f; }
+  ::-webkit-scrollbar-thumb { background: #7c3aed50; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #7c3aed90; }
+}
+
+@layer components {
+  .section-eyebrow {
+    @apply font-cinzel text-x-gold text-xs tracking-[0.35em] uppercase text-center mb-3;
+  }
+  .section-title {
+    @apply font-cinzel text-4xl md:text-5xl text-white text-center mb-4;
+  }
+  .gold-divider {
+    @apply w-24 h-px bg-gradient-to-r from-transparent via-x-gold to-transparent mx-auto;
+  }
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-7 py-3 font-cinzel text-sm tracking-wider text-black bg-x-gold border border-x-gold rounded transition-all duration-300;
+    box-shadow: 0 4px 20px rgba(212,160,23,0.35);
+  }
+  .btn-primary:hover {
+    background-color: #e8be3a;
+    box-shadow: 0 6px 30px rgba(212,160,23,0.5);
+  }
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-7 py-3 font-cinzel text-sm tracking-wider text-white border border-white/20 rounded backdrop-blur-sm transition-all duration-300;
+    background: rgba(255,255,255,0.05);
+  }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.10);
+    border-color: rgba(255,255,255,0.40);
+  }
+}
+
+/* Arcane rune drift animation */
+@keyframes arcane-drift {
+  0%   { transform: translateY(0) rotate(0deg);   opacity: 0; }
+  10%  { opacity: 0.6; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(-140px) rotate(180deg); opacity: 0; }
+}
+
+/* Shimmer gold text */
+@keyframes shimmer-text {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, #d4a017 0%, #e8be3a 40%, #fffacd 50%, #e8be3a 60%, #d4a017 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer-text 4s linear infinite;
+}
+
+/* Cursor blink */
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+.cursor-blink::after {
+  content: '▌';
+  animation: blink 1s step-end infinite;
+  color: #a855f7;
+  margin-left: 1px;
+}
+
+/* Timeline active pulse */
+@keyframes timeline-glow {
+  0%,100% { box-shadow: 0 0 8px rgba(212,160,23,0.4); }
+  50%      { box-shadow: 0 0 24px rgba(212,160,23,0.9), 0 0 48px rgba(212,160,23,0.3); }
+}
+
+.timeline-active { animation: timeline-glow 2.5s ease-in-out infinite; }
