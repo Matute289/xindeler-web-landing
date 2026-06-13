@@ -9,6 +9,7 @@ import Roadmap from './components/Roadmap';
 import UpdatesSection from './components/UpdatesSection';
 import WaitlistSection from './components/WaitlistSection';
 import ServerStatusSection from './components/ServerStatusSection';
+import FAQSection from './components/FAQSection';
 import CommunitySection from './components/CommunitySection';
 import DownloadSection from './components/DownloadSection';
 import Footer from './components/Footer';
@@ -37,6 +38,7 @@ export default function App() {
         <UpdatesSection />
         <WaitlistSection />
         <ServerStatusSection />
+        <FAQSection />
         <CommunitySection />
         <GitHubStats />
         <DownloadSection />
