@@ -53,6 +53,16 @@
   }
 }
 
+/* Override browser autofill white background on dark inputs */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #0d0d1e inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff;
+}
+
 /* Arcane rune drift animation */
 @keyframes arcane-drift {
   0%   { transform: translateY(0) rotate(0deg);   opacity: 0; }
