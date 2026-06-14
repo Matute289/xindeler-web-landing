@@ -23,20 +23,26 @@ const SOURCES = [
 function ToggleGroup({ options, value, onChange }) {
   return (
     <div className="flex flex-wrap gap-2">
-      {options.map(opt => (
-        <button
-          key={opt.value}
-          type="button"
-          onClick={() => onChange(opt.value)}
-          className={`px-4 py-2 rounded-xl text-sm font-cinzel border transition-all duration-200 ${
-            value === opt.value
-              ? 'border-x-gold/60 bg-x-gold/10 text-x-gold'
-              : 'border-white/10 bg-white/3 text-gray-400 hover:border-white/20 hover:text-gray-300'
-          }`}
-        >
-          {opt.label}
-        </button>
-      ))}
+      {options.map(opt => {
+        const selected    = value === opt.value;
+        const deselected  = value !== '' && !selected;
+        return (
+          <button
+            key={opt.value}
+            type="button"
+            onClick={() => onChange(opt.value)}
+            className={`px-4 py-2 rounded-xl text-sm font-cinzel border transition-all duration-200 ${
+              selected
+                ? 'border-x-gold bg-x-gold text-x-dark'
+                : deselected
+                  ? 'border-white/10 bg-black/60 text-x-gold'
+                  : 'border-white/10 bg-transparent text-gray-400 hover:border-white/20 hover:text-gray-300'
+            }`}
+          >
+            {opt.label}
+          </button>
+        );
+      })}
     </div>
   );
 }
