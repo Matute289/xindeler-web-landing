@@ -7,7 +7,7 @@ const LANGUAGES = [
   // Add more languages here in the future
 ];
 
-export default function LanguageSwitcher() {
+export default function LanguageSwitcher({ align = 'right' }) {
   const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
@@ -39,7 +39,7 @@ export default function LanguageSwitcher() {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full mt-2 z-50 min-w-[140px] rounded-xl border border-white/10 overflow-hidden shadow-2xl shadow-black/60"
+        <div className={`absolute ${align === 'left' ? 'left-0' : 'right-0'} top-full mt-2 z-50 min-w-[140px] rounded-xl border border-white/10 overflow-hidden shadow-2xl shadow-black/60`}
              style={{ background: 'rgba(13,13,30,0.97)', backdropFilter: 'blur(16px)' }}>
           {LANGUAGES.map((lang) => (
             <button
