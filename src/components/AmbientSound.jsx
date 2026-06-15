@@ -4,9 +4,8 @@ import { Volume2, VolumeX } from 'lucide-react';
 
 const CDN          = 'https://cdn.xindeler.greenmountain.dev/sounds/common/2026-06-13';
 const MASTER_VOL   = 0.15;
-const FADE_MS      = 2000;   // play/pause fade
-const LOOP_HALF_MS = 1250;   // same-track: 1.25s fade out + 1.25s fade in = 2.5s total
-const ROT_HALF_MS  = 2000;   // rotation:   2s fade out   + 2s fade in   = 4s total
+const FADE_S       = 2;
+const ROT_FADE_S   = 2;
 const SCENE_MIN_MS = 60  * 1000;
 const SCENE_MAX_MS = 150 * 1000;
 
@@ -18,50 +17,34 @@ const SCENES = [
   { name: 'Nature',    emoji: '🌿', src: `${CDN}/Nature.mp3`    },
 ];
 
-// Per-scene vibration params: fx/fy/fs = frequency (Hz), ax/ay/as_ = amplitude (px / scale units)
 const SCENE_VIB = [
-  { fx: 0.70, fy: 0.50, fs: 0.40, ax: 1.2, ay: 0.7, as_: 0.020 }, // Dark      — lento, pesado
-  { fx: 0.35, fy: 0.28, fs: 0.22, ax: 0.5, ay: 0.3, as_: 0.007 }, // Mystical  — suave, etéreo
-  { fx: 1.60, fy: 1.10, fs: 0.85, ax: 1.5, ay: 0.9, as_: 0.028 }, // Adventure — enérgico
-  { fx: 0.22, fy: 0.18, fs: 0.14, ax: 0.3, ay: 0.2, as_: 0.004 }, // Divine    — casi imperceptible
-  { fx: 0.85, fy: 0.60, fs: 0.48, ax: 1.0, ay: 0.6, as_: 0.015 }, // Nature    — orgánico
+  { fx: 0.70, fy: 0.50, fs: 0.40, ax: 1.2, ay: 0.7, as_: 0.020 },
+  { fx: 0.35, fy: 0.28, fs: 0.22, ax: 0.5, ay: 0.3, as_: 0.007 },
+  { fx: 1.60, fy: 1.10, fs: 0.85, ax: 1.5, ay: 0.9, as_: 0.028 },
+  { fx: 0.22, fy: 0.18, fs: 0.14, ax: 0.3, ay: 0.2, as_: 0.004 },
+  { fx: 0.85, fy: 0.60, fs: 0.48, ax: 1.0, ay: 0.6, as_: 0.015 },
 ];
-
-const clamp = (v) => Math.min(1, Math.max(0, v));
-
-function fadeVol(el, from, to, ms, onDone) {
-  const steps    = Math.max(1, Math.round(ms / 50));
-  const interval = ms / steps;
-  let   step     = 0;
-  el.volume = clamp(from);
-  const id = setInterval(() => {
-    step++;
-    el.volume = clamp(from + (to - from) * (step / steps));
-    if (step >= steps) { clearInterval(id); el.volume = clamp(to); onDone?.(); }
-  }, interval);
-  return id;
-}
 
 export default function AmbientSound() {
   const [playing,    setPlayingState] = useState(false);
   const [loading,    setLoading]      = useState(false);
   const [sceneLabel, setSceneLabel]   = useState(null);
 
-  const elsRef         = useRef(null);   // Audio[]
-  const activeIdx      = useRef(-1);
-  const playingRef     = useRef(false);
-  const initialised    = useRef(false);
-  const rotTimerRef    = useRef(null);
-  const labelTimer     = useRef(null);
-  const fadeTimers     = useRef([]);
-  const loopCleanup    = useRef(null);   // removes timeupdate/ended listeners from active track
-  const loopFading     = useRef(false);  // true while a loop-fade is in progress
-  const vibrateRef     = useRef(null);   // wrapper div that receives the vibration transform
-  const vibRafRef      = useRef(null);
+  const ctxRef        = useRef(null);  // AudioContext
+  const masterRef     = useRef(null);  // GainNode (master)
+  const buffersRef    = useRef([]);    // AudioBuffer[] — decoded
+  const fetchesRef    = useRef(null);  // Promise<ArrayBuffer>[] — pre-fetches
+  const activeRef     = useRef(null);  // { source: AudioBufferSourceNode, gain: GainNode }
+  const activeIdx     = useRef(-1);
+  const playingRef    = useRef(false);
+  const initRef       = useRef(false);
+  const rotTimerRef   = useRef(null);
+  const labelTimer    = useRef(null);
+  const pendingSuspend = useRef(null);
+  const vibrateRef    = useRef(null);
+  const vibRafRef     = useRef(null);
 
   const setPlaying = (v) => { playingRef.current = v; setPlayingState(v); };
-
-  const clearFades = () => { fadeTimers.current.forEach(clearInterval); fadeTimers.current = []; };
 
   const showLabel = (idx) => {
     clearTimeout(labelTimer.current);
@@ -70,105 +53,59 @@ export default function AmbientSound() {
   };
 
   const nextIdx = () => {
-    const cur = activeIdx.current;
     let n;
-    do { n = Math.floor(Math.random() * SCENES.length); } while (n === cur);
+    do { n = Math.floor(Math.random() * SCENES.length); } while (n === activeIdx.current);
     return n;
   };
 
-  // Attach loop-fade listeners to an audio element.
-  // When the track is LOOP_HALF_MS away from ending: fade out.
-  // When it ends: restart from 0 and fade in.
-  const attachLoopFade = useCallback((el) => {
-    loopCleanup.current?.();
-    loopFading.current = false;
+  const playScene = useCallback((idx, fadeS) => {
+    const ctx    = ctxRef.current;
+    const master = masterRef.current;
+    const buf    = buffersRef.current[idx];
+    if (!ctx || !master || !buf) return;
 
-    const onTimeUpdate = () => {
-      if (loopFading.current) return;
-      if (!isFinite(el.duration)) return;
-      if (!playingRef.current) return;
-      const remaining = (el.duration - el.currentTime) * 1000;
-      if (remaining <= LOOP_HALF_MS) {
-        loopFading.current = true;
-        clearFades();
-        const t = fadeVol(el, MASTER_VOL, 0, remaining, () => {});
-        fadeTimers.current.push(t);
-      }
-    };
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0, ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(MASTER_VOL, ctx.currentTime + fadeS);
+    gain.connect(master);
 
-    const onEnded = () => {
-      loopFading.current = false;
-      if (!playingRef.current) return;
-      el.currentTime = 0;
-      el.play().catch(() => {});
-      clearFades();
-      const t = fadeVol(el, 0, MASTER_VOL, LOOP_HALF_MS);
-      fadeTimers.current.push(t);
-    };
+    const source = ctx.createBufferSource();
+    source.buffer = buf;
+    source.loop   = true;
+    source.connect(gain);
+    source.start();
 
-    el.addEventListener('timeupdate', onTimeUpdate);
-    el.addEventListener('ended', onEnded);
-
-    loopCleanup.current = () => {
-      el.removeEventListener('timeupdate', onTimeUpdate);
-      el.removeEventListener('ended', onEnded);
-    };
+    activeRef.current = { source, gain };
+    activeIdx.current = idx;
+    showLabel(idx);
   }, []);
-
-  const rotateToRef = useRef(null);
 
   const scheduleRotation = useCallback(() => {
     clearTimeout(rotTimerRef.current);
     const delay = SCENE_MIN_MS + Math.random() * (SCENE_MAX_MS - SCENE_MIN_MS);
-    rotTimerRef.current = setTimeout(() => rotateToRef.current?.(nextIdx()), delay);
-  }, []);
+    rotTimerRef.current = setTimeout(() => {
+      if (!playingRef.current) return;
+      const newIdx = nextIdx();
+      const old    = activeRef.current;
+      const ctx    = ctxRef.current;
 
-  const rotateTo = useCallback((newIdx) => {
-    const els    = elsRef.current;
-    const oldIdx = activeIdx.current;
-    if (!els) return;
+      // Crossfade: start new scene (fades in) while old scene fades out simultaneously
+      playScene(newIdx, ROT_FADE_S);
 
-    const oldEl = oldIdx >= 0 ? els[oldIdx] : null;
-    const newEl = els[newIdx];
+      if (old && ctx) {
+        const { source: oldSrc, gain: oldGain } = old;
+        oldGain.gain.setValueAtTime(oldGain.gain.value, ctx.currentTime);
+        oldGain.gain.linearRampToValueAtTime(0, ctx.currentTime + ROT_FADE_S);
+        setTimeout(() => {
+          try { oldSrc.stop(); oldGain.disconnect(); } catch {}
+        }, ROT_FADE_S * 1000 + 100);
+      }
 
-    // Remove loop listeners from old track before fading
-    loopCleanup.current?.();
-    loopCleanup.current = null;
-    loopFading.current  = false;
+      scheduleRotation();
+    }, delay);
+  }, [playScene]);
 
-    clearFades();
-    activeIdx.current = newIdx;
-    showLabel(newIdx);
-    scheduleRotation();
-
-    if (!playingRef.current) {
-      if (oldEl && oldIdx !== newIdx) { oldEl.volume = 0; oldEl.pause(); }
-      return;
-    }
-
-    const startNew = () => {
-      newEl.volume = 0;
-      newEl.play().catch(() => {});
-      const t = fadeVol(newEl, 0, MASTER_VOL, ROT_HALF_MS, () => {
-        attachLoopFade(newEl);
-      });
-      fadeTimers.current.push(t);
-    };
-
-    if (oldEl && oldIdx !== newIdx) {
-      const t = fadeVol(oldEl, MASTER_VOL, 0, ROT_HALF_MS, () => {
-        oldEl.pause();
-        startNew();
-      });
-      fadeTimers.current.push(t);
-    } else {
-      startNew();
-    }
-  }, [scheduleRotation, attachLoopFade]);
-
-  useEffect(() => { rotateToRef.current = rotateTo; }, [rotateTo]);
-
-  // RAF vibration — drives the wrapper div transform based on active scene
+  // RAF vibration
   useEffect(() => {
     const el = vibrateRef.current;
     if (!el) return;
@@ -181,12 +118,10 @@ export default function AmbientSound() {
     }
 
     el.style.transition = 'none';
-
     const tick = (ts) => {
       const t   = ts / 1000;
       const idx = Math.min(Math.max(activeIdx.current, 0), SCENE_VIB.length - 1);
       const v   = SCENE_VIB[idx];
-      // Two sine waves per axis → organic, non-mechanical feel
       const x = (Math.sin(t * v.fx * Math.PI * 2) + Math.sin(t * v.fx * 2.71 * Math.PI) * 0.4) * v.ax;
       const y = (Math.sin(t * v.fy * Math.PI * 2) + Math.cos(t * v.fy * 1.83 * Math.PI) * 0.3) * v.ay;
       const s = 1
@@ -195,79 +130,81 @@ export default function AmbientSound() {
       el.style.transform = `translate(${x}px,${y}px) scale(${s})`;
       vibRafRef.current  = requestAnimationFrame(tick);
     };
-
     vibRafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(vibRafRef.current);
   }, [playing]);
 
-  // Pre-create <audio> elements on mount — browser starts buffering in background
+  // Pre-fetch audio data on mount (no AudioContext needed — works without user gesture)
   useEffect(() => {
-    const els = SCENES.map(({ src }) => {
-      const el   = new Audio(src);
-      el.loop    = false; // manual looping with fade
-      el.volume  = 0;
-      el.preload = 'auto';
-      return el;
-    });
-    elsRef.current = els;
-
+    fetchesRef.current = SCENES.map(s => fetch(s.src).then(r => r.arrayBuffer()));
     return () => {
       clearTimeout(rotTimerRef.current);
       clearTimeout(labelTimer.current);
+      clearTimeout(pendingSuspend.current);
       cancelAnimationFrame(vibRafRef.current);
-      clearFades();
-      loopCleanup.current?.();
-      els.forEach(el => { el.pause(); el.src = ''; });
+      if (ctxRef.current) { ctxRef.current.close(); ctxRef.current = null; }
     };
   }, []);
 
   const toggle = async () => {
-    const els = elsRef.current;
-    if (!els) return;
-
-    if (!initialised.current) {
-      initialised.current = true;
-      const startIdx = Math.floor(Math.random() * SCENES.length);
-      activeIdx.current = startIdx;
-      showLabel(startIdx);
+    // First click: create AudioContext, decode buffers, start playback
+    if (!initRef.current) {
+      initRef.current = true;
       setLoading(true);
-
       try {
-        await els[startIdx].play();
-      } catch {
-        initialised.current = false;
-        setLoading(false);
-        return;
-      }
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioCtx();
+        await ctx.resume();
+        ctxRef.current = ctx;
 
-      clearFades();
-      const t = fadeVol(els[startIdx], 0, MASTER_VOL, FADE_MS, () => {
-        attachLoopFade(els[startIdx]);
-      });
-      fadeTimers.current.push(t);
-      setLoading(false);
-      setPlaying(true);
-      scheduleRotation();
+        const master = ctx.createGain();
+        master.gain.value = 1;
+        master.connect(ctx.destination);
+        masterRef.current = master;
+
+        const arrayBuffers = await Promise.all(fetchesRef.current);
+        buffersRef.current = await Promise.all(
+          arrayBuffers.map(ab => ctx.decodeAudioData(ab))
+        );
+
+        const startIdx = Math.floor(Math.random() * SCENES.length);
+        playScene(startIdx, FADE_S);
+        setPlaying(true);
+        scheduleRotation();
+      } catch {
+        initRef.current = false;
+      } finally {
+        setLoading(false);
+      }
       return;
     }
 
-    const el = els[activeIdx.current];
-    clearFades();
+    const ctx = ctxRef.current;
+    if (!ctx) return;
 
-    if (!playingRef.current) {
-      el.play().catch(() => {});
-      const t = fadeVol(el, el.volume, MASTER_VOL, FADE_MS, () => {
-        attachLoopFade(el);
-      });
-      fadeTimers.current.push(t);
-      setPlaying(true);
-    } else {
-      loopCleanup.current?.();
-      loopCleanup.current = null;
-      loopFading.current  = false;
-      const t = fadeVol(el, MASTER_VOL, 0, FADE_MS, () => el.pause());
-      fadeTimers.current.push(t);
+    if (playingRef.current) {
+      // Pause: fade out gain then suspend AudioContext
+      const active = activeRef.current;
+      if (active) {
+        active.gain.gain.setValueAtTime(active.gain.gain.value, ctx.currentTime);
+        active.gain.gain.linearRampToValueAtTime(0, ctx.currentTime + FADE_S);
+      }
+      clearTimeout(rotTimerRef.current);
+      clearTimeout(pendingSuspend.current);
+      pendingSuspend.current = setTimeout(() => ctx.suspend(), FADE_S * 1000);
       setPlaying(false);
+    } else {
+      // Resume: cancel pending suspend, resume context, fade gain back in
+      clearTimeout(pendingSuspend.current);
+      await ctx.resume();
+      const active = activeRef.current;
+      if (active) {
+        active.gain.gain.cancelScheduledValues(ctx.currentTime);
+        active.gain.gain.setValueAtTime(0, ctx.currentTime);
+        active.gain.gain.linearRampToValueAtTime(MASTER_VOL, ctx.currentTime + FADE_S);
+      }
+      setPlaying(true);
+      scheduleRotation();
     }
   };
 
@@ -289,7 +226,6 @@ export default function AmbientSound() {
         )}
       </AnimatePresence>
 
-      {/* Wrapper receives the RAF vibration transform; motion.button keeps hover/tap */}
       <div ref={vibrateRef} style={{ willChange: 'transform' }}>
         <motion.button
           onClick={toggle}

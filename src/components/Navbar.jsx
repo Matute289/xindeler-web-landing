@@ -127,7 +127,7 @@ export default function Navbar() {
                 </li>
               ))}
               <li className="pt-2 border-t border-white/10 flex items-center justify-between">
-                <LanguageSwitcher />
+                <LanguageSwitcher align="left" />
                 <button
                   onClick={() => scrollTo('#download')}
                   className="btn-primary"
