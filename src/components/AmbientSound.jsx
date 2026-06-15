@@ -158,8 +158,17 @@ export default function AmbientSound() {
       try {
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         const ctx = new AudioCtx();
-        await ctx.resume();
         ctxRef.current = ctx;
+
+        // iOS Safari requires audio to start synchronously within the user gesture.
+        // Play a silent 1-frame buffer immediately to unlock the AudioContext before
+        // any await, otherwise subsequent source.start() calls are silently blocked.
+        const unlock = ctx.createBuffer(1, 1, ctx.sampleRate);
+        const unlockSrc = ctx.createBufferSource();
+        unlockSrc.buffer = unlock;
+        unlockSrc.connect(ctx.destination);
+        unlockSrc.start(0);
+        ctx.resume();
 
         const master = ctx.createGain();
         master.gain.value = 1;
