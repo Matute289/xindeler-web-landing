@@ -16,12 +16,11 @@ const LINK_DEFS = [
   {
     key: 'discord',
     icon: MessageCircle,
-    href: '#',
+    href: 'https://discord.gg/Jpg9scQE',
     color: 'text-indigo-400',
     bg: 'from-indigo-900/40 to-indigo-950/20',
     border: 'border-indigo-700/30',
     hoverBorder: 'hover:border-indigo-500/50',
-    hasBadge: true,
   },
   {
     key: 'wiki',

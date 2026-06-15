@@ -80,6 +80,8 @@ export default function AmbientSound() {
     showLabel(idx);
   }, []);
 
+  const scheduleRotRef = useRef(null);
+
   const scheduleRotation = useCallback(() => {
     clearTimeout(rotTimerRef.current);
     const delay = SCENE_MIN_MS + Math.random() * (SCENE_MAX_MS - SCENE_MIN_MS);
@@ -97,13 +99,15 @@ export default function AmbientSound() {
         oldGain.gain.setValueAtTime(oldGain.gain.value, ctx.currentTime);
         oldGain.gain.linearRampToValueAtTime(0, ctx.currentTime + ROT_FADE_S);
         setTimeout(() => {
-          try { oldSrc.stop(); oldGain.disconnect(); } catch {}
+          try { oldSrc.stop(); oldGain.disconnect(); } catch { /* already stopped */ }
         }, ROT_FADE_S * 1000 + 100);
       }
 
-      scheduleRotation();
+      scheduleRotRef.current?.();
     }, delay);
   }, [playScene]);
+
+  useEffect(() => { scheduleRotRef.current = scheduleRotation; }, [scheduleRotation]);
 
   // RAF vibration
   useEffect(() => {

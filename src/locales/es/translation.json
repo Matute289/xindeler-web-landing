@@ -173,7 +173,7 @@
     "title": "Únete a la Comunidad",
     "subtitle": "Xindeler es construido por la comunidad, para la comunidad. Cada contribución hace el mundo más rico.",
     "github":    { "title": "GitHub",         "desc": "Explora el código fuente, reporta problemas y contribuye al proyecto.",                        "btn": "Ver Repositorio" },
-    "discord":   { "title": "Discord",        "desc": "Únete a la comunidad, haz preguntas y conoce a otros aventureros.",                            "btn": "Unirse al Servidor", "badge": "Próximamente" },
+    "discord":   { "title": "Discord",        "desc": "Únete a la comunidad, haz preguntas y conoce a otros aventureros.",                            "btn": "Unirse al Servidor" },
     "wiki":      { "title": "Wiki",           "desc": "Explora el lore, guías y conocimiento de la comunidad en el Wiki de Xindeler.",                "btn": "Ver Wiki" },
     "docs":      { "title": "Documentación",  "desc": "Documentación técnica para jugadores, contribuidores y operadores de servidores.",              "btn": "Leer Documentación" },
     "downloads": { "title": "Descargas",      "desc": "Obtén la última versión de Xindeler para tu sistema operativo.",                               "btn": "Descargar Ahora" }
