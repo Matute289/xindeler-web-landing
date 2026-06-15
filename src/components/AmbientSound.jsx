@@ -168,7 +168,7 @@ export default function AmbientSound() {
         unlockSrc.buffer = unlock;
         unlockSrc.connect(ctx.destination);
         unlockSrc.start(0);
-        ctx.resume();
+        await ctx.resume();
 
         const master = ctx.createGain();
         master.gain.value = 1;
@@ -176,9 +176,9 @@ export default function AmbientSound() {
         masterRef.current = master;
 
         const arrayBuffers = await Promise.all(fetchesRef.current);
-        buffersRef.current = await Promise.all(
-          arrayBuffers.map(ab => ctx.decodeAudioData(ab))
-        );
+        // Callback-based decodeAudioData for broader iOS Safari compatibility
+        const decode = (ab) => new Promise((res, rej) => ctx.decodeAudioData(ab, res, rej));
+        buffersRef.current = await Promise.all(arrayBuffers.map(decode));
 
         const startIdx = Math.floor(Math.random() * SCENES.length);
         playScene(startIdx, FADE_S);
