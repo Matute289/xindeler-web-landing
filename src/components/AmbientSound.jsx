@@ -30,19 +30,20 @@ export default function AmbientSound() {
   const [loading,    setLoading]      = useState(false);
   const [sceneLabel, setSceneLabel]   = useState(null);
 
-  const ctxRef        = useRef(null);  // AudioContext
-  const masterRef     = useRef(null);  // GainNode (master)
-  const buffersRef    = useRef([]);    // AudioBuffer[] — decoded
-  const fetchesRef    = useRef(null);  // Promise<ArrayBuffer>[] — pre-fetches
-  const activeRef     = useRef(null);  // { source: AudioBufferSourceNode, gain: GainNode }
-  const activeIdx     = useRef(-1);
-  const playingRef    = useRef(false);
-  const initRef       = useRef(false);
-  const rotTimerRef   = useRef(null);
-  const labelTimer    = useRef(null);
+  const ctxRef         = useRef(null);  // AudioContext — created on mount, starts suspended
+  const masterRef      = useRef(null);  // GainNode
+  const buffersRef     = useRef([]);    // AudioBuffer[] — decoded on mount in background
+  const decodeRef      = useRef(null);  // Promise<AudioBuffer[]>
+  const activeRef      = useRef(null);  // { source, gain } currently playing
+  const activeIdx      = useRef(-1);
+  const playingRef     = useRef(false);
+  const initRef        = useRef(false);
+  const rotTimerRef    = useRef(null);
+  const labelTimer     = useRef(null);
   const pendingSuspend = useRef(null);
-  const vibrateRef    = useRef(null);
-  const vibRafRef     = useRef(null);
+  const scheduleRotRef = useRef(null);
+  const vibrateRef     = useRef(null);
+  const vibRafRef      = useRef(null);
 
   const setPlaying = (v) => { playingRef.current = v; setPlayingState(v); };
 
@@ -80,8 +81,6 @@ export default function AmbientSound() {
     showLabel(idx);
   }, []);
 
-  const scheduleRotRef = useRef(null);
-
   const scheduleRotation = useCallback(() => {
     clearTimeout(rotTimerRef.current);
     const delay = SCENE_MIN_MS + Math.random() * (SCENE_MAX_MS - SCENE_MIN_MS);
@@ -91,7 +90,6 @@ export default function AmbientSound() {
       const old    = activeRef.current;
       const ctx    = ctxRef.current;
 
-      // Crossfade: start new scene (fades in) while old scene fades out simultaneously
       playScene(newIdx, ROT_FADE_S);
 
       if (old && ctx) {
@@ -113,14 +111,12 @@ export default function AmbientSound() {
   useEffect(() => {
     const el = vibrateRef.current;
     if (!el) return;
-
     if (!playing) {
       cancelAnimationFrame(vibRafRef.current);
       el.style.transition = 'transform 0.5s ease-out';
       el.style.transform  = 'translate(0px,0px) scale(1)';
       return;
     }
-
     el.style.transition = 'none';
     const tick = (ts) => {
       const t   = ts / 1000;
@@ -138,65 +134,72 @@ export default function AmbientSound() {
     return () => cancelAnimationFrame(vibRafRef.current);
   }, [playing]);
 
-  // Pre-fetch audio data on mount (no AudioContext needed — works without user gesture)
+  // AudioContext created on mount (suspended — no user gesture needed for creation).
+  // All audio decoded in background so toggle() can be fully synchronous.
   useEffect(() => {
-    fetchesRef.current = SCENES.map(s => fetch(s.src).then(r => r.arrayBuffer()));
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+
+    const ctx = new AudioCtx();
+    ctxRef.current = ctx;
+
+    const master = ctx.createGain();
+    master.gain.value = 1;
+    master.connect(ctx.destination);
+    masterRef.current = master;
+
+    decodeRef.current = Promise.all(
+      SCENES.map(s =>
+        fetch(s.src)
+          .then(r => r.arrayBuffer())
+          .then(ab => new Promise((res, rej) => ctx.decodeAudioData(ab, res, rej)))
+      )
+    ).then(buffers => { buffersRef.current = buffers; return buffers; });
+
     return () => {
       clearTimeout(rotTimerRef.current);
       clearTimeout(labelTimer.current);
       clearTimeout(pendingSuspend.current);
       cancelAnimationFrame(vibRafRef.current);
-      if (ctxRef.current) { ctxRef.current.close(); ctxRef.current = null; }
+      ctx.close();
+      ctxRef.current = null;
     };
   }, []);
 
-  const toggle = async () => {
-    // First click: create AudioContext, decode buffers, start playback
+  // Fully synchronous — no async/await anywhere.
+  // iOS Safari only honours user gestures in the synchronous part of an event handler.
+  // ctx.resume() and source.start() must both run in the same tick as the click.
+  const toggle = () => {
+    const ctx = ctxRef.current;
+    if (!ctx) return;
+
     if (!initRef.current) {
       initRef.current = true;
-      setLoading(true);
-      try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        const ctx = new AudioCtx();
-        ctxRef.current = ctx;
+      ctx.resume(); // synchronous within gesture — unlocks AudioContext on iOS
 
-        // iOS Safari requires audio to start synchronously within the user gesture.
-        // Play a silent 1-frame buffer immediately to unlock the AudioContext before
-        // any await, otherwise subsequent source.start() calls are silently blocked.
-        const unlock = ctx.createBuffer(1, 1, ctx.sampleRate);
-        const unlockSrc = ctx.createBufferSource();
-        unlockSrc.buffer = unlock;
-        unlockSrc.connect(ctx.destination);
-        unlockSrc.start(0);
-        await ctx.resume();
-
-        const master = ctx.createGain();
-        master.gain.value = 1;
-        master.connect(ctx.destination);
-        masterRef.current = master;
-
-        const arrayBuffers = await Promise.all(fetchesRef.current);
-        // Callback-based decodeAudioData for broader iOS Safari compatibility
-        const decode = (ab) => new Promise((res, rej) => ctx.decodeAudioData(ab, res, rej));
-        buffersRef.current = await Promise.all(arrayBuffers.map(decode));
-
+      if (buffersRef.current.length === SCENES.length) {
+        // Already decoded → start immediately in the same gesture tick
         const startIdx = Math.floor(Math.random() * SCENES.length);
         playScene(startIdx, FADE_S);
         setPlaying(true);
         scheduleRotation();
-      } catch {
-        initRef.current = false;
-      } finally {
-        setLoading(false);
+      } else {
+        // Still decoding — show spinner and start once ready
+        setLoading(true);
+        decodeRef.current
+          .then(() => {
+            const startIdx = Math.floor(Math.random() * SCENES.length);
+            playScene(startIdx, FADE_S);
+            setPlaying(true);
+            scheduleRotation();
+            setLoading(false);
+          })
+          .catch(() => { initRef.current = false; setLoading(false); });
       }
       return;
     }
 
-    const ctx = ctxRef.current;
-    if (!ctx) return;
-
     if (playingRef.current) {
-      // Pause: fade out gain then suspend AudioContext
       const active = activeRef.current;
       if (active) {
         active.gain.gain.setValueAtTime(active.gain.gain.value, ctx.currentTime);
@@ -207,9 +210,7 @@ export default function AmbientSound() {
       pendingSuspend.current = setTimeout(() => ctx.suspend(), FADE_S * 1000);
       setPlaying(false);
     } else {
-      // Resume: cancel pending suspend, resume context, fade gain back in
-      clearTimeout(pendingSuspend.current);
-      await ctx.resume();
+      ctx.resume();
       const active = activeRef.current;
       if (active) {
         active.gain.gain.cancelScheduledValues(ctx.currentTime);
