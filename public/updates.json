@@ -1,1 +1,82 @@
-[]
+[
+  {
+    "id": "magia-evolucion",
+    "date": "2026-06-22",
+    "title": "El sistema de magia evoluciona",
+    "summary": "Nuevas capas de profundidad en el arte arcano: se amplían y refinan las formas en que la magia moldea el mundo de Xindeler.",
+    "type": "updated",
+    "category": "gameplay"
+  },
+  {
+    "id": "clases-expansion",
+    "date": "2026-06-22",
+    "title": "El abanico de clases se expande",
+    "summary": "Se sientan las bases de un repertorio de clases mucho más amplio, cada una con su propia identidad y estilo de juego.",
+    "type": "added",
+    "category": "gameplay"
+  },
+  {
+    "id": "sistemas-personaje",
+    "date": "2026-06-22",
+    "title": "Nuevos sistemas para tu personaje",
+    "summary": "Evolucionan las formas de definir a tu héroe y de aventurar acompañado: bandas más numerosas y nuevas dimensiones de identidad.",
+    "type": "added",
+    "category": "gameplay"
+  },
+  {
+    "id": "mundo-desafiante",
+    "date": "2026-06-22",
+    "title": "Un mundo más desafiante",
+    "summary": "El terreno y las regiones de Xindeler ganan profundidad: explorar el mundo será una prueba más exigente y gratificante.",
+    "type": "updated",
+    "category": "mundo"
+  },
+  {
+    "id": "herramientas-desarrollo",
+    "date": "2026-06-21",
+    "title": "Mejor instrumental de desarrollo",
+    "summary": "Nuevas herramientas internas y de diagnóstico aceleran el desarrollo y la calidad detrás de escena del proyecto.",
+    "type": "added",
+    "category": "infraestructura"
+  },
+  {
+    "id": "fabrica-contenido",
+    "date": "2026-06-20",
+    "title": "Nueva maquinaria de creación",
+    "summary": "Se construyen herramientas para generar y consolidar el contenido del mundo a gran escala, asegurando un canon unificado y propio de Xindeler.",
+    "type": "added",
+    "category": "infraestructura"
+  },
+  {
+    "id": "motor-mejoras",
+    "date": "2026-06-20",
+    "title": "Evoluciona el motor del juego",
+    "summary": "Mejoras de base en el motor y su rendimiento, y sincronización con los avances del proyecto que lo sustenta.",
+    "type": "updated",
+    "category": "motor"
+  },
+  {
+    "id": "consolidacion-tecnica",
+    "date": "2026-06-20",
+    "title": "Consolidación técnica",
+    "summary": "Se revisó y consolidó el enfoque de varios sistemas internos, simplificando las bases técnicas del proyecto.",
+    "type": "removed",
+    "category": "infraestructura"
+  },
+  {
+    "id": "cosmologia-profundidad",
+    "date": "2026-06-19",
+    "title": "Se profundiza la cosmología",
+    "summary": "Nuevas capas en el panteón y los planos de Xindeler: el trasfondo del mundo se vuelve más rico, coherente y misterioso.",
+    "type": "updated",
+    "category": "lore"
+  },
+  {
+    "id": "iniciativa-especial",
+    "date": "2026-06-11",
+    "title": "Iniciativa Especial",
+    "summary": "Avanzan iniciativas reservadas que sentarán las bases de capas de profundidad aún por revelar. Más detalles, a su debido tiempo.",
+    "type": "updated",
+    "category": "proyecto"
+  }
+]
