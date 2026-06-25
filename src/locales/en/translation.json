@@ -60,7 +60,7 @@
     "title": "A Living World",
     "titleHighlight": "Powered by AI",
     "subtitle": "The people of Xindeler are more than scripted NPCs. They think, remember, form opinions and react to the world around them.",
-    "disclaimer": "AI NPC features are part of our Phase 4 roadmap. We are building the foundation to make every inhabitant of Xindeler feel truly alive.",
+    "disclaimer": "AI NPC features are part of our Phase 7 roadmap. We are building the foundation to make every inhabitant of Xindeler feel truly alive.",
     "dynamicConversations": { "title": "Dynamic Conversations", "desc": "NPCs engage in meaningful dialogue rather than repeating predefined lines." },
     "persistentMemory":     { "title": "Persistent Memory",     "desc": "Characters remember events, relationships and player interactions over time." },
     "dynamicQuests":        { "title": "Dynamic Quests",        "desc": "NPCs generate context-sensitive quests based on their needs and circumstances." },
@@ -110,33 +110,48 @@
     "inProgress": "In Progress",
     "upcoming": "Upcoming",
     "phase1": {
-      "title": "Infrastructure",
-      "desc": "Core server infrastructure, CI/CD pipeline and establishment of the Xindeler identity.",
-      "items": ["Server setup", "CI/CD pipeline", "Brand identity", "Domain & CDN configuration"]
+      "title": "Foundation & Web Infrastructure",
+      "desc": "Establishment of Xindeler's identity, web server infrastructure, CI/CD pipeline and online presence.",
+      "items": ["Landing page", "Web CI/CD", "Brand identity", "Domain & CDN"]
     },
     "phase2": {
-      "title": "Website, Docs & Authentication",
-      "desc": "The public-facing landing page, comprehensive documentation portal, wiki, and the authentication service.",
-      "items": ["Landing page", "Documentation portal", "Wiki system", "Auth service"]
+      "title": "Docs, Wiki & Authentication",
+      "desc": "Technical documentation portal, game wiki and authentication service for the game client.",
+      "items": ["Documentation portal", "Wiki system", "Authentication service", "Auth integration"]
     },
     "phase3": {
-      "title": "Magic System",
-      "desc": "A deep and customizable magic framework with schools of magic, spell crafting and arcane progression.",
-      "items": ["Spell framework", "Schools of magic", "Spell crafting UI", "Visual effect system"]
+      "title": "Engine & Game CI/CD",
+      "desc": "Engine improvements, build automation and release pipeline for client and server.",
+      "items": ["Engine improvements", "Client CI/CD", "Server CI/CD", "Release pipeline"]
     },
     "phase4": {
-      "title": "AI NPC Framework",
-      "desc": "The foundation for AI-driven NPCs with persistent memory, dynamic conversations and contextual behavior.",
-      "items": ["Memory system", "Dialogue engine", "Behavior tree", "Relationship graph"]
+      "title": "Magic System",
+      "desc": "A deep magic framework with magical sources, spell schools and arcane progression.",
+      "items": ["Spell framework", "Schools of magic", "Spell crafting UI", "Visual effect system"]
     },
     "phase5": {
-      "title": "Dynamic Quests",
-      "desc": "Procedural quest generation that creates contextually appropriate missions based on NPC needs and world state.",
-      "items": ["Quest generator", "Context engine", "Reward balancer", "Story threading"]
+      "title": "Item System",
+      "desc": "Loot, advanced crafting and inventory — the foundation of the game's economy and progression.",
+      "items": ["Items & loot tables", "Advanced crafting", "Inventory & equipment", "Resource economy"]
     },
     "phase6": {
+      "title": "World AI Framework",
+      "desc": "ORACLE: the autonomous Game Master that generates events, emergent narrative and controls the global world state.",
+      "items": ["World AI engine", "Dynamic events", "Emergent narrative", "Global world state"]
+    },
+    "phase7": {
+      "title": "AI NPC Framework",
+      "desc": "AURORA: NPCs with persistent memory, social relationships, dynamic economy and contextual behavior.",
+      "items": ["Memory system", "Dialogue engine", "Relationship graph", "Social simulation"]
+    },
+    "phase8": {
+      "title": "Dynamic Quests",
+      "desc": "Procedural quest generation driven by world state and NPC needs.",
+      "items": ["Quest generator", "Context engine", "Reward balancer", "Story threading"]
+    },
+    "phase9": {
       "title": "Persistent MMORPG World",
-      "desc": "Launching the persistent online world with full multiplayer, economy, factions and a living, evolving universe.",
+      "desc": "Launch of the persistent online world with full multiplayer, economy, factions and a living, evolving universe.",
       "items": ["Persistent servers", "Player economy", "Faction system", "World events"]
     }
   },
