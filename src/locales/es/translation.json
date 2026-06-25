@@ -60,7 +60,7 @@
     "title": "Un Mundo Vivo",
     "titleHighlight": "Impulsado por IA",
     "subtitle": "Los habitantes de Xindeler son más que NPCs con guión. Piensan, recuerdan, forman opiniones y reaccionan al mundo que los rodea.",
-    "disclaimer": "Las características de NPCs con IA son parte de nuestra Fase 4 del desarrollo. Estamos construyendo la base para que cada habitante de Xindeler se sienta verdaderamente vivo.",
+    "disclaimer": "Las características de NPCs con IA son parte de nuestra Fase 7 del desarrollo. Estamos construyendo la base para que cada habitante de Xindeler se sienta verdaderamente vivo.",
     "dynamicConversations": { "title": "Conversaciones Dinámicas", "desc": "Los NPCs entablan diálogos significativos en lugar de repetir líneas predefinidas." },
     "persistentMemory":     { "title": "Memoria Persistente",      "desc": "Los personajes recuerdan eventos, relaciones e interacciones con jugadores a lo largo del tiempo." },
     "dynamicQuests":        { "title": "Misiones Dinámicas",       "desc": "Los NPCs generan misiones contextuales basadas en sus necesidades y circunstancias." },
@@ -110,34 +110,49 @@
     "inProgress": "En Progreso",
     "upcoming": "Próximamente",
     "phase1": {
-      "title": "Infraestructura",
-      "desc": "Infraestructura central del servidor, pipeline CI/CD y establecimiento de identidad Xindeler.",
-      "items": ["Configuración del servidor", "Pipeline CI/CD", "Identidad de marca", "Dominio y CDN"]
+      "title": "Fundación & Infraestructura Web",
+      "desc": "Establecimiento de la identidad de Xindeler, infraestructura del servidor web, pipeline CI/CD y presencia online.",
+      "items": ["Landing page", "CI/CD web", "Identidad de marca", "Dominio y CDN"]
     },
     "phase2": {
-      "title": "Web, Documentación y Autenticación",
-      "desc": "La landing page pública, portal de documentación completo, wiki y el servicio de autenticación.",
-      "items": ["Landing page", "Portal de documentación", "Sistema wiki", "Servicio de autenticación"]
+      "title": "Documentación, Wiki & Autenticación",
+      "desc": "Portal de documentación técnica, wiki del juego y servicio de autenticación para el cliente.",
+      "items": ["Portal de documentación", "Sistema wiki", "Servicio de autenticación", "Integración auth"]
     },
     "phase3": {
-      "title": "Sistema de Magia",
-      "desc": "Un framework de magia profundo y personalizable con escuelas de magia, creación de hechizos y progresión arcana.",
-      "items": ["Framework de hechizos", "Escuelas de magia", "UI de creación de hechizos", "Sistema de efectos visuales"]
+      "title": "Engine & CI/CD de Juego",
+      "desc": "Mejoras al motor, automatización de builds y pipeline de releases para cliente y servidor.",
+      "items": ["Mejoras al motor", "CI/CD cliente", "CI/CD servidor", "Pipeline de releases"]
     },
     "phase4": {
-      "title": "Framework de NPCs con IA",
-      "desc": "La base para NPCs impulsados por IA con memoria persistente, conversaciones dinámicas y comportamiento contextual.",
-      "items": ["Sistema de memoria", "Motor de diálogos", "Árbol de comportamiento", "Grafo de relaciones"]
+      "title": "Sistema de Magia",
+      "desc": "Un framework de magia profundo con fuentes mágicas, escuelas de hechizos y progresión arcana.",
+      "items": ["Framework de hechizos", "Escuelas de magia", "UI de creación", "Sistema de efectos visuales"]
     },
     "phase5": {
-      "title": "Misiones Dinámicas",
-      "desc": "Generación procedural de misiones contextualmente apropiadas basadas en las necesidades de los NPCs y el estado del mundo.",
-      "items": ["Generador de misiones", "Motor de contexto", "Balanceador de recompensas", "Hilos narrativos"]
+      "title": "Sistema de Items",
+      "desc": "Loot, crafteo avanzado e inventario — la base de la economía y progresión del juego.",
+      "items": ["Items & loot tables", "Crafteo avanzado", "Inventario y equipamiento", "Economía de recursos"]
     },
     "phase6": {
+      "title": "Framework IA del Mundo",
+      "desc": "ORACLE: el Game Master autónomo que genera eventos, narrativa emergente y controla el estado global del mundo.",
+      "items": ["Motor IA del mundo", "Eventos dinámicos", "Narrativa emergente", "Estado global"]
+    },
+    "phase7": {
+      "title": "Framework NPCs con IA",
+      "desc": "AURORA: NPCs con memoria persistente, relaciones sociales, economía dinámica y comportamiento contextual.",
+      "items": ["Sistema de memoria", "Motor de diálogos", "Grafo de relaciones", "Simulación social"]
+    },
+    "phase8": {
+      "title": "Misiones Dinámicas",
+      "desc": "Generación procedural de misiones basada en el estado del mundo y las necesidades de los NPCs.",
+      "items": ["Generador de misiones", "Motor de contexto", "Balanceador de recompensas", "Hilos narrativos"]
+    },
+    "phase9": {
       "title": "Mundo MMORPG Persistente",
-      "desc": "Lanzamiento del mundo en línea persistente con multijugador completo, economía, facciones y un universo vivo y evolutivo.",
-      "items": ["Servidores persistentes", "Economía de jugadores", "Sistema de facciones", "Eventos del mundo"]
+      "desc": "Lanzamiento del mundo online persistente con multijugador completo, economía, facciones y un universo vivo.",
+      "items": ["Servidores persistentes", "Economía de jugadores", "Sistema de facciones", "Eventos globales"]
     }
   },
   "githubStats": {

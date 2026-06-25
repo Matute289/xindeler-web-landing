@@ -6,9 +6,12 @@ const PHASES = [
   { number: 1, status: 'completed'   },
   { number: 2, status: 'in-progress' },
   { number: 3, status: 'upcoming'    },
-  { number: 4, status: 'upcoming'    },
+  { number: 4, status: 'in-progress' },
   { number: 5, status: 'upcoming'    },
   { number: 6, status: 'upcoming'    },
+  { number: 7, status: 'upcoming'    },
+  { number: 8, status: 'upcoming'    },
+  { number: 9, status: 'upcoming'    },
 ];
 
 const STATUS_CONFIG = {
