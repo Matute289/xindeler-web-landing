@@ -43,7 +43,7 @@ const LINK_DEFS = [
   {
     key: 'downloads',
     icon: Download,
-    href: 'https://downloads.xindeler.greenmountain.dev',
+    href: '#download',
     color: 'text-x-gold',
     bg: 'from-amber-900/40 to-amber-950/20',
     border: 'border-amber-700/30',
@@ -79,7 +79,7 @@ export default function CommunitySection() {
             <motion.a
               key={link.key}
               href={link.href}
-              target={link.href !== '#' ? '_blank' : undefined}
+              target={link.href.startsWith('#') ? undefined : '_blank'}
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
