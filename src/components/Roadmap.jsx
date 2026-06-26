@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 const PHASES = [
   { number: 1, status: 'completed'                },
-  { number: 2, status: 'in-progress', doneCount: 1 },
+  { number: 2, status: 'in-progress', doneCount: 2 },
   { number: 3, status: 'upcoming'                 },
   { number: 4, status: 'in-progress' },
   { number: 5, status: 'upcoming'    },
