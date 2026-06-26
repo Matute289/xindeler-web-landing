@@ -1,5 +1,13 @@
 [
   {
+    "id": "docs-portal",
+    "date": "2026-06-26",
+    "title": "Portal de documentación online",
+    "summary": "El portal de documentación técnica de Xindeler ya está disponible en docs.xindeler.greenmountain.dev, con guías para jugadores, contribuidores y operadores de servidores.",
+    "type": "added",
+    "category": "infraestructura"
+  },
+  {
     "id": "magia-evolucion",
     "date": "2026-06-22",
     "title": "El sistema de magia evoluciona",

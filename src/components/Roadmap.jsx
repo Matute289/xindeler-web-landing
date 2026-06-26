@@ -3,9 +3,9 @@ import { Check, Zap, Clock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const PHASES = [
-  { number: 1, status: 'completed'   },
-  { number: 2, status: 'in-progress' },
-  { number: 3, status: 'upcoming'    },
+  { number: 1, status: 'completed'                },
+  { number: 2, status: 'in-progress', doneCount: 1 },
+  { number: 3, status: 'upcoming'                 },
   { number: 4, status: 'in-progress' },
   { number: 5, status: 'upcoming'    },
   { number: 6, status: 'upcoming'    },
@@ -83,6 +83,7 @@ export default function Roadmap() {
               const StatusIcon = cfg.icon;
               const isRight = i % 2 === 0;
               const items = t(`roadmap.phase${phase.number}.items`, { returnObjects: true });
+              const doneCount = phase.doneCount ?? 0;
 
               return (
                 <motion.div
@@ -115,12 +116,15 @@ export default function Roadmap() {
                       </p>
 
                       <ul className="grid grid-cols-2 gap-1">
-                        {Array.isArray(items) && items.map((item) => (
-                          <li key={item} className="flex items-center gap-1.5 text-xs text-gray-500">
-                            <span className={`w-1 h-1 rounded-full flex-shrink-0 ${cfg.dotColor}`} />
-                            {item}
-                          </li>
-                        ))}
+                        {Array.isArray(items) && items.map((item, idx) => {
+                          const done = idx < doneCount;
+                          return (
+                            <li key={item} className={`flex items-center gap-1.5 text-xs ${done ? 'text-emerald-400' : 'text-gray-500'}`}>
+                              <span className={`w-1 h-1 rounded-full flex-shrink-0 ${done ? 'bg-emerald-400' : cfg.dotColor}`} />
+                              {item}
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
                   </div>
