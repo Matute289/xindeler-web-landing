@@ -3,14 +3,13 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { CheckCircle, XCircle, Loader2 } from 'lucide-react';
-import Analytics from '../components/Analytics';
 
 const AUTH_API = 'https://auth.xindeler.greenmountain.dev';
 
 export default function VerifyEmailPage() {
     const { t } = useTranslation();
     const [searchParams] = useSearchParams();
-    const [status, setStatus] = useState('loading'); // loading | success | error
+    const [status, setStatus] = useState('loading'); // loading | success | error | network-error
 
     useEffect(() => {
         const token = searchParams.get('token');
@@ -18,12 +17,12 @@ export default function VerifyEmailPage() {
             setStatus('error');
             return;
         }
+        // Remove token from URL immediately — prevents it leaking into analytics, browser history,
+        // or referrer headers if the user navigates away before the request completes.
+        window.history.replaceState(null, '', window.location.pathname);
         fetch(`${AUTH_API}/verify-email?token=${encodeURIComponent(token)}`)
-            .then(res => {
-                if (res.ok) setStatus('success');
-                else setStatus('error');
-            })
-            .catch(() => setStatus('network-error'));
+            .then(res => { setStatus(res.ok ? 'success' : 'error'); })
+            .catch(() => { setStatus('network-error'); });
     }, [searchParams]);
 
     const icon = status === 'success'
@@ -32,17 +31,15 @@ export default function VerifyEmailPage() {
             ? <Loader2 size={48} className="text-x-gold animate-spin" />
             : <XCircle size={48} className="text-red-400" />;
 
-    const message = status === 'success'
-        ? t('auth.verifyEmail.success')
-        : status === 'loading'
-            ? t('auth.verifyEmail.loading')
-            : status === 'network-error'
-                ? t('auth.verifyEmail.errorNetwork')
-                : t('auth.verifyEmail.errorInvalid');
+    const message = {
+        success: t('auth.verifyEmail.success'),
+        loading: t('auth.verifyEmail.loading'),
+        'network-error': t('auth.verifyEmail.errorNetwork'),
+        error: t('auth.verifyEmail.errorInvalid'),
+    }[status];
 
     return (
         <div className="min-h-screen bg-x-dark flex flex-col items-center justify-center p-4">
-            <Analytics />
             <Link
                 to="/"
                 className="font-cinzel-dec text-2xl font-bold text-white hover:text-x-gold transition-colors mb-12"

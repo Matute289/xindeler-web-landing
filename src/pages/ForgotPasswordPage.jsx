@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Mail, CheckCircle } from 'lucide-react';
-import Analytics from '../components/Analytics';
 
 const AUTH_API = 'https://auth.xindeler.greenmountain.dev';
 
@@ -35,7 +34,6 @@ export default function ForgotPasswordPage() {
 
     return (
         <div className="min-h-screen bg-x-dark flex flex-col items-center justify-center p-4">
-            <Analytics />
             <Link
                 to="/"
                 className="font-cinzel-dec text-2xl font-bold text-white hover:text-x-gold transition-colors mb-12"

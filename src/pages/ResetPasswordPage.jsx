@@ -1,10 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, CheckCircle } from 'lucide-react';
 import { netPrehash } from '../lib/netPrehash';
-import Analytics from '../components/Analytics';
 
 const AUTH_API = 'https://auth.xindeler.greenmountain.dev';
 
@@ -38,7 +37,13 @@ function PasswordInput({ label, value, onChange, placeholder, autoComplete }) {
 export default function ResetPasswordPage() {
     const { t } = useTranslation();
     const [searchParams] = useSearchParams();
-    const token = searchParams.get('token');
+
+    // Read and immediately strip the token from the URL to prevent it leaking
+    // into analytics, browser history, or referrer headers.
+    const [token] = useState(() => searchParams.get('token'));
+    useEffect(() => {
+        if (token) window.history.replaceState(null, '', window.location.pathname);
+    }, [token]);
 
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
@@ -46,7 +51,6 @@ export default function ResetPasswordPage() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
 
-    // Validate token format before even rendering the form
     const tokenValid = token && /^[0-9a-fA-F]{64}$/.test(token);
 
     const handleSubmit = async (e) => {
@@ -80,7 +84,6 @@ export default function ResetPasswordPage() {
 
     return (
         <div className="min-h-screen bg-x-dark flex flex-col items-center justify-center p-4">
-            <Analytics />
             <Link
                 to="/"
                 className="font-cinzel-dec text-2xl font-bold text-white hover:text-x-gold transition-colors mb-12"
