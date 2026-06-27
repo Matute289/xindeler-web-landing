@@ -9,27 +9,29 @@ const AUTH_API = 'https://auth.xindeler.greenmountain.dev';
 export default function VerifyEmailPage() {
     const { t } = useTranslation();
     const [searchParams] = useSearchParams();
-    const [status, setStatus] = useState('loading'); // loading | success | error | network-error
+
+    // Read and validate token at initialization — avoids synchronous setState in effect
+    const [token] = useState(() => {
+        const raw = searchParams.get('token');
+        return (raw && /^[0-9a-fA-F]{64}$/.test(raw)) ? raw : null;
+    });
+    const [status, setStatus] = useState(() => token ? 'loading' : 'error');
 
     useEffect(() => {
-        const token = searchParams.get('token');
-        if (!token || !/^[0-9a-fA-F]{64}$/.test(token)) {
-            setStatus('error');
-            return;
-        }
-        // Remove token from URL immediately — prevents it leaking into analytics, browser history,
-        // or referrer headers if the user navigates away before the request completes.
+        if (!token) return;
+        // Strip token from URL so it can't leak into referrer headers or browser history
         window.history.replaceState(null, '', window.location.pathname);
         fetch(`${AUTH_API}/verify-email?token=${encodeURIComponent(token)}`)
             .then(res => { setStatus(res.ok ? 'success' : 'error'); })
             .catch(() => { setStatus('network-error'); });
-    }, [searchParams]);
+    }, [token]);
 
-    const icon = status === 'success'
-        ? <CheckCircle size={48} className="text-green-400" />
-        : status === 'loading'
-            ? <Loader2 size={48} className="text-x-gold animate-spin" />
-            : <XCircle size={48} className="text-red-400" />;
+    const icon = {
+        success: <CheckCircle size={48} className="text-green-400" />,
+        loading: <Loader2 size={48} className="text-x-gold animate-spin" />,
+        error: <XCircle size={48} className="text-red-400" />,
+        'network-error': <XCircle size={48} className="text-red-400" />,
+    }[status];
 
     const message = {
         success: t('auth.verifyEmail.success'),

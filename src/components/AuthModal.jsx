@@ -44,6 +44,7 @@ function InputField({ label, hint, type, value, onChange, placeholder, autoCompl
 
 export default function AuthModal({ mode, onClose }) {
     const { t } = useTranslation();
+    // Initialize tab from mode — mode doesn't change while modal is open
     const [tab, setTab] = useState(mode);
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -53,11 +54,7 @@ export default function AuthModal({ mode, onClose }) {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    useEffect(() => { setTab(mode); }, [mode]);
-    useEffect(() => {
-        setError(''); setSuccess(''); setPassword(''); setConfirm('');
-    }, [tab]);
-
+    // Escape key closes modal
     const handleKey = useCallback((e) => {
         if (e.key === 'Escape') onClose();
     }, [onClose]);
@@ -66,6 +63,16 @@ export default function AuthModal({ mode, onClose }) {
         document.addEventListener('keydown', handleKey);
         return () => document.removeEventListener('keydown', handleKey);
     }, [handleKey]);
+
+    // Clear form fields when switching tabs — called explicitly by switchTab()
+    const clearForm = () => {
+        setError(''); setSuccess(''); setPassword(''); setConfirm('');
+    };
+
+    const switchTab = (newTab) => {
+        setTab(newTab);
+        clearForm();
+    };
 
     const validate = () => {
         if (!isValidUsername(username)) { setError(t('auth.errorUsernameFormat')); return false; }
@@ -134,7 +141,7 @@ export default function AuthModal({ mode, onClose }) {
                     {/* Tabs */}
                     <div className="flex border-b border-white/10">
                         <button
-                            onClick={() => setTab('register')}
+                            onClick={() => switchTab('register')}
                             className={`flex-1 py-3.5 font-cinzel text-xs tracking-widest uppercase transition-colors ${
                                 tab === 'register' ? 'text-x-gold border-b-2 border-x-gold' : 'text-gray-500 hover:text-gray-300'
                             }`}
@@ -144,7 +151,7 @@ export default function AuthModal({ mode, onClose }) {
                             </span>
                         </button>
                         <button
-                            onClick={() => setTab('login')}
+                            onClick={() => switchTab('login')}
                             className={`flex-1 py-3.5 font-cinzel text-xs tracking-widest uppercase transition-colors ${
                                 tab === 'login' ? 'text-x-gold border-b-2 border-x-gold' : 'text-gray-500 hover:text-gray-300'
                             }`}
@@ -215,7 +222,7 @@ export default function AuthModal({ mode, onClose }) {
                         <div className="flex flex-col items-center gap-1 text-xs text-gray-600">
                             <button
                                 type="button"
-                                onClick={() => setTab(tab === 'register' ? 'login' : 'register')}
+                                onClick={() => switchTab(tab === 'register' ? 'login' : 'register')}
                                 className="hover:text-gray-400 transition-colors"
                             >
                                 {tab === 'register' ? t('auth.switchToLogin') : t('auth.switchToRegister')}
