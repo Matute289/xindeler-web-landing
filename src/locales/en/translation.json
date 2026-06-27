@@ -6,7 +6,8 @@
     "aiWorld": "AI World",
     "roadmap": "Roadmap",
     "community": "Community",
-    "download": "Download"
+    "download": "Download",
+    "register": "Create account"
   },
   "hero": {
     "eyebrow": "Open Source MMORPG",
@@ -242,5 +243,71 @@
     "copyright": "© 2025 Xindeler Project — Open Source MMORPG",
     "forkedFrom": "Originally forked from",
     "license": "· Licensed under GPL-3.0"
+  },
+  "auth": {
+    "register": "Create account",
+    "login": "Sign in",
+    "registerTitle": "Create your account",
+    "loginTitle": "Sign in",
+    "username": "Username",
+    "usernamePlaceholder": "your_name",
+    "usernameHint": "3–32 characters. Letters, numbers, hyphen or underscore.",
+    "email": "Email",
+    "emailPlaceholder": "you@email.com",
+    "emailOptional": "Optional — needed to recover your password.",
+    "password": "Password",
+    "passwordPlaceholder": "At least 8 characters",
+    "confirmPassword": "Confirm password",
+    "confirmPasswordPlaceholder": "Repeat your password",
+    "registerBtn": "Create account",
+    "loggingIn": "Verifying…",
+    "registering": "Creating account…",
+    "switchToLogin": "Already have an account? Sign in",
+    "switchToRegister": "No account yet? Register",
+    "registerSuccess": "Account created! If you provided an email, check your inbox to verify it.",
+    "loginSuccess": "Signed in! Use the game client to connect.",
+    "forgotPassword": "Forgot your password?",
+    "errorPasswordMismatch": "Passwords do not match.",
+    "errorPasswordShort": "Password must be at least 8 characters.",
+    "errorUsernameFormat": "Username must be 3–32 characters (letters, numbers, - or _).",
+    "errorUserExists": "That username is already taken.",
+    "errorInvalidLogin": "Invalid username or password.",
+    "errorNetwork": "Network error. Check your connection and try again.",
+    "errorUnknown": "An unexpected error occurred. Please try again.",
+    "verifyEmail": {
+      "title": "Verifying your email",
+      "loading": "Verifying…",
+      "success": "Email verified! You can now sign in to the game with your username.",
+      "errorInvalid": "The link is invalid or has already been used.",
+      "errorNetwork": "Network error during verification. Please try again.",
+      "backHome": "Back to home"
+    },
+    "forgotPasswordPage": {
+      "title": "Recover your password",
+      "desc": "Enter your account email and we'll send you a link to reset your password.",
+      "emailLabel": "Your account email",
+      "submitBtn": "Send reset link",
+      "sending": "Sending…",
+      "success": "If an account with that email exists, you'll receive a reset link shortly. Check your inbox.",
+      "errorNetwork": "Network error. Please try again.",
+      "backHome": "Back to home",
+      "backLogin": "Back to sign in"
+    },
+    "resetPassword": {
+      "title": "Reset your password",
+      "desc": "Enter your new password.",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "submitBtn": "Change password",
+      "changing": "Changing…",
+      "success": "Password changed! You can now sign in to the game with your new password.",
+      "errorMismatch": "Passwords do not match.",
+      "errorShort": "Password must be at least 8 characters.",
+      "errorInvalidToken": "The link is invalid or has expired. Please request a new one.",
+      "errorNetwork": "Network error. Please try again.",
+      "noToken": "Invalid link. Please use the link from your email.",
+      "backHome": "Back to home",
+      "forgotAgain": "Request a new link"
+    }
   }
 }
