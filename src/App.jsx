@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import ScrollProgress from './components/ScrollProgress';
 import HeroSection from './components/HeroSection';
@@ -18,8 +20,13 @@ import GitHubStats from './components/GitHubStats';
 import EasterEgg from './components/EasterEgg';
 import AmbientSound from './components/AmbientSound';
 import Analytics from './components/Analytics';
+import AuthModal from './components/AuthModal';
+import VerifyEmailPage from './pages/VerifyEmailPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 
-export default function App() {
+function LandingHome() {
+  const [authModal, setAuthModal] = useState(null); // null | 'register' | 'login'
   return (
     <div className="min-h-screen bg-x-dark">
       <Analytics />
@@ -27,7 +34,7 @@ export default function App() {
       <EasterEgg />
       <AmbientSound />
       <ScrollProgress />
-      <Navbar />
+      <Navbar onOpenAuth={setAuthModal} />
       <main>
         <HeroSection />
         <FeaturesSection />
@@ -44,6 +51,18 @@ export default function App() {
         <DownloadSection />
       </main>
       <Footer />
+      {authModal && <AuthModal mode={authModal} onClose={() => setAuthModal(null)} />}
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<LandingHome />} />
+      <Route path="/verify-email" element={<VerifyEmailPage />} />
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/reset-password" element={<ResetPasswordPage />} />
+    </Routes>
   );
 }

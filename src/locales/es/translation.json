@@ -6,7 +6,8 @@
     "aiWorld": "IA en el Mundo",
     "roadmap": "Hoja de Ruta",
     "community": "Comunidad",
-    "download": "Descargar"
+    "download": "Descargar",
+    "register": "Crear cuenta"
   },
   "hero": {
     "eyebrow": "MMORPG de Código Abierto",
@@ -242,5 +243,71 @@
     "copyright": "© 2025 Proyecto Xindeler — MMORPG de Código Abierto",
     "forkedFrom": "Originalmente bifurcado de",
     "license": "· Licenciado bajo GPL-3.0"
+  },
+  "auth": {
+    "register": "Crear cuenta",
+    "login": "Iniciar sesión",
+    "registerTitle": "Crea tu cuenta",
+    "loginTitle": "Iniciar sesión",
+    "username": "Usuario",
+    "usernamePlaceholder": "tu_nombre",
+    "usernameHint": "3–32 caracteres. Letras, números, guion o guion bajo.",
+    "email": "Email",
+    "emailPlaceholder": "tu@email.com",
+    "emailOptional": "Opcional — para recuperar tu contraseña.",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Mínimo 8 caracteres",
+    "confirmPassword": "Confirmar contraseña",
+    "confirmPasswordPlaceholder": "Repetí la contraseña",
+    "registerBtn": "Crear cuenta",
+    "loggingIn": "Verificando…",
+    "registering": "Creando cuenta…",
+    "switchToLogin": "¿Ya tenés cuenta? Iniciá sesión",
+    "switchToRegister": "¿No tenés cuenta? Registrate",
+    "registerSuccess": "¡Cuenta creada! Si ingresaste un email, revisá tu bandeja para verificarla.",
+    "loginSuccess": "¡Sesión iniciada! Usá el cliente del juego para conectarte.",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "errorPasswordMismatch": "Las contraseñas no coinciden.",
+    "errorPasswordShort": "La contraseña debe tener al menos 8 caracteres.",
+    "errorUsernameFormat": "El usuario debe tener 3–32 caracteres (letras, números, - o _).",
+    "errorUserExists": "El nombre de usuario ya existe.",
+    "errorInvalidLogin": "Usuario o contraseña incorrectos.",
+    "errorNetwork": "Error de red. Revisá tu conexión e intentá de nuevo.",
+    "errorUnknown": "Ocurrió un error inesperado. Intentá de nuevo.",
+    "verifyEmail": {
+      "title": "Verificando tu email",
+      "loading": "Verificando…",
+      "success": "¡Email verificado! Ya podés iniciar sesión en el juego con tu usuario.",
+      "errorInvalid": "El link es inválido o ya fue usado.",
+      "errorNetwork": "Error de red al verificar. Intentá de nuevo.",
+      "backHome": "Volver al inicio"
+    },
+    "forgotPasswordPage": {
+      "title": "Recuperar contraseña",
+      "desc": "Ingresá el email de tu cuenta y te enviaremos un link para resetear tu contraseña.",
+      "emailLabel": "Email de tu cuenta",
+      "submitBtn": "Enviar link",
+      "sending": "Enviando…",
+      "success": "Si existe una cuenta con ese email, recibirás el link en breve. Revisá tu bandeja de entrada.",
+      "errorNetwork": "Error de red. Intentá de nuevo.",
+      "backHome": "Volver al inicio",
+      "backLogin": "Volver al login"
+    },
+    "resetPassword": {
+      "title": "Resetear contraseña",
+      "desc": "Ingresá tu nueva contraseña.",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "submitBtn": "Cambiar contraseña",
+      "changing": "Cambiando…",
+      "success": "¡Contraseña cambiada! Ya podés iniciar sesión en el juego con tu nueva contraseña.",
+      "errorMismatch": "Las contraseñas no coinciden.",
+      "errorShort": "La contraseña debe tener al menos 8 caracteres.",
+      "errorInvalidToken": "El link es inválido o expiró. Solicitá uno nuevo.",
+      "errorNetwork": "Error de red. Intentá de nuevo.",
+      "noToken": "Link inválido. Por favor usá el link del email.",
+      "backHome": "Volver al inicio",
+      "forgotAgain": "Solicitar nuevo link"
+    }
   }
 }
