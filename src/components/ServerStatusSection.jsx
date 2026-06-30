@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Server, RefreshCw } from 'lucide-react';
 
-const API     = 'https://xindeler.greenmountain.dev/api/status';
+const API     = 'https://xindeler.com/api/status';
 const POLL_MS = 60_000;
 
 function formatChecked(iso) {

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-const CDN = 'https://cdn.xindeler.greenmountain.dev/images/common/2026-06-12';
+const CDN = 'https://cdn.xindeler.com/images/common/2026-06-12';
 
 const SCENE_DEFS = [
   { key: 'mistyMountains', icon: '⛰️', span: 'col-span-2 row-span-2', img: `${CDN}/misty-mountains-img.webp`,    gradient: 'from-slate-700 via-slate-600 to-blue-900'      },

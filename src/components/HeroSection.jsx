@@ -60,8 +60,8 @@ export default function HeroSection() {
 
   const BUTTONS = [
     { tKey: 'hero.btnDownload', icon: Download,   scroll: '#download',                                   primary: true  },
-    { tKey: 'hero.btnDocs',     icon: BookOpen,   href: 'https://docs.xindeler.greenmountain.dev',       primary: false },
-    { tKey: 'hero.btnWiki',     icon: Globe,      href: 'https://wiki.xindeler.greenmountain.dev',       primary: false },
+    { tKey: 'hero.btnDocs',     icon: BookOpen,   href: 'https://docs.xindeler.com',       primary: false },
+    { tKey: 'hero.btnWiki',     icon: Globe,      href: 'https://wiki.xindeler.com',       primary: false },
     { tKey: 'hero.btnGitHub',   icon: GitHubIcon, href: 'https://github.com/Matute289/xindeler',         primary: false },
   ];
 
@@ -69,7 +69,7 @@ export default function HeroSection() {
     <section id="home" className="relative h-screen min-h-[600px] overflow-hidden flex items-center justify-center">
       <motion.div className="absolute inset-0" style={{ y: bgY }}>
         <img
-          src="https://cdn.xindeler.greenmountain.dev/images/common/2026-06-12/front-img.webp"
+          src="https://cdn.xindeler.com/images/common/2026-06-12/front-img.webp"
           alt="Xindeler world"
           className="w-full h-full object-cover scale-110"
           loading="eager"
