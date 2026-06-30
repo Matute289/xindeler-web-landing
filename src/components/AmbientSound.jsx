@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Volume2, VolumeX } from 'lucide-react';
 
-const CDN          = 'https://cdn.xindeler.greenmountain.dev/sounds/common/2026-06-13';
+const CDN          = 'https://cdn.xindeler.com/sounds/common/2026-06-13';
 const MASTER_VOL   = 0.15;
 const FADE_MS      = 2000;   // play/pause fade
 const LOOP_HALF_MS = 1250;   // same-track: 1.25s fade out + 1.25s fade in = 2.5s total

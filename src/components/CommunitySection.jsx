@@ -25,7 +25,7 @@ const LINK_DEFS = [
   {
     key: 'wiki',
     icon: BookOpen,
-    href: 'https://wiki.xindeler.greenmountain.dev',
+    href: 'https://wiki.xindeler.com',
     color: 'text-emerald-400',
     bg: 'from-emerald-900/40 to-emerald-950/20',
     border: 'border-emerald-700/30',
@@ -34,7 +34,7 @@ const LINK_DEFS = [
   {
     key: 'docs',
     icon: FileText,
-    href: 'https://docs.xindeler.greenmountain.dev',
+    href: 'https://docs.xindeler.com',
     color: 'text-blue-400',
     bg: 'from-blue-900/40 to-blue-950/20',
     border: 'border-blue-700/30',

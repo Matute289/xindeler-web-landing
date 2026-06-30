@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { CheckCircle, XCircle, Loader2 } from 'lucide-react';
 
-const AUTH_API = 'https://auth.xindeler.greenmountain.dev';
+const AUTH_API = 'https://auth.xindeler.com';
 
 export default function VerifyEmailPage() {
     const { t } = useTranslation();

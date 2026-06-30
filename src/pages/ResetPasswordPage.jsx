@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Eye, EyeOff, CheckCircle } from 'lucide-react';
 import { netPrehash } from '../lib/netPrehash';
 
-const AUTH_API = 'https://auth.xindeler.greenmountain.dev';
+const AUTH_API = 'https://auth.xindeler.com';
 
 function PasswordInput({ label, value, onChange, placeholder, autoComplete }) {
     const [show, setShow] = useState(false);

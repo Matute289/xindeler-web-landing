@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, CheckCircle2, AlertCircle, Loader2, Users } from 'lucide-react';
 
-const API       = 'https://xindeler.greenmountain.dev/api/waitlist';
-const COUNT_API = 'https://xindeler.greenmountain.dev/api/waitlist/count';
+const API       = 'https://xindeler.com/api/waitlist';
+const COUNT_API = 'https://xindeler.com/api/waitlist/count';
 const MIN_COUNT = 5; // don't show badge until we have real traction
 
 const PLATFORMS = [

@@ -8,8 +8,8 @@ const OS_DEFS = [
     nameKey: 'download.windows',
     subKey: 'download.windowsSub',
     archs: [
-      { arch: 'x86_64', href: 'https://downloads.xindeler.greenmountain.dev' },
-      { arch: 'ARM64',  href: 'https://downloads.xindeler.greenmountain.dev' },
+      { arch: 'x86_64', href: 'https://downloads.xindeler.com' },
+      { arch: 'ARM64',  href: 'https://downloads.xindeler.com' },
     ],
   },
   {
@@ -17,8 +17,8 @@ const OS_DEFS = [
     nameKey: 'download.linux',
     subKey: 'download.linuxSub',
     archs: [
-      { arch: 'x86_64', href: 'https://downloads.xindeler.greenmountain.dev' },
-      { arch: 'ARM64',  href: 'https://downloads.xindeler.greenmountain.dev' },
+      { arch: 'x86_64', href: 'https://downloads.xindeler.com' },
+      { arch: 'ARM64',  href: 'https://downloads.xindeler.com' },
     ],
   },
   {
@@ -26,8 +26,8 @@ const OS_DEFS = [
     nameKey: 'download.macos',
     subKey: 'download.macosSub',
     archs: [
-      { arch: 'x86_64',    href: 'https://downloads.xindeler.greenmountain.dev' },
-      { arch: 'ARM64 (M)', href: 'https://downloads.xindeler.greenmountain.dev' },
+      { arch: 'x86_64',    href: 'https://downloads.xindeler.com' },
+      { arch: 'ARM64 (M)', href: 'https://downloads.xindeler.com' },
     ],
   },
 ];

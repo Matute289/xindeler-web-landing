@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { netPrehash } from '../lib/netPrehash';
 import { Link } from 'react-router-dom';
 
-const AUTH_API = 'https://auth.xindeler.greenmountain.dev';
+const AUTH_API = 'https://auth.xindeler.com';
 
 function isValidUsername(u) {
     return /^[a-zA-Z0-9_-]{3,32}$/.test(u);
