@@ -20,6 +20,8 @@ const SOURCES = [
   { value: 'other',   label: 'Otro'           },
 ];
 
+const BANNER = 'https://cdn.xindeler.com/images/common/2026-06-30/banner-lista-espera.webp';
+
 function ToggleGroup({ options, value, onChange }) {
   return (
     <div className="flex flex-wrap gap-2">
@@ -103,9 +105,14 @@ export default function WaitlistSection() {
 
   return (
     <section id="waitlist" className="py-28 bg-x-dark relative overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <img src={BANNER} alt="" aria-hidden="true"
+             className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-x-dark/85" />
+      </div>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_100%,_rgba(212,160,23,0.06)_0%,_transparent_65%)] pointer-events-none" />
 
-      <div className="container mx-auto px-4 max-w-xl">
+      <div className="container mx-auto px-4 max-w-xl relative z-10">
         <motion.div
           className="text-center mb-14"
           initial={{ opacity: 0, y: 24 }}
