@@ -274,6 +274,22 @@
     "errorInvalidLogin": "Usuario o contraseña incorrectos.",
     "errorNetwork": "Error de red. Revisá tu conexión e intentá de nuevo.",
     "errorUnknown": "Ocurrió un error inesperado. Intentá de nuevo.",
+    "legacyModal": {
+      "title": "Confirmá tu email",
+      "desc": "Esta cuenta es anterior a la verificación de email. Agregá y verificá un email para seguir iniciando sesión.",
+      "deadlinePrefix": "Tenés tiempo hasta:",
+      "emailSubmitBtn": "Guardar email",
+      "emailSubmitting": "Guardando…",
+      "emailSuccess": "¡Email guardado! Revisá tu bandeja para el link de verificación.",
+      "errorEmailRequired": "Ingresá un email.",
+      "resendBtn": "Reenviar email de verificación",
+      "resendSubmitting": "Enviando…",
+      "resendSuccess": "Email de verificación reenviado. Revisá tu bandeja de entrada.",
+      "errorInvalidToken": "Esta sesión expiró. Por favor, iniciá sesión de nuevo.",
+      "errorAccountExpired": "La ventana de verificación de esta cuenta cerró. Por favor, contactá a soporte.",
+      "errorInvalidEmail": "Ese email no se puede usar. Probá con otro.",
+      "back": "Volver al login"
+    },
     "verifyEmail": {
       "title": "Verificando tu email",
       "loading": "Verificando…",
