@@ -274,6 +274,22 @@
     "errorInvalidLogin": "Invalid username or password.",
     "errorNetwork": "Network error. Check your connection and try again.",
     "errorUnknown": "An unexpected error occurred. Please try again.",
+    "legacyModal": {
+      "title": "Confirm your email",
+      "desc": "This account predates email verification. Add and verify an email address to keep signing in.",
+      "deadlinePrefix": "You have until:",
+      "emailSubmitBtn": "Save email",
+      "emailSubmitting": "Saving…",
+      "emailSuccess": "Email saved! Check your inbox for a verification link.",
+      "errorEmailRequired": "Enter an email address.",
+      "resendBtn": "Resend verification email",
+      "resendSubmitting": "Sending…",
+      "resendSuccess": "Verification email sent. Check your inbox.",
+      "errorInvalidToken": "This session has expired. Please sign in again.",
+      "errorAccountExpired": "The verification window for this account has closed. Please contact support.",
+      "errorInvalidEmail": "That email address can't be used. Try a different one.",
+      "back": "Back to sign in"
+    },
     "verifyEmail": {
       "title": "Verifying your email",
       "loading": "Verifying…",
