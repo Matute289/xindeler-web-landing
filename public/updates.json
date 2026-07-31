@@ -3,7 +3,7 @@
     "id": "wiki-online",
     "date": "2026-06-26",
     "title": "Wiki de Xindeler disponible",
-    "summary": "El wiki de Xindeler ya está online en wiki.xindeler.greenmountain.dev con lore, guías y conocimiento de la comunidad.",
+    "summary": "El wiki de Xindeler ya está online en wiki.xindeler.com con lore, guías y conocimiento de la comunidad.",
     "type": "added",
     "category": "infraestructura"
   },
@@ -11,7 +11,7 @@
     "id": "docs-portal",
     "date": "2026-06-26",
     "title": "Portal de documentación online",
-    "summary": "El portal de documentación técnica de Xindeler ya está disponible en docs.xindeler.greenmountain.dev, con guías para jugadores, contribuidores y operadores de servidores.",
+    "summary": "El portal de documentación técnica de Xindeler ya está disponible en docs.xindeler.com, con guías para jugadores, contribuidores y operadores de servidores.",
     "type": "added",
     "category": "infraestructura"
   },
