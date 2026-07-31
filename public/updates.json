@@ -24,6 +24,22 @@
     "category": "gameplay"
   },
   {
+    "id": "inventario-mas-claro",
+    "date": "2026-07-25",
+    "title": "Tu inventario, más claro",
+    "summary": "El inventario ahora te muestra con más claridad qué necesitás para poder equipar cada objeto, sin adivinar por qué algo no se puede usar todavía.",
+    "type": "updated",
+    "category": "gameplay"
+  },
+  {
+    "id": "ajustes-internos",
+    "date": "2026-07-24",
+    "title": "Ajustes bajo el capó",
+    "summary": "Se pulieron herramientas internas y pequeños detalles de la fauna del mundo, sumando prolijidad silenciosa al desarrollo diario de Xindeler.",
+    "type": "updated",
+    "category": "infraestructura"
+  },
+  {
     "id": "wiki-online",
     "date": "2026-06-26",
     "title": "Wiki de Xindeler disponible",
