@@ -1,0 +1,13 @@
+{
+  "phases": [
+    { "number": 1, "status": "completed",   "doneItems": [0, 1, 2, 3], "lock": "manual" },
+    { "number": 2, "status": "in-progress", "doneItems": [0, 1],       "lock": "manual" },
+    { "number": 3, "status": "in-progress", "doneItems": [],           "lock": "auto"   },
+    { "number": 4, "status": "in-progress", "doneItems": [],           "lock": "auto"   },
+    { "number": 5, "status": "upcoming",    "doneItems": [],           "lock": "auto"   },
+    { "number": 6, "status": "upcoming",    "doneItems": [],           "lock": "auto"   },
+    { "number": 7, "status": "upcoming",    "doneItems": [],           "lock": "auto"   },
+    { "number": 8, "status": "upcoming",    "doneItems": [],           "lock": "manual" },
+    { "number": 9, "status": "upcoming",    "doneItems": [],           "lock": "manual" }
+  ]
+}

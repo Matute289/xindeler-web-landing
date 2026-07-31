@@ -1,18 +1,20 @@
 import { motion } from 'framer-motion';
 import { Check, Zap, Clock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import roadmapData from '../data/roadmap.json';
 
-const PHASES = [
-  { number: 1, status: 'completed'                },
-  { number: 2, status: 'in-progress', doneCount: 2 },
-  { number: 3, status: 'upcoming'                 },
-  { number: 4, status: 'in-progress' },
-  { number: 5, status: 'upcoming'    },
-  { number: 6, status: 'upcoming'    },
-  { number: 7, status: 'upcoming'    },
-  { number: 8, status: 'upcoming'    },
-  { number: 9, status: 'upcoming'    },
-];
+const VALID_STATUS = new Set(['completed', 'in-progress', 'upcoming']);
+const ITEMS_PER_PHASE = 4;
+
+const PHASES = Array.from({ length: 9 }, (_, i) => {
+  const raw = roadmapData?.phases?.find((p) => p.number === i + 1) ?? {};
+  const status = VALID_STATUS.has(raw.status) ? raw.status : 'upcoming';
+  const listed = Array.isArray(raw.doneItems) ? raw.doneItems : [];
+  const doneItems = new Set(
+    listed.filter((n) => Number.isInteger(n) && n >= 0 && n < ITEMS_PER_PHASE)
+  );
+  return { number: i + 1, status, doneItems };
+});
 
 const STATUS_CONFIG = {
   completed: {
@@ -83,7 +85,7 @@ export default function Roadmap() {
               const StatusIcon = cfg.icon;
               const isRight = i % 2 === 0;
               const items = t(`roadmap.phase${phase.number}.items`, { returnObjects: true });
-              const doneCount = phase.doneCount ?? 0;
+              const allDone = phase.status === 'completed';
 
               return (
                 <motion.div
@@ -117,7 +119,7 @@ export default function Roadmap() {
 
                       <ul className="grid grid-cols-2 gap-1">
                         {Array.isArray(items) && items.map((item, idx) => {
-                          const done = idx < doneCount;
+                          const done = allDone || phase.doneItems.has(idx);
                           return (
                             <li key={item} className={`flex items-center gap-1.5 text-xs ${done ? 'text-emerald-400' : 'text-gray-500'}`}>
                               <span className={`w-1 h-1 rounded-full flex-shrink-0 ${done ? 'bg-emerald-400' : cfg.dotColor}`} />
