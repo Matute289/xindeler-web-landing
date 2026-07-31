@@ -1,10 +1,10 @@
 {
   "schemaVersion": 3,
-  "lastRun": "2026-07-31T16:25:58Z",
+  "lastRun": "2026-07-31T18:56:00Z",
   "lastProcessedPR": 72,
   "publishedNH": {
-    "NH-2":  { "gate": 1, "lastPR": 2,  "date": "2026-07-24", "novedadWritten": false },
-    "NH-19": { "gate": 1, "lastPR": 5,  "date": "2026-07-25", "novedadWritten": false },
+    "NH-2":  { "gate": 1, "lastPR": 2,  "date": "2026-07-24", "novedadWritten": true, "updateId": "ajustes-internos" },
+    "NH-19": { "gate": 1, "lastPR": 5,  "date": "2026-07-25", "novedadWritten": true, "updateId": "inventario-mas-claro" },
     "NH-62": { "gate": 1, "lastPR": 53, "date": "2026-07-30", "novedadWritten": true, "updateId": "multiclase-disponible" },
     "NH-38": { "gate": 2, "lastPR": 72, "date": "2026-07-31", "novedadWritten": true, "updateId": "magia-nuevas-formas" },
     "NH-39": { "gate": 2, "lastPR": 36, "date": "2026-07-30", "novedadWritten": true, "updateId": "magia-nuevas-formas" },
