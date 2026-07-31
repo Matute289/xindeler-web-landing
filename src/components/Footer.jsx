@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import GitHubIcon from './GitHubIcon';
 
 const LINKS_COMMUNITY = [
-  { key: 'github',  href: 'https://github.com/Matute289/xindeler',          icon: GitHubIcon    },
+  { key: 'github',  href: 'https://github.com/Matute289/xindeler-new-horizon', icon: GitHubIcon },
   { key: 'discord', href: '#',                                               icon: MessageCircle },
   { key: 'wiki',    href: 'https://wiki.xindeler.com',         icon: BookOpen      },
 ];
@@ -11,7 +11,7 @@ const LINKS_COMMUNITY = [
 const LINKS_RESOURCES = [
   { key: 'docs',      href: 'https://docs.xindeler.com',            icon: FileText },
   { key: 'downloads', href: 'https://downloads.xindeler.com',       icon: Download },
-  { key: 'license',   href: 'https://github.com/Matute289/xindeler/blob/main/LICENSE', icon: FileText, labelOverride: 'License (GPL)' },
+  { key: 'license',   href: 'https://github.com/Matute289/xindeler-new-horizon/blob/development/LICENSE', icon: FileText, labelOverride: 'License (GPL)' },
 ];
 
 export default function Footer() {

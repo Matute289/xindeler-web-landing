@@ -62,7 +62,7 @@ export default function HeroSection() {
     { tKey: 'hero.btnDownload', icon: Download,   scroll: '#download',                                   primary: true  },
     { tKey: 'hero.btnDocs',     icon: BookOpen,   href: 'https://docs.xindeler.com',       primary: false },
     { tKey: 'hero.btnWiki',     icon: Globe,      href: 'https://wiki.xindeler.com',       primary: false },
-    { tKey: 'hero.btnGitHub',   icon: GitHubIcon, href: 'https://github.com/Matute289/xindeler',         primary: false },
+    { tKey: 'hero.btnGitHub',   icon: GitHubIcon, href: 'https://github.com/Matute289/xindeler-new-horizon', primary: false },
   ];
 
   return (

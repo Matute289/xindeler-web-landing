@@ -7,7 +7,7 @@ const LINK_DEFS = [
   {
     key: 'github',
     icon: GitHubIcon,
-    href: 'https://github.com/Matute289/xindeler',
+    href: 'https://github.com/Matute289/xindeler-new-horizon',
     color: 'text-white',
     bg: 'from-gray-800/50 to-gray-900/30',
     border: 'border-gray-600/30',
