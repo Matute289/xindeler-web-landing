@@ -1,5 +1,29 @@
 [
   {
+    "id": "magia-nuevas-formas",
+    "date": "2026-07-31",
+    "title": "Nuevos hechizos toman forma",
+    "summary": "El arte arcano de Xindeler suma nuevas formas de percibir el entorno, dominar voluntades y moldear el mundo a tu alrededor. Todavía queda camino por recorrer.",
+    "type": "updated",
+    "category": "gameplay"
+  },
+  {
+    "id": "multiclase-disponible",
+    "date": "2026-07-30",
+    "title": "Combiná dos clases en una",
+    "summary": "Ya podés combinar dos clases en un mismo personaje y forjar tu propio estilo de juego, sin abandonar el camino que ya elegiste.",
+    "type": "added",
+    "category": "gameplay"
+  },
+  {
+    "id": "bestiario-estructura",
+    "date": "2026-07-30",
+    "title": "El bestiario gana estructura",
+    "summary": "Cada criatura de Xindeler empieza a clasificarse según su verdadera naturaleza, sentando las bases para interacciones de combate más coherentes y matizadas en el mundo.",
+    "type": "added",
+    "category": "gameplay"
+  },
+  {
     "id": "wiki-online",
     "date": "2026-06-26",
     "title": "Wiki de Xindeler disponible",
