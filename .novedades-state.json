@@ -1,16 +1,16 @@
 {
-  "schemaVersion": 2,
-  "lastRun": "2026-07-31T14:40:46Z",
-  "lastProcessedPR": 68,
+  "schemaVersion": 3,
+  "lastRun": "2026-07-31T16:25:58Z",
+  "lastProcessedPR": 72,
   "publishedNH": {
-    "NH-2":  { "gate": 1, "lastPR": 2,  "date": "2026-07-24" },
-    "NH-19": { "gate": 1, "lastPR": 5,  "date": "2026-07-25" },
-    "NH-62": { "gate": 1, "lastPR": 53, "date": "2026-07-30" },
-    "NH-38": { "gate": 2, "lastPR": 68, "date": "2026-07-31" },
-    "NH-39": { "gate": 2, "lastPR": 36, "date": "2026-07-30" },
-    "NH-40": { "gate": 2, "lastPR": 32, "date": "2026-07-30" },
-    "NH-42": { "gate": 2, "lastPR": 38, "date": "2026-07-30" },
-    "NH-53": { "gate": 2, "lastPR": 31, "date": "2026-07-30" }
+    "NH-2":  { "gate": 1, "lastPR": 2,  "date": "2026-07-24", "novedadWritten": false },
+    "NH-19": { "gate": 1, "lastPR": 5,  "date": "2026-07-25", "novedadWritten": false },
+    "NH-62": { "gate": 1, "lastPR": 53, "date": "2026-07-30", "novedadWritten": true, "updateId": "multiclase-disponible" },
+    "NH-38": { "gate": 2, "lastPR": 72, "date": "2026-07-31", "novedadWritten": true, "updateId": "magia-nuevas-formas" },
+    "NH-39": { "gate": 2, "lastPR": 36, "date": "2026-07-30", "novedadWritten": true, "updateId": "magia-nuevas-formas" },
+    "NH-40": { "gate": 2, "lastPR": 32, "date": "2026-07-30", "novedadWritten": true, "updateId": "magia-nuevas-formas" },
+    "NH-42": { "gate": 2, "lastPR": 38, "date": "2026-07-30", "novedadWritten": true, "updateId": "magia-nuevas-formas" },
+    "NH-53": { "gate": 2, "lastPR": 31, "date": "2026-07-30", "novedadWritten": true, "updateId": "bestiario-estructura" }
   },
   "skippedNH": {}
 }
