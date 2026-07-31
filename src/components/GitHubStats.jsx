@@ -4,7 +4,7 @@ import { Star, GitFork, Users, X, CheckCircle2, AlertCircle, Loader2 } from 'luc
 import { useTranslation } from 'react-i18next';
 import GitHubIcon from './GitHubIcon';
 
-const REPO            = 'Matute289/xindeler';
+const REPO            = 'Matute289/xindeler-new-horizon';
 const MAX_AVATARS     = 20;
 const CONTRIBUTE_API  = 'https://xindeler.com/api/contribute';
 
