@@ -21,5 +21,11 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      # Guards the netPrehash golden vector. If it drifts from the Rust
+      # implementation every login breaks at once, and the server reports it as
+      # invalid credentials, which is indistinguishable from a wrong password.
+      - name: Test
+        run: npm test
+
       - name: Build
         run: npm run build
