@@ -22,25 +22,67 @@
     "eyebrow": "Core Gameplay",
     "title": "Features",
     "subtitle": "Adventure awaits across every facet of Xindeler's ever-growing world.",
-    "exploration": { "title": "Exploration", "desc": "Discover vast landscapes, ancient ruins and hidden secrets across an ever-expanding world." },
-    "combat":      { "title": "Combat",      "desc": "Master melee, ranged weapons and powerful abilities in fluid real-time battle." },
-    "crafting":    { "title": "Crafting",    "desc": "Gather resources and create equipment, tools and consumables to survive and thrive." },
-    "magic":       { "title": "Magic",       "desc": "Harness arcane forces, master spells and shape the battlefield with mystical powers." },
-    "livingWorld": { "title": "Living World","desc": "Experience a world that evolves through player actions, economies and political changes." },
-    "aiNpcs":      { "title": "AI NPCs",     "desc": "Interact with intelligent NPCs capable of dynamic conversations, opinions and behavior." }
+    "exploration": {
+      "title": "Exploration",
+      "desc": "Discover vast landscapes, ancient ruins and hidden secrets across an ever-expanding world."
+    },
+    "combat": {
+      "title": "Combat",
+      "desc": "Master melee, ranged weapons and powerful abilities in fluid real-time battle."
+    },
+    "crafting": {
+      "title": "Crafting",
+      "desc": "Gather resources and create equipment, tools and consumables to survive and thrive."
+    },
+    "magic": {
+      "title": "Magic",
+      "desc": "Harness arcane forces, master spells and shape the battlefield with mystical powers."
+    },
+    "livingWorld": {
+      "title": "Living World",
+      "desc": "Experience a world that evolves through player actions, economies and political changes."
+    },
+    "aiNpcs": {
+      "title": "AI NPCs",
+      "desc": "Interact with intelligent NPCs capable of dynamic conversations, opinions and behavior."
+    }
   },
   "showcase": {
     "eyebrow": "Explore the Realm",
     "title": "World Showcase",
     "subtitle": "A living world of breathtaking landscapes, ancient ruins and hidden wonders. Click any scene to explore.",
-    "mistyMountains": { "name": "Misty Mountains",       "desc": "Snow-capped peaks stretch to the horizon" },
-    "ancientForest":  { "name": "Ancient Forest",         "desc": "Primeval woodlands shrouded in mist" },
-    "willowdale":     { "name": "Village of Willowdale",  "desc": "A peaceful trading settlement at dusk" },
-    "stonehaven":     { "name": "Stonehaven Castle",      "desc": "Ancient seat of power and intrigue" },
-    "crystalRiver":   { "name": "Crystal River",          "desc": "Life-giving waters through lush valleys" },
-    "darkfire":       { "name": "Darkfire Dungeon",       "desc": "Ancient evil stirs in the deep places" },
-    "arcane":         { "name": "Arcane Sanctum",         "desc": "Source of all magical energy in the realm" },
-    "guild":          { "name": "Adventurers' Guild",     "desc": "Where heroes gather and legends are born" }
+    "mistyMountains": {
+      "name": "Misty Mountains",
+      "desc": "Snow-capped peaks stretch to the horizon"
+    },
+    "ancientForest": {
+      "name": "Ancient Forest",
+      "desc": "Primeval woodlands shrouded in mist"
+    },
+    "willowdale": {
+      "name": "Village of Willowdale",
+      "desc": "A peaceful trading settlement at dusk"
+    },
+    "stonehaven": {
+      "name": "Stonehaven Castle",
+      "desc": "Ancient seat of power and intrigue"
+    },
+    "crystalRiver": {
+      "name": "Crystal River",
+      "desc": "Life-giving waters through lush valleys"
+    },
+    "darkfire": {
+      "name": "Darkfire Dungeon",
+      "desc": "Ancient evil stirs in the deep places"
+    },
+    "arcane": {
+      "name": "Arcane Sanctum",
+      "desc": "Source of all magical energy in the realm"
+    },
+    "guild": {
+      "name": "Adventurers' Guild",
+      "desc": "Where heroes gather and legends are born"
+    }
   },
   "vision": {
     "eyebrow": "Long-term Vision",
@@ -48,13 +90,34 @@
     "titleHighlight": "We Are Building",
     "desc1": "Xindeler is more than a game — it is a persistent world where every player leaves a mark. We are building the foundations of a universe that breathes, reacts, and evolves through collective action.",
     "desc2": "Our goal is to create a space where emergent stories replace scripted quests, where economies have weight, and where AI-powered inhabitants make every corner of the world feel alive.",
-    "persistentWorld":    { "title": "Persistent World",        "desc": "A living world that endures across sessions — your actions shape history." },
-    "dynamicEconomy":     { "title": "Dynamic Economy",         "desc": "Player-driven markets where supply, demand and scarcity drive real trade." },
-    "playerCommunities":  { "title": "Player Communities",      "desc": "Guilds, alliances and factions that form the backbone of civilization." },
-    "aiStorytelling":     { "title": "AI-driven Storytelling",  "desc": "Emergent narratives woven from player choices and NPC motivations." },
-    "emergentGameplay":   { "title": "Emergent Gameplay",       "desc": "Unexpected stories arise from the interplay of systems and inhabitants." },
-    "magicSystem":        { "title": "Magic System",            "desc": "Deep, customizable arcane arts with schools of magic and spell crafting." },
-    "factionWarfare":     { "title": "Faction Warfare",         "desc": "Dynamic political landscape where power shifts through conflict and diplomacy." }
+    "persistentWorld": {
+      "title": "Persistent World",
+      "desc": "A living world that endures across sessions — your actions shape history."
+    },
+    "dynamicEconomy": {
+      "title": "Dynamic Economy",
+      "desc": "Player-driven markets where supply, demand and scarcity drive real trade."
+    },
+    "playerCommunities": {
+      "title": "Player Communities",
+      "desc": "Guilds, alliances and factions that form the backbone of civilization."
+    },
+    "aiStorytelling": {
+      "title": "AI-driven Storytelling",
+      "desc": "Emergent narratives woven from player choices and NPC motivations."
+    },
+    "emergentGameplay": {
+      "title": "Emergent Gameplay",
+      "desc": "Unexpected stories arise from the interplay of systems and inhabitants."
+    },
+    "magicSystem": {
+      "title": "Magic System",
+      "desc": "Deep, customizable arcane arts with schools of magic and spell crafting."
+    },
+    "factionWarfare": {
+      "title": "Faction Warfare",
+      "desc": "Dynamic political landscape where power shifts through conflict and diplomacy."
+    }
   },
   "aiWorld": {
     "badge": "Flagship Feature",
@@ -62,12 +125,30 @@
     "titleHighlight": "Powered by AI",
     "subtitle": "The people of Xindeler are more than scripted NPCs. They think, remember, form opinions and react to the world around them.",
     "disclaimer": "AI NPC features are part of our Phase 7 roadmap. We are building the foundation to make every inhabitant of Xindeler feel truly alive.",
-    "dynamicConversations": { "title": "Dynamic Conversations", "desc": "NPCs engage in meaningful dialogue rather than repeating predefined lines." },
-    "persistentMemory":     { "title": "Persistent Memory",     "desc": "Characters remember events, relationships and player interactions over time." },
-    "dynamicQuests":        { "title": "Dynamic Quests",        "desc": "NPCs generate context-sensitive quests based on their needs and circumstances." },
-    "socialRelationships":  { "title": "Social Relationships",  "desc": "NPCs maintain friendships, rivalries, families and complex social bonds." },
-    "livingSettlements":    { "title": "Living Settlements",    "desc": "Villages and cities evolve according to events, economy and player influence." },
-    "emergentStories":      { "title": "Emergent Stories",      "desc": "Unique stories arise naturally from interactions between players, NPCs and the world." },
+    "dynamicConversations": {
+      "title": "Dynamic Conversations",
+      "desc": "NPCs engage in meaningful dialogue rather than repeating predefined lines."
+    },
+    "persistentMemory": {
+      "title": "Persistent Memory",
+      "desc": "Characters remember events, relationships and player interactions over time."
+    },
+    "dynamicQuests": {
+      "title": "Dynamic Quests",
+      "desc": "NPCs generate context-sensitive quests based on their needs and circumstances."
+    },
+    "socialRelationships": {
+      "title": "Social Relationships",
+      "desc": "NPCs maintain friendships, rivalries, families and complex social bonds."
+    },
+    "livingSettlements": {
+      "title": "Living Settlements",
+      "desc": "Villages and cities evolve according to events, economy and player influence."
+    },
+    "emergentStories": {
+      "title": "Emergent Stories",
+      "desc": "Unique stories arise naturally from interactions between players, NPCs and the world."
+    },
     "npc": {
       "role": "Village Herbalist",
       "location": "Willowdale",
@@ -113,86 +194,151 @@
     "phase1": {
       "title": "Foundation & Web Infrastructure",
       "desc": "Establishment of Xindeler's identity, web server infrastructure, CI/CD pipeline and online presence.",
-      "items": ["Landing page", "Web CI/CD", "Brand identity", "Domain & CDN"]
+      "items": [
+        "Landing page",
+        "Web CI/CD",
+        "Brand identity",
+        "Domain & CDN"
+      ]
     },
     "phase2": {
       "title": "Docs, Wiki & Authentication",
       "desc": "Technical documentation portal, game wiki and authentication service for the game client.",
-      "items": ["Documentation portal", "Wiki system", "Authentication service", "Auth integration"]
+      "items": [
+        "Documentation portal",
+        "Wiki system",
+        "Authentication service",
+        "Auth integration"
+      ]
     },
     "phase3": {
       "title": "Engine & Game CI/CD",
       "desc": "Engine improvements, build automation and release pipeline for client and server.",
-      "items": ["Engine improvements", "Client CI/CD", "Server CI/CD", "Release pipeline"]
+      "items": [
+        "Engine improvements",
+        "Client CI/CD",
+        "Server CI/CD",
+        "Release pipeline"
+      ]
     },
     "phase4": {
       "title": "Magic System",
       "desc": "A deep magic framework with magical sources, spell schools and arcane progression.",
-      "items": ["Spell framework", "Schools of magic", "Spell crafting UI", "Visual effect system"]
+      "items": [
+        "Spell framework",
+        "Schools of magic",
+        "Spell crafting UI",
+        "Visual effect system"
+      ]
     },
     "phase5": {
       "title": "Item System",
       "desc": "Loot, advanced crafting and inventory — the foundation of the game's economy and progression.",
-      "items": ["Items & loot tables", "Advanced crafting", "Inventory & equipment", "Resource economy"]
+      "items": [
+        "Items & loot tables",
+        "Advanced crafting",
+        "Inventory & equipment",
+        "Resource economy"
+      ]
     },
     "phase6": {
       "title": "World AI Framework",
       "desc": "ORACLE: the autonomous Game Master that generates events, emergent narrative and controls the global world state.",
-      "items": ["World AI engine", "Dynamic events", "Emergent narrative", "Global world state"]
+      "items": [
+        "World AI engine",
+        "Dynamic events",
+        "Emergent narrative",
+        "Global world state"
+      ]
     },
     "phase7": {
       "title": "AI NPC Framework",
       "desc": "AURORA: NPCs with persistent memory, social relationships, dynamic economy and contextual behavior.",
-      "items": ["Memory system", "Dialogue engine", "Relationship graph", "Social simulation"]
+      "items": [
+        "Memory system",
+        "Dialogue engine",
+        "Relationship graph",
+        "Social simulation"
+      ]
     },
     "phase8": {
       "title": "Dynamic Quests",
       "desc": "Procedural quest generation driven by world state and NPC needs.",
-      "items": ["Quest generator", "Context engine", "Reward balancer", "Story threading"]
+      "items": [
+        "Quest generator",
+        "Context engine",
+        "Reward balancer",
+        "Story threading"
+      ]
     },
     "phase9": {
       "title": "Persistent MMORPG World",
       "desc": "Launch of the persistent online world with full multiplayer, economy, factions and a living, evolving universe.",
-      "items": ["Persistent servers", "Player economy", "Faction system", "World events"]
+      "items": [
+        "Persistent servers",
+        "Player economy",
+        "Faction system",
+        "World events"
+      ]
     }
   },
   "githubStats": {
-    "openSource":   "Open Source on GitHub",
-    "title":        "Built by the Community",
-    "stars":        "Stars",
-    "forks":        "Forks",
+    "openSource": "Open Source on GitHub",
+    "title": "Built by the Community",
+    "stars": "Stars",
+    "forks": "Forks",
     "contributors": "Contributors",
     "contribution": "contribution",
     "contributions": "contributions",
     "viewOnGitHub": "View on GitHub",
     "contributeTitle": "Want to contribute?",
-    "contributeDesc":  "The project is open to collaborators. Tell us what interests you and we'll get in touch.",
-    "contributeBtn":   "Join the project"
+    "contributeDesc": "The project is open to collaborators. Tell us what interests you and we'll get in touch.",
+    "contributeBtn": "Join the project"
   },
   "contribute": {
-    "modalTitle":    "I want to contribute",
-    "name":          "Name",
-    "email":         "Email",
-    "skills":        "Skills / area of interest",
+    "modalTitle": "I want to contribute",
+    "name": "Name",
+    "email": "Email",
+    "skills": "Skills / area of interest",
     "skillsPlaceholder": "e.g. Rust programming, 3D design, narrative writing, testing...",
-    "portfolio":     "GitHub / GitLab / Portfolio",
+    "portfolio": "GitHub / GitLab / Portfolio",
     "portfolioPlaceholder": "https://github.com/your-username (optional)",
-    "submit":        "Send",
-    "sending":       "Sending…",
-    "successTitle":  "Thank you!",
-    "successDesc":   "We received your message. Given our limited availability, we'll get back to you within one month.",
-    "errorGeneric":  "Something went wrong. Please try again in a few minutes.",
-    "errorRate":     "Too many attempts. Please wait a moment and try again."
+    "submit": "Send",
+    "sending": "Sending…",
+    "successTitle": "Thank you!",
+    "successDesc": "We received your message. Given our limited availability, we'll get back to you within one month.",
+    "errorGeneric": "Something went wrong. Please try again in a few minutes.",
+    "errorRate": "Too many attempts. Please wait a moment and try again."
   },
   "community": {
     "eyebrow": "Get Involved",
     "title": "Join the Community",
     "subtitle": "Xindeler is built by the community, for the community. Every contribution makes the world richer.",
-    "github":    { "title": "GitHub",         "desc": "Browse the source code, submit issues and contribute to the project.",              "btn": "View Repository" },
-    "discord":   { "title": "Discord",        "desc": "Join the community, ask questions and meet fellow adventurers.",                    "btn": "Join Server" },
-    "wiki":      { "title": "Wiki",           "desc": "Explore lore, guides and community knowledge in the Xindeler Wiki.",               "btn": "Browse Wiki" },
-    "docs":      { "title": "Documentation",  "desc": "Technical documentation for players, contributors and server operators.",           "btn": "Read Docs" },
-    "downloads": { "title": "Downloads",      "desc": "Get the latest build of Xindeler for your operating system.",                      "btn": "Download Now" }
+    "github": {
+      "title": "GitHub",
+      "desc": "Browse the source code, submit issues and contribute to the project.",
+      "btn": "View Repository"
+    },
+    "discord": {
+      "title": "Discord",
+      "desc": "Join the community, ask questions and meet fellow adventurers.",
+      "btn": "Join Server"
+    },
+    "wiki": {
+      "title": "Wiki",
+      "desc": "Explore lore, guides and community knowledge in the Xindeler Wiki.",
+      "btn": "Browse Wiki"
+    },
+    "docs": {
+      "title": "Documentation",
+      "desc": "Technical documentation for players, contributors and server operators.",
+      "btn": "Read Docs"
+    },
+    "downloads": {
+      "title": "Downloads",
+      "desc": "Get the latest build of Xindeler for your operating system.",
+      "btn": "Download Now"
+    }
   },
   "download": {
     "eyebrow": "Begin Your Journey",
@@ -252,6 +398,9 @@
     "username": "Username",
     "usernamePlaceholder": "your_name",
     "usernameHint": "3–32 characters. Letters, numbers, hyphen or underscore.",
+    "usernameChecking": "Checking availability…",
+    "usernameAvailable": "Name available.",
+    "usernameTaken": "That name is already taken.",
     "email": "Email",
     "emailPlaceholder": "you@email.com",
     "emailOptional": "Optional — needed to recover your password.",
