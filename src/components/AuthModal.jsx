@@ -20,7 +20,7 @@ function formatDeadline(deadline) {
     }
 }
 
-function InputField({ label, hint, type, value, onChange, placeholder, autoComplete }) {
+function InputField({ label, hint, type, value, onChange, placeholder, autoComplete, status }) {
     const [show, setShow] = useState(false);
     const isPassword = type === 'password';
     return (
@@ -46,7 +46,11 @@ function InputField({ label, hint, type, value, onChange, placeholder, autoCompl
                     </button>
                 )}
             </div>
-            {hint && <p className="text-xs text-gray-600">{hint}</p>}
+            {status ? (
+                <p className={`text-xs ${status.tone}`}>{status.message}</p>
+            ) : (
+                hint && <p className="text-xs text-gray-600">{hint}</p>
+            )}
         </div>
     );
 }
@@ -56,6 +60,10 @@ export default function AuthModal({ mode, onClose }) {
     // Initialize tab from mode — mode doesn't change while modal is open
     const [tab, setTab] = useState(mode);
     const [username, setUsername] = useState('');
+    // Resultado de la última consulta, atado al nombre que se consultó. Guardar
+    // el nombre junto al resultado evita que una respuesta lenta pise a otra
+    // más nueva: si no coincide con lo que hay escrito ahora, se descarta.
+    const [usernameCheck, setUsernameCheck] = useState(null);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
@@ -99,6 +107,53 @@ export default function AuthModal({ mode, onClose }) {
         setTab(newTab);
         clearForm();
     };
+
+    // Consulta la disponibilidad del nombre mientras se escribe, solo al
+    // registrarse. Con debounce y cancelación por dos razones: no castigar al
+    // servidor con una petición por tecla, y porque /check-username tiene su
+    // propio límite por IP — sin esto, escribir un par de nombres lo agotaría y
+    // el resto de la sesión se quedaría sin verificación.
+    //
+    // Nunca bloquea el envío: es una ayuda visual. Quien decide sigue siendo el
+    // servidor al registrar, que además resuelve la carrera entre dos personas
+    // eligiendo el mismo nombre a la vez.
+    useEffect(() => {
+        if (tab !== 'register' || !isValidUsername(username)) return;
+
+        const controller = new AbortController();
+        const timer = setTimeout(async () => {
+            try {
+                const res = await fetch(
+                    `${AUTH_API}/check-username?username=${encodeURIComponent(username)}`,
+                    { signal: controller.signal },
+                );
+                if (!res.ok) return;
+                const body = await res.json();
+                setUsernameCheck({ username, available: body.available === true });
+            } catch {
+                // Cancelada por una tecla posterior, o la red falló. En ninguno
+                // de los dos casos hay algo que decirle a quien escribe.
+            }
+        }, 450);
+
+        return () => {
+            clearTimeout(timer);
+            controller.abort();
+        };
+    }, [username, tab]);
+
+    const usernameFieldStatus = (() => {
+        if (tab !== 'register' || !isValidUsername(username)) return null;
+        // Sin resultado para el nombre actual todavía: o se está esperando el
+        // debounce, o la consulta está en vuelo, o falló. Para quien escribe
+        // los tres casos son lo mismo.
+        if (usernameCheck?.username !== username) {
+            return { message: t('auth.usernameChecking'), tone: 'text-gray-500' };
+        }
+        return usernameCheck.available
+            ? { message: t('auth.usernameAvailable'), tone: 'text-emerald-400' }
+            : { message: t('auth.usernameTaken'), tone: 'text-red-400' };
+    })();
 
     const validate = () => {
         if (!isValidUsername(username)) { setError(t('auth.errorUsernameFormat')); return false; }
@@ -376,6 +431,7 @@ export default function AuthModal({ mode, onClose }) {
                                     onChange={e => setUsername(e.target.value)}
                                     placeholder={t('auth.usernamePlaceholder')}
                                     autoComplete="username"
+                                    status={usernameFieldStatus}
                                 />
                                 {tab === 'register' && (
                                     <InputField
