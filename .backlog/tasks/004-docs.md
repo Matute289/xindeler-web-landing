@@ -1,9 +1,21 @@
 # 004 — Portal de Documentación Técnica
 
-**Estado:** `[ ]` Pendiente  
+**Estado:** `[x]` Completo — redirigido al repo `Matute289/xindeler-documentation`  
 **Prioridad:** Alta  
 **Esfuerzo estimado:** XL (nuevo repo + contenido técnico profundo)  
-**Subdomain destino:** `docs.xindeler.greenmountain.dev`
+**Subdomain destino:** `docs.xindeler.com`
+
+---
+
+> **Nota (2026-08-14):** este spec se escribió cuando el portal todavía no existía.
+> El repo `Matute289/xindeler-documentation` ya está creado, deployado y cubre
+> la estructura completa descripta abajo (proyecto/, cliente/, servidor/,
+> sistemas/, oracle/, aurora/, apis/, contribucion/, referencia/). Auditado
+> contra este spec el 2026-08-14 — coincide. El trabajo restante (páginas
+> diferidas por estabilidad, no por secretismo) está trackeado en el backlog
+> propio de ese repo (`.backlog/backlog.md`), no acá. Ver
+> [PR #20](https://github.com/Matute289/xindeler-documentation/pull/20) por
+> la corrección de una imprecisión menor encontrada en esa auditoría.
 
 ---
 
