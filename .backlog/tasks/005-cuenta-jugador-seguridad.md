@@ -3,7 +3,7 @@
 **Estado:** `[ ]` Pendiente
 **Prioridad:** Alta
 **Esfuerzo estimado:** L (pantalla nueva + sesión en memoria + integración con un contrato de 2FA que hoy todavía no está implementado en `xindeler-auth`)
-**Depende de:** `xindeler-auth` G-03 / Fase L (`POST /2fa/enroll`, `POST /2fa/confirm`, `POST /2fa/disable`, cambio de contrato en `/login`) — diseñado y documentado, estado `todo`, **no implementado todavía**.
+**Depende de:** `xindeler-auth` G-03 / Fase L (`POST /2fa/enroll`, `POST /2fa/confirm`, `POST /2fa/disable`, cambio de contrato en `/login`) — diseñado y documentado, estado `todo`, **no implementado todavía**. También depende de [007-sesion-web-autenticada.md](007-sesion-web-autenticada.md) — el mecanismo de sesión persistente que reemplaza la propuesta provisoria de la sección 2 de este documento.
 
 ---
 

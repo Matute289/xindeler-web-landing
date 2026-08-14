@@ -4,7 +4,7 @@
 **Prioridad:** Alta (mismo pedido de Matías que 005, pero no se puede implementar hoy)
 **Esfuerzo estimado:** sin estimar del lado de este repo — depende de un endpoint que todavía no
 existe en ningún otro repo
-**Depende de:** trabajo nuevo, no planificado todavía, en `xindeler-new-horizon` (game server)
+**Depende de:** trabajo nuevo, no planificado todavía, en `xindeler-new-horizon` (game server). También depende de [007-sesion-web-autenticada.md](007-sesion-web-autenticada.md), ya que la pantalla de cuenta que aloja esta tab requiere sesión persistente igual que 005.
 
 ---
 
