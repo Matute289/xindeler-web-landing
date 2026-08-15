@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Eye, EyeOff, CheckCircle } from 'lucide-react';
 import { netPrehash } from '../lib/netPrehash';
 
-const AUTH_API = 'https://auth.xindeler.com';
+const WEB_API = 'https://xindeler.com/api';
 
 function PasswordInput({ label, value, onChange, placeholder, autoComplete }) {
     const [show, setShow] = useState(false);
@@ -61,16 +61,16 @@ export default function ResetPasswordPage() {
         setLoading(true);
         try {
             const prehash = await netPrehash(password);
-            const res = await fetch(`${AUTH_API}/reset-password`, {
+            const res = await fetch(`${WEB_API}/account/reset-password`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token, password: prehash }),
+                body: JSON.stringify({ token, new_password_prehash: prehash }),
             });
             if (res.ok) {
                 setSuccess(true);
                 setPassword('');
                 setConfirm('');
-            } else if (res.status === 400 || res.status === 404) {
+            } else if (res.status === 422 || res.status === 400 || res.status === 404) {
                 setError(t('auth.resetPassword.errorInvalidToken'));
             } else {
                 setError(t('auth.errorUnknown'));

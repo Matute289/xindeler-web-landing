@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Mail, CheckCircle } from 'lucide-react';
 
-const AUTH_API = 'https://auth.xindeler.com';
+const WEB_API = 'https://xindeler.com/api';
 
 export default function ForgotPasswordPage() {
     const { t } = useTranslation();
@@ -18,7 +18,7 @@ export default function ForgotPasswordPage() {
         setError('');
         setLoading(true);
         try {
-            await fetch(`${AUTH_API}/forgot-password`, {
+            await fetch(`${WEB_API}/account/forgot-password`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email }),
