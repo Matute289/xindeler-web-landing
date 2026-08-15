@@ -77,6 +77,14 @@ export default function AuthModal({ mode, onClose }) {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
+    // 2FA step of login — shown when POST /api/session/login answers 202
+    // (the account has TOTP confirmed). No session cookie exists yet at
+    // this point; it's only set once totpChallenge is redeemed below.
+    const [totpChallenge, setTotpChallenge] = useState(null); // { challengeId }
+    const [totpCode, setTotpCode] = useState('');
+    const [totpLoading, setTotpLoading] = useState(false);
+    const [totpError, setTotpError] = useState('');
+
     // Legacy account modal — shown when login returns 403 EMAIL_VERIFICATION_REQUIRED.
     // completionToken is a bearer credential: only ever attached as the Authorization
     // header on /account-email and /resend-verification, never logged or displayed.
@@ -191,6 +199,11 @@ export default function AuthModal({ mode, onClose }) {
                     body: JSON.stringify({ username, password_prehash: prehash }),
                 });
                 if (res.ok) { setSuccess(t('auth.loginSuccess')); setPassword(''); }
+                else if (res.status === 202) {
+                    const body = await res.json();
+                    setTotpChallenge({ challengeId: body.challenge_id });
+                    setPassword('');
+                }
                 else if (res.status === 403) {
                     // Only the specific EMAIL_VERIFICATION_REQUIRED code opens the legacy
                     // modal. Any other 403 (or a 403 with an unexpected/unparseable body)
@@ -212,6 +225,43 @@ export default function AuthModal({ mode, onClose }) {
             setError(t('auth.errorNetwork'));
         } finally {
             setLoading(false);
+        }
+    };
+
+    const closeTotpChallenge = () => {
+        setTotpChallenge(null);
+        setTotpCode('');
+        setTotpError('');
+        setTotpLoading(false);
+    };
+
+    const handleTotpSubmit = async (e) => {
+        e.preventDefault();
+        setTotpError('');
+        if (!totpChallenge) return;
+        setTotpLoading(true);
+        try {
+            const res = await fetch(`${WEB_API}/session/login/2fa`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ challenge_id: totpChallenge.challengeId, code: totpCode }),
+            });
+            if (res.ok) {
+                setTotpChallenge(null);
+                setTotpCode('');
+                setSuccess(t('auth.loginSuccess'));
+            } else {
+                let body = null;
+                try { body = await res.json(); } catch { /* fall through to generic error */ }
+                if (body?.code === 'TOTP_INVALID_CODE') setTotpError(t('auth.totpErrorInvalidCode'));
+                else if (body?.code === 'TOTP_CHALLENGE_INVALID') setTotpError(t('auth.totpErrorChallengeExpired'));
+                else if (body?.code === 'ACCOUNT_2FA_LOCKED') setTotpError(t('auth.totpErrorLocked'));
+                else setTotpError(t('auth.errorUnknown'));
+            }
+        } catch {
+            setTotpError(t('auth.errorNetwork'));
+        } finally {
+            setTotpLoading(false);
         }
     };
 
@@ -402,6 +452,45 @@ export default function AuthModal({ mode, onClose }) {
                                 {t('auth.legacyModal.back')}
                             </button>
                         </div>
+                    ) : totpChallenge ? (
+                        <div className="p-6 flex flex-col gap-4">
+                            <h2 className="font-cinzel text-sm tracking-widest uppercase text-x-gold text-center">
+                                {t('auth.totpTitle')}
+                            </h2>
+                            <p className="text-sm text-gray-400 leading-relaxed text-center">
+                                {t('auth.totpDesc')}
+                            </p>
+                            <form onSubmit={handleTotpSubmit} className="flex flex-col gap-3">
+                                <InputField
+                                    label={t('auth.totpCodePlaceholder')}
+                                    type="text"
+                                    value={totpCode}
+                                    onChange={e => setTotpCode(e.target.value)}
+                                    placeholder={t('auth.totpCodePlaceholder')}
+                                    autoComplete="one-time-code"
+                                />
+                                {totpError && (
+                                    <p className="text-xs text-red-400 bg-red-900/20 border border-red-500/20 rounded px-3 py-2">
+                                        {totpError}
+                                    </p>
+                                )}
+                                <button
+                                    type="submit"
+                                    disabled={totpLoading}
+                                    className="w-full py-2.5 font-cinzel text-xs tracking-wider text-black bg-x-gold rounded hover:bg-x-gold/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                    style={{ boxShadow: '0 2px 12px rgba(212,160,23,0.35)' }}
+                                >
+                                    {totpLoading ? t('auth.totpVerifying') : t('auth.totpSubmitBtn')}
+                                </button>
+                            </form>
+                            <button
+                                type="button"
+                                onClick={closeTotpChallenge}
+                                className="text-xs text-gray-600 hover:text-gray-400 transition-colors self-center"
+                            >
+                                {t('auth.legacyModal.back')}
+                            </button>
+                        </div>
                     ) : (
                         <>
                             {/* Tabs */}
@@ -471,6 +560,15 @@ export default function AuthModal({ mode, onClose }) {
 
                                 {error && <p className="text-xs text-red-400 bg-red-900/20 border border-red-500/20 rounded px-3 py-2">{error}</p>}
                                 {success && <p className="text-xs text-green-400 bg-green-900/20 border border-green-500/20 rounded px-3 py-2">{success}</p>}
+                                {success && tab === 'login' && (
+                                    <Link
+                                        to="/account"
+                                        onClick={onClose}
+                                        className="text-xs text-center text-x-gold hover:text-x-gold/80 transition-colors"
+                                    >
+                                        {t('auth.goToAccount')}
+                                    </Link>
+                                )}
 
                                 {!success && (
                                     <button
