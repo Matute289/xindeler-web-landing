@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Mail, CheckCircle } from 'lucide-react';
 
-const WEB_API = 'https://xindeler.com/api';
+const WEB_API = '/api';
 
 export default function ForgotPasswordPage() {
     const { t } = useTranslation();
