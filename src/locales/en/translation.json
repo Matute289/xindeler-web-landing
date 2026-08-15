@@ -443,7 +443,7 @@
       "title": "Verifying your email",
       "loading": "Verifying…",
       "success": "Email verified! You can now sign in to the game with your username.",
-      "errorInvalid": "The link is invalid or has already been used.",
+      "errorInvalid": "The link is invalid, has already been used, or expired. If your account still isn't verified, sign up again to get a new link.",
       "errorNetwork": "Network error during verification. Please try again.",
       "backHome": "Back to home"
     },

@@ -443,7 +443,7 @@
       "title": "Verificando tu email",
       "loading": "Verificando…",
       "success": "¡Email verificado! Ya podés iniciar sesión en el juego con tu usuario.",
-      "errorInvalid": "El link es inválido o ya fue usado.",
+      "errorInvalid": "El link es inválido, ya fue usado o venció. Si tu cuenta todavía no está verificada, registrate de nuevo para recibir un link nuevo.",
       "errorNetwork": "Error de red al verificar. Intentá de nuevo.",
       "backHome": "Volver al inicio"
     },
