@@ -6,7 +6,7 @@ import GitHubIcon from './GitHubIcon';
 
 const REPO            = 'Matute289/xindeler-new-horizon';
 const MAX_AVATARS     = 20;
-const CONTRIBUTE_API  = 'https://xindeler.com/api/contribute';
+const CONTRIBUTE_API  = '/api/contribute';
 
 function StatPill({ icon: Icon, value, label, loading }) {
   return (
