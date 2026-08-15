@@ -1,6 +1,13 @@
 # 005 — Pantalla de cuenta del jugador: sesión, seguridad (2FA) y nombre de usuario
 
-**Estado:** `[ ]` En curso (actualizado 2026-08-15 — ambos bloqueos originales ya se resolvieron)
+**Estado:** `[x]` Implementada (2026-08-15) — backend (`xindeler-web-api#11`) y frontend
+(`xindeler-web-landing#45`) completos, código verificado (build/test/lint en verde en ambos repos,
+74 tests de integración en el backend). **Pendiente de verificación manual con sesión real en el
+browser** — el smoke test llegó hasta el registro y el manejo de `EMAIL_VERIFICATION_REQUIRED`
+contra producción real, pero no pudo completar un login (la cuenta de prueba quedó pendiente de
+verificar email, sin acceso a esa bandeja desde acá). Confirmar el flujo completo (2FA
+enroll→confirm→backup codes, cambiar contraseña, eliminar cuenta, cooldown de username) con una
+cuenta real antes de considerarla verificada de punta a punta.
 **Prioridad:** Alta
 **Esfuerzo estimado:** L (pantalla nueva con dos tabs, más cambiar contraseña y eliminar cuenta
 sumados el 2026-08-15)
