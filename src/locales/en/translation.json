@@ -571,6 +571,10 @@
     "errorNetwork": "Network error. Please try again.",
     "errorUnknown": "Something went wrong. Please try again.",
     "sessionRevokedNotice": "Done — please log in again.",
-    "accountDeletedNotice": "Your account has been deleted."
+    "accountDeletedNotice": "Your account has been deleted.",
+    "tabCharacters": "Characters",
+    "characters": {
+      "comingSoon": "There's no way to read your characters from here yet — this section is on its way."
+    }
   }
 }

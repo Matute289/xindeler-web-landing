@@ -571,6 +571,10 @@
     "errorNetwork": "Error de red. Intentá de nuevo.",
     "errorUnknown": "Ocurrió un error inesperado. Intentá de nuevo.",
     "sessionRevokedNotice": "Listo — iniciá sesión de nuevo.",
-    "accountDeletedNotice": "Tu cuenta fue eliminada."
+    "accountDeletedNotice": "Tu cuenta fue eliminada.",
+    "tabCharacters": "Personajes",
+    "characters": {
+      "comingSoon": "Todavía no hay forma de leer tus personajes desde acá — esta sección está en camino."
+    }
   }
 }
