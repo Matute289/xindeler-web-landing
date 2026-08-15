@@ -6,6 +6,12 @@ import { netPrehash } from '../lib/netPrehash';
 import { Link } from 'react-router-dom';
 
 const AUTH_API = 'https://auth.xindeler.com';
+// Login goes through xindeler-web-api instead of straight to AUTH_API — it's
+// the only call in this file that needs to establish a session cookie
+// (same-origin proxy, see /api/session/login). Registration and the legacy
+// account-recovery flow below don't touch sessions, so they keep calling
+// AUTH_API directly.
+const WEB_API = '/api';
 
 function isValidUsername(u) {
     return /^[a-zA-Z0-9_-]{3,32}$/.test(u);
@@ -179,10 +185,10 @@ export default function AuthModal({ mode, onClose }) {
                 else if (res.status === 409) setError(t('auth.errorUserExists'));
                 else setError(t('auth.errorUnknown'));
             } else {
-                const res = await fetch(`${AUTH_API}/generate_token`, {
+                const res = await fetch(`${WEB_API}/session/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password: prehash }),
+                    body: JSON.stringify({ username, password_prehash: prehash }),
                 });
                 if (res.ok) { setSuccess(t('auth.loginSuccess')); setPassword(''); }
                 else if (res.status === 403) {
