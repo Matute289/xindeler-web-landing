@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import AuthModal from '../components/AuthModal';
 import SecurityTab from '../components/account/SecurityTab';
 import UsernameTab from '../components/account/UsernameTab';
+import CharactersTab from '../components/account/CharactersTab';
 
 const WEB_API = '/api';
 
@@ -117,17 +118,27 @@ export default function AccountPage() {
                             >
                                 {t('account.tabUsername')}
                             </button>
+                            <button
+                                onClick={() => setTab('characters')}
+                                className={`flex-1 py-3.5 font-cinzel text-xs tracking-widest uppercase transition-colors ${
+                                    tab === 'characters' ? 'text-x-gold border-b-2 border-x-gold' : 'text-gray-500 hover:text-gray-300'
+                                }`}
+                            >
+                                {t('account.tabCharacters')}
+                            </button>
                         </div>
                         <div className="p-6">
-                            {tab === 'security' ? (
+                            {tab === 'security' && (
                                 <SecurityTab
                                     session={session}
                                     onSessionInvalidated={handleSessionInvalidated}
                                     onTotpChanged={handleTotpChanged}
                                 />
-                            ) : (
+                            )}
+                            {tab === 'username' && (
                                 <UsernameTab session={session} onSessionInvalidated={handleSessionInvalidated} />
                             )}
+                            {tab === 'characters' && <CharactersTab />}
                         </div>
                         <div className="pb-6 text-center">
                             <Link to="/" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">

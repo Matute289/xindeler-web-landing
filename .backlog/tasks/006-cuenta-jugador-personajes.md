@@ -1,6 +1,12 @@
 # 006 — Visor de personajes en la pantalla de cuenta (BLOQUEADA: falta API en el game server)
 
-**Estado:** `[ ]` Pendiente — **bloqueada por un gap arquitectónico cross-repo**
+**Estado:** `[ ]` Pendiente — **bloqueada por un gap arquitectónico cross-repo**. Actualización
+2026-08-15: la tab "Personajes" ya existe en `/account` como placeholder ("Próximamente") —
+`src/components/account/CharactersTab.jsx` — para no retrasar el resto de la pantalla (005, ya
+deployada). El blocker real ya tiene tarea propia del otro lado: **NH-79** en el backlog de
+`xindeler-new-horizon` (repo de diseño privado), con spec/plan/tasks completos, esperando que
+Matías responda su worksheet de decisiones (§9). Secuenciada por pedido de Matías justo después de
+NH-78 (2FA en el flujo de multijugador).
 **Prioridad:** Alta (mismo pedido de Matías que 005, pero no se puede implementar hoy)
 **Esfuerzo estimado:** sin estimar del lado de este repo — depende de un endpoint que todavía no
 existe en ningún otro repo
