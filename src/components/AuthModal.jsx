@@ -13,8 +13,12 @@ const AUTH_API = 'https://auth.xindeler.com';
 // AUTH_API directly.
 const WEB_API = '/api';
 
+// Mirrors the one-off exception in xindeler-auth's Username::try_from —
+// reserved for the project's admin/operator account.
+const RESERVED_ADMIN_USERNAME = 'ΑΩ';
+
 function isValidUsername(u) {
-    return /^[a-zA-Z0-9_-]{3,32}$/.test(u);
+    return u === RESERVED_ADMIN_USERNAME || /^[a-zA-Z0-9_-]{3,32}$/.test(u);
 }
 
 function formatDeadline(deadline) {
