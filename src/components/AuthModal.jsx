@@ -112,6 +112,14 @@ export default function AuthModal({ mode, onClose }) {
         return () => document.removeEventListener('keydown', handleKey);
     }, [handleKey]);
 
+    // A successful login closes the modal on its own — the "Ir a mi cuenta"
+    // link below still lets someone jump there immediately without waiting.
+    useEffect(() => {
+        if (!success || tab !== 'login') return;
+        const timer = setTimeout(onClose, 1200);
+        return () => clearTimeout(timer);
+    }, [success, tab, onClose]);
+
     // Clear form fields when switching tabs — called explicitly by switchTab()
     const clearForm = () => {
         setError(''); setSuccess(''); setPassword(''); setConfirm('');
