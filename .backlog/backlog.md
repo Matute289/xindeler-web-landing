@@ -16,6 +16,7 @@
 | 005 | Pantalla de cuenta del jugador — sesión, seguridad (2FA) y nombre de usuario | [005-cuenta-jugador-seguridad.md](tasks/005-cuenta-jugador-seguridad.md) | `[~]` — implementada, pendiente de verificación manual con sesión real |
 | 006 | Visor de personajes en la pantalla de cuenta — bloqueada, falta API en el game server | [006-cuenta-jugador-personajes.md](tasks/006-cuenta-jugador-personajes.md) | `[ ]` — placeholder ya en `/account`; blocker real es NH-79 en `xindeler-new-horizon` |
 | 007 | Sesión web autenticada — cómo la landing recuerda quién está logueado | [007-sesion-web-autenticada.md](tasks/007-sesion-web-autenticada.md) | `[x]` — deployada en producción real el 2026-08-15 (`xindeler-web-api`, ver su `.backlog/README.md`) |
+| 008 | Navbar consciente de sesión — botón de usuario + menú desplegable a Cuenta | [008-navbar-sesion.md](tasks/008-navbar-sesion.md) | `[ ]` — no depende de nada externo, los tres endpoints que hacen falta ya están shippeados |
 
 ## Prioridad Media
 
