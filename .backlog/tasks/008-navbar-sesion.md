@@ -1,6 +1,11 @@
 # 008 — Navbar consciente de sesión: botón de usuario + menú desplegable a Cuenta
 
-**Estado:** `[ ]` Pendiente
+**Estado:** `[x]` Implementada (2026-08-16) — probada de punta a punta en el navegador (login/logout
+reales, desktop y mobile) contra una cuenta real. En el camino apareció y se corrigió un loop
+infinito de re-render en `AuthModal` (el efecto de auto-close dependía de `onClose`/`onLoggedIn`,
+que `App.jsx` pasa con nueva identidad en cada render — y `onLoggedIn` en sí dispara ese render al
+refrescar la sesión); resuelto leyendo esos callbacks desde refs en vez de las dependencias del
+efecto.
 **Prioridad:** Alta
 **Esfuerzo estimado:** M (hook de sesión compartida + Navbar dinámico en desktop/mobile + AuthModal
 notifica tras loguearse; nada de esto depende de trabajo nuevo en ningún backend, los tres
@@ -174,17 +179,22 @@ condición que ya gatilla ese efecto.
 
 ## Acceptance criteria
 
-- [ ] Con sesión activa, el `Navbar` muestra un botón con el username en vez de "Iniciar
-      sesión"/"Crear cuenta" — en desktop y en el menú mobile
-- [ ] Ese botón despliega un menú con "Mi cuenta" (→ `/account`) y "Cerrar sesión"
-- [ ] "Cerrar sesión" llama a `POST /api/session/logout`, vuelve a mostrar el botón de login sin
+- [x] Con sesión activa, el `Navbar` muestra un botón con el username en vez de "Iniciar
+      sesión"/"Crear cuenta" — en desktop y en el menú mobile (verificado en el navegador con login
+      real, ambos viewports)
+- [x] Ese botón despliega un menú con "Mi cuenta" (→ `/account`) y "Cerrar sesión"
+- [x] "Cerrar sesión" llama a `POST /api/session/logout`, vuelve a mostrar el botón de login sin
       recargar la página, y cierra el dropdown
-- [ ] Tras loguearse desde el modal (login directo o vía 2FA), el `Navbar` refleja la sesión nueva
-      sin recargar la página, en el mismo momento en que el modal se cierra solo
-- [ ] `AccountPage.jsx` sigue funcionando exactamente igual que hoy, ahora consumiendo el hook
-      compartido `useSession` en vez de su copia local
-- [ ] El dropdown cierra al hacer click afuera
-- [ ] Username largo (hasta 32 caracteres) no rompe el layout del Navbar — trunca con ellipsis
-- [ ] Visual consistente con el resto del `Navbar`/`AuthModal` (`x-navy`/`x-gold`/`font-cinzel`)
-- [ ] Bilingüe ES/EN vía i18next
-- [ ] `npm run lint && npm test && npm run build` en verde
+- [x] Tras loguearse desde el modal (login directo — el flujo de 2FA no se probó porque la cuenta de
+      prueba no lo tiene activo, pero comparte exactamente el mismo punto del efecto), el `Navbar`
+      refleja la sesión nueva sin recargar la página, en el mismo momento en que el modal se cierra
+      solo
+- [x] `AccountPage.jsx` sigue funcionando exactamente igual que hoy, ahora consumiendo el hook
+      compartido `useSession` en vez de su copia local — verificado navegando ahí desde el dropdown
+- [x] El dropdown cierra al hacer click afuera
+- [x] Username largo (hasta 32 caracteres) no rompe el layout del Navbar — `max-w-[120px] truncate`;
+      mecanismo verificado leyendo el CSS aplicado, no se probó visualmente con un username real de
+      32 caracteres
+- [x] Visual consistente con el resto del `Navbar`/`AuthModal` (`x-navy`/`x-gold`/`font-cinzel`)
+- [x] Bilingüe ES/EN vía i18next (`nav.myAccount`/`nav.logout` en ambos locales)
+- [x] `npm run lint && npm test && npm run build` en verde
