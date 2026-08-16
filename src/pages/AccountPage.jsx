@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
@@ -6,39 +6,14 @@ import AuthModal from '../components/AuthModal';
 import SecurityTab from '../components/account/SecurityTab';
 import UsernameTab from '../components/account/UsernameTab';
 import CharactersTab from '../components/account/CharactersTab';
-
-const WEB_API = '/api';
+import { useSession } from '../hooks/useSession';
 
 export default function AccountPage() {
     const { t } = useTranslation();
-    const [loading, setLoading] = useState(true);
-    const [session, setSession] = useState(null); // { username, totp_enabled } | null
+    const { session, loading, refreshSession, setSession } = useSession();
     const [tab, setTab] = useState('security');
     const [authModal, setAuthModal] = useState(null);
     const [invalidatedReason, setInvalidatedReason] = useState(null); // null | 'revoked' | 'deleted'
-
-    // Fetches without touching `loading` — used for the initial mount,
-    // where `loading` already starts `true`, so a synchronous setState
-    // inside the effect body would just be redundant (and React's
-    // exhaustive-deps linting flags it).
-    const loadSession = useCallback(() => {
-        return fetch(`${WEB_API}/session/me`)
-            .then(res => (res.ok ? res.json() : null))
-            .then(data => setSession(data))
-            .catch(() => setSession(null))
-            .finally(() => setLoading(false));
-    }, []);
-
-    useEffect(() => {
-        loadSession();
-    }, [loadSession]);
-
-    // For refreshes triggered by a user action (not the mount effect
-    // above) — resets `loading` first since it may already be `false`.
-    const refreshSession = useCallback(() => {
-        setLoading(true);
-        loadSession();
-    }, [loadSession]);
 
     // Called after change-password / 2fa/disable / change-username /
     // delete-account, all of which revoke the session on success —

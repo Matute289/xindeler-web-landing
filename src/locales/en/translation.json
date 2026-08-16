@@ -8,7 +8,9 @@
     "community": "Community",
     "download": "Download",
     "register": "Create account",
-    "login": "Log in"
+    "login": "Log in",
+    "myAccount": "My account",
+    "logout": "Log out"
   },
   "hero": {
     "eyebrow": "Open Source MMORPG",
