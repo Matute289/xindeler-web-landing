@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Download, UserPlus } from 'lucide-react';
+import { Menu, X, Download, UserPlus, LogIn } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 
@@ -139,11 +139,11 @@ export default function Navbar({ onOpenAuth }) {
                 <LanguageSwitcher align="left" />
                 {onOpenAuth && (
                   <button
-                    onClick={() => { setMobileOpen(false); onOpenAuth('register'); }}
+                    onClick={() => { setMobileOpen(false); onOpenAuth('login'); }}
                     className="flex items-center gap-1.5 px-3 py-2 font-cinzel text-xs tracking-wider text-x-gold border border-x-gold/40 rounded hover:bg-x-gold/10 transition-colors"
                   >
-                    <UserPlus size={13} />
-                    {t('nav.register')}
+                    <LogIn size={13} />
+                    {t('nav.login')}
                   </button>
                 )}
                 <button
