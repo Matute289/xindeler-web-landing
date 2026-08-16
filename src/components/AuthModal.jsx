@@ -496,16 +496,6 @@ export default function AuthModal({ mode, onClose }) {
                             {/* Tabs */}
                             <div className="flex border-b border-white/10">
                                 <button
-                                    onClick={() => switchTab('register')}
-                                    className={`flex-1 py-3.5 font-cinzel text-xs tracking-widest uppercase transition-colors ${
-                                        tab === 'register' ? 'text-x-gold border-b-2 border-x-gold' : 'text-gray-500 hover:text-gray-300'
-                                    }`}
-                                >
-                                    <span className="flex items-center justify-center gap-1.5">
-                                        <UserPlus size={12} />{t('auth.register')}
-                                    </span>
-                                </button>
-                                <button
                                     onClick={() => switchTab('login')}
                                     className={`flex-1 py-3.5 font-cinzel text-xs tracking-widest uppercase transition-colors ${
                                         tab === 'login' ? 'text-x-gold border-b-2 border-x-gold' : 'text-gray-500 hover:text-gray-300'
@@ -513,6 +503,16 @@ export default function AuthModal({ mode, onClose }) {
                                 >
                                     <span className="flex items-center justify-center gap-1.5">
                                         <LogIn size={12} />{t('auth.login')}
+                                    </span>
+                                </button>
+                                <button
+                                    onClick={() => switchTab('register')}
+                                    className={`flex-1 py-3.5 font-cinzel text-xs tracking-widest uppercase transition-colors ${
+                                        tab === 'register' ? 'text-x-gold border-b-2 border-x-gold' : 'text-gray-500 hover:text-gray-300'
+                                    }`}
+                                >
+                                    <span className="flex items-center justify-center gap-1.5">
+                                        <UserPlus size={12} />{t('auth.register')}
                                     </span>
                                 </button>
                             </div>
