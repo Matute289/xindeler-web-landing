@@ -20,7 +20,9 @@
 
 ## Prioridad Media
 
-*(vacío)*
+| # | Tarea | Archivo spec | Estado |
+|---|-------|--------------|--------|
+| 009 | Botones "Continuar con Discord" / "Continuar con Google" en el modal de login/registro | — | `[ ]` — bloqueada, esperando la implementación del backend en `xindeler-auth` (G-05). Spec + plan ya escritos ahí: `docs/superpowers/specs/2026-08-16-oauth-discord-google-design.md` y `docs/superpowers/plans/2026-08-16-oauth-discord-google.md`. Cuando esté deployado, el flujo del lado landing es: el botón navega directo a `https://auth.xindeler.com/oauth/{discord,google}/start` (nada de armar la URL de autorización acá, el backend lo hace todo); una página nueva en `/oauth/callback` lee `window.location.hash` (`#token=...` en éxito, `#error=<código>` en fallo) y sigue el mismo camino que ya usa el login con password una vez que tiene el token. No hay trabajo de backend propio de este repo, es 100% UI |
 
 ## Prioridad Baja
 
