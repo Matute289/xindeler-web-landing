@@ -92,7 +92,7 @@ export default function HeroSection() {
           </p>
           <h1
             className="font-cinzel-dec font-black text-white leading-none mb-4"
-            style={{ fontSize: 'clamp(4rem, 12vw, 9rem)', textShadow: '0 0 60px rgba(212,160,23,0.45), 0 4px 16px rgba(0,0,0,0.95)' }}
+            style={{ fontSize: 'clamp(2.5rem, 12vw, 9rem)', textShadow: '0 0 60px rgba(212,160,23,0.45), 0 4px 16px rgba(0,0,0,0.95)' }}
           >
             XINDELER
           </h1>
