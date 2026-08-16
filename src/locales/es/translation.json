@@ -8,7 +8,9 @@
     "community": "Comunidad",
     "download": "Descargar",
     "register": "Crear cuenta",
-    "login": "Iniciar sesión"
+    "login": "Iniciar sesión",
+    "myAccount": "Mi cuenta",
+    "logout": "Cerrar sesión"
   },
   "hero": {
     "eyebrow": "MMORPG de Código Abierto",

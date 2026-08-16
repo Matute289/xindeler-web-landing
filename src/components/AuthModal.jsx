@@ -61,7 +61,7 @@ function InputField({ label, hint, type, value, onChange, placeholder, autoCompl
     );
 }
 
-export default function AuthModal({ mode, onClose }) {
+export default function AuthModal({ mode, onClose, onLoggedIn }) {
     const { t } = useTranslation();
     // Initialize tab from mode — mode doesn't change while modal is open
     const [tab, setTab] = useState(mode);
@@ -112,13 +112,30 @@ export default function AuthModal({ mode, onClose }) {
         return () => document.removeEventListener('keydown', handleKey);
     }, [handleKey]);
 
+    // Callers (App.jsx) pass inline onClose/onLoggedIn that get a new
+    // identity on every parent render — including the one onLoggedIn
+    // itself triggers by refreshing the session. Depending on them directly
+    // below would re-run the effect on every such render and call
+    // onLoggedIn again, which refreshes again, forever. Refs sidestep that:
+    // the effect only reacts to success/tab actually changing.
+    const onCloseRef = useRef(onClose);
+    const onLoggedInRef = useRef(onLoggedIn);
+    useEffect(() => {
+        onCloseRef.current = onClose;
+        onLoggedInRef.current = onLoggedIn;
+    });
+
     // A successful login closes the modal on its own — the "Ir a mi cuenta"
     // link below still lets someone jump there immediately without waiting.
+    // onLoggedIn fires right away (not after the delay) so callers relying
+    // on it — e.g. the navbar swapping to the logged-in state — don't wait
+    // on a timer that exists purely for the modal's own UX.
     useEffect(() => {
         if (!success || tab !== 'login') return;
-        const timer = setTimeout(onClose, 1200);
+        onLoggedInRef.current?.();
+        const timer = setTimeout(() => onCloseRef.current(), 1200);
         return () => clearTimeout(timer);
-    }, [success, tab, onClose]);
+    }, [success, tab]);
 
     // Clear form fields when switching tabs — called explicitly by switchTab()
     const clearForm = () => {

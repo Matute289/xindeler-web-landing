@@ -25,9 +25,11 @@ import VerifyEmailPage from './pages/VerifyEmailPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import AccountPage from './pages/AccountPage';
+import { useSession } from './hooks/useSession';
 
 function LandingHome() {
   const [authModal, setAuthModal] = useState(null); // null | 'register' | 'login'
+  const { session, refreshSession } = useSession();
   return (
     <div className="min-h-screen bg-x-dark">
       <Analytics />
@@ -35,7 +37,7 @@ function LandingHome() {
       <EasterEgg />
       <AmbientSound />
       <ScrollProgress />
-      <Navbar onOpenAuth={setAuthModal} />
+      <Navbar onOpenAuth={setAuthModal} session={session} refreshSession={refreshSession} />
       <main>
         <HeroSection />
         <FeaturesSection />
@@ -52,7 +54,9 @@ function LandingHome() {
         <DownloadSection />
       </main>
       <Footer />
-      {authModal && <AuthModal mode={authModal} onClose={() => setAuthModal(null)} />}
+      {authModal && (
+        <AuthModal mode={authModal} onClose={() => setAuthModal(null)} onLoggedIn={refreshSession} />
+      )}
     </div>
   );
 }
