@@ -583,7 +583,34 @@
     "accountDeletedNotice": "Tu cuenta fue eliminada.",
     "tabCharacters": "Personajes",
     "characters": {
-      "comingSoon": "Todavía no hay forma de leer tus personajes desde acá — esta sección está en camino."
+      "loading": "Cargando tus personajes…",
+      "errorLoad": "No pudimos cargar tus personajes ahora. Puede que el servidor esté reiniciando — probá de nuevo en un rato.",
+      "retryBtn": "Reintentar",
+      "empty": "Todavía no creaste ningún personaje. Entrá al juego para crear el primero.",
+      "locationUnknown": "Sin ubicación registrada todavía",
+      "renameBtn": "Renombrar",
+      "renameLabel": "Nuevo nombre",
+      "renameSubmit": "Guardar",
+      "renameCancel": "Cancelar",
+      "renameSuccess": "¡Listo! El nombre se actualizó.",
+      "errorEmptyName": "El nombre no puede estar vacío.",
+      "classNames": {
+        "Adventurer": "Aventurero",
+        "Warrior": "Guerrero",
+        "Mage": "Mago",
+        "Cleric": "Clérigo",
+        "Rogue": "Pícaro",
+        "Barbarian": "Bárbaro",
+        "Sorcerer": "Hechicero",
+        "Warlock": "Brujo",
+        "Bard": "Bardo",
+        "Paladin": "Paladín",
+        "Druid": "Druida",
+        "Ranger": "Explorador",
+        "Monk": "Monje",
+        "Artificer": "Artífice",
+        "BloodSlayer": "Verdugo de Sangre"
+      }
     }
   },
   "legal": {
