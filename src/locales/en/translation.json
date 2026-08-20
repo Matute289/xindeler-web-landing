@@ -579,5 +579,204 @@
     "characters": {
       "comingSoon": "There's no way to read your characters from here yet — this section is on its way."
     }
+  },
+  "legal": {
+    "backHome": "Back to home",
+    "lastUpdated": "Last updated: August 20, 2026",
+    "privacy": {
+      "title": "Privacy Policy",
+      "intro": "This policy explains what personal data Xindeler collects when you create an account, sign in (including with Discord or Google), join the waitlist, or play. It's written in plain language on purpose — if anything is unclear, reach out (see Contact at the end).",
+      "sections": [
+        {
+          "heading": "1. Who we are",
+          "body": [
+            "Xindeler is an MMORPG video game project in active development, built by Matías Grinberg (\"we\", \"the Xindeler team\").",
+            "We're responsible for the personal data we collect through xindeler.com and the services behind it (authentication server, account backend, game server)."
+          ]
+        },
+        {
+          "heading": "2. What data we collect",
+          "body": ["The data we collect depends on how you use Xindeler:"],
+          "list": [
+            "If you create an account with a username and password: your username and email. We never see your password in plain text — your browser transforms it with an algorithm (Argon2i) before sending it, and our server protects it with another round of hashing (Argon2id). Neither we nor anyone with database access can recover your original password from that.",
+            "If you create an account or sign in with Discord or Google: we only ask that provider for your account identifier and your email (with Discord, also your Discord username, used only as an initial suggestion for your Xindeler username; with Google, your public name, for the same purpose). We don't request access to your Discord servers, your contacts, your profile picture, or any other data.",
+            "If you turn on two-factor verification (2FA): we store your authenticator's secret key securely, never shared with anything outside Xindeler. If you generate backup codes, those codes are stored already encrypted — not even we can read them, only check whether one you send us matches.",
+            "While you have an active web session: a session cookie (it doesn't contain your password or any sensitive data, just an identifier tied to your account), valid for 7 days.",
+            "If you join the waitlist or apply as a contributor: your name and email (and, if applying as a contributor, the skills and portfolio you share with us).",
+            "When you play: your character's name, linked to your account, and your progress in the game. If you're banned or reported for misconduct, your IP address may be recorded together with the sanction, for moderation purposes only."
+          ]
+        },
+        {
+          "heading": "3. What we use your data for",
+          "list": [
+            "Creating and maintaining your account, and letting you sign in (including via Discord or Google).",
+            "Sending you the emails you asked for: account verification, password recovery, confirmation of changes to your account.",
+            "Preventing abuse: login attempt limits, duplicate-account detection, in-game moderation (bans).",
+            "If you joined the waitlist or applied as a contributor: updating you on the project's status or, for contributors, reaching out about your application.",
+            "Understanding how the landing page is used (Google Analytics) — always in aggregate, never to identify you individually."
+          ]
+        },
+        {
+          "heading": "4. Who we share your data with",
+          "body": ["We don't sell your data to anyone. We share it only with:"],
+          "list": [
+            "Discord and Google, if you choose to sign in with those providers — they already have your data because you have an account there; we only confirm your identity with them to authenticate you.",
+            "Our email provider, to send the transactional emails mentioned above (verification, password recovery).",
+            "Google Analytics, for aggregate usage statistics on the landing page.",
+            "The hosting provider that runs our servers.",
+            "If we're ever legally required to (for example, under a court order)."
+          ]
+        },
+        {
+          "heading": "5. Cookies and local storage",
+          "body": [
+            "We use a technical session cookie (needed for login to work) and the cookies Google Analytics sets to measure aggregate page usage. Your chosen language (Spanish/English) is saved in your browser's local storage, not in a cookie.",
+            "We don't currently show a consent banner before Analytics cookies are activated."
+          ]
+        },
+        {
+          "heading": "6. How long we keep your data",
+          "list": [
+            "Player account: for as long as the account exists. If you delete it, we immediately remove your username, email, linked Discord/Google identities, 2FA setup, and active sessions. Your username stays reserved (without your email) for a while, so no one else can grab it right after you free it up.",
+            "Waitlist and contributor applications: we don't delete these automatically today. If you want your entry removed, reach out (see Contact) and we'll do it by hand.",
+            "Web session: up to 7 days since your last login, or until you log out earlier."
+          ]
+        },
+        {
+          "heading": "7. How we protect your data",
+          "list": [
+            "Your password is never stored in plain text (double hashing, see point 2).",
+            "Password-reset and email-verification tokens are stored hashed, never in plain text.",
+            "The IP addresses we use to prevent login abuse are never stored in plain text — they're run through a cryptographic function before being saved in any log.",
+            "All communication between your browser and our servers is encrypted (HTTPS).",
+            "The session cookie has the standard technical protections so it can't be read from another site or easily stolen."
+          ]
+        },
+        {
+          "heading": "8. Your rights",
+          "body": ["As a user, at any time you can ask us for:"],
+          "list": [
+            "Access: what data of yours we have on file.",
+            "Rectification: correcting incorrect data (for example, your email).",
+            "Erasure: deleting your account and its associated data — you can do this yourself from your Account screen → Delete account; for waitlist entries or applications, reach out to us."
+          ],
+          "footer": [
+            "We respond to access requests within 10 calendar days at most, and to rectification requests within 5 business days. If you're in Argentina, you can also file a complaint with the Agencia de Acceso a la Información Pública (AAIP), the enforcement authority for Ley 25.326."
+          ]
+        },
+        {
+          "heading": "9. Minors",
+          "body": [
+            "Xindeler is intended for people 13 and older. If you're younger than that, you need permission from a parent or guardian to create an account. We don't currently verify age at registration — we rely on you telling us the truth."
+          ]
+        },
+        {
+          "heading": "10. Changes to this policy",
+          "body": [
+            "If we change something important in this policy, we'll update it here and, if the change meaningfully affects how we use data we already hold about you, we'll let you know (for example, by email)."
+          ]
+        },
+        {
+          "heading": "11. Contact",
+          "body": [
+            "Questions, requests about your data, or something doesn't add up? Reach out on Discord (link in the footer)."
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "title": "Terms & Conditions",
+      "intro": "These terms govern the use of xindeler.com, your account, and the Xindeler game while it's in development. By creating an account — with a username and password, with Discord, or with Google — you're accepting them.",
+      "sections": [
+        {
+          "heading": "1. Acceptance",
+          "body": [
+            "By creating an account or using any Xindeler service (the website, sign-in, the game) you accept these terms and our Privacy Policy. If you don't agree, don't use the service."
+          ]
+        },
+        {
+          "heading": "2. Eligibility and your account",
+          "list": [
+            "You must be at least 13 years old; if you're under 18, you need permission from a responsible adult.",
+            "You're responsible for keeping your password and account access secure (including your Discord/Google access if you linked it). Any activity from your account is considered your own.",
+            "One person, one account, unless we explicitly give you permission otherwise.",
+            "You have to give us real information when registering (username, email)."
+          ]
+        },
+        {
+          "heading": "3. Signing in with Discord or Google",
+          "body": [
+            "If you choose to link your account with Discord or Google, you're also subject to those services' own terms. We only receive your identifier and email — see the Privacy Policy for the exact detail.",
+            "You can unlink Discord or Google from your account at any time from the Account screen, as long as you have another way to sign in (username/password, or another linked provider)."
+          ]
+        },
+        {
+          "heading": "4. Xindeler is in development",
+          "body": [
+            "Xindeler is an actively-under-construction project. That means the game may have bugs, server downtime, and frequent changes. Characters, progress, and save data may be reset during development (for example, between testing phases) — we'll try to give advance notice when we can, but we can't always guarantee it.",
+            "We don't guarantee the service will be available at all times or free of errors."
+          ]
+        },
+        {
+          "heading": "5. Acceptable use",
+          "body": ["You may not:"],
+          "list": [
+            "Use cheats, exploits, bots, or any tool that gives you an advantage not intended by the game's design.",
+            "Harass, discriminate against, or threaten other players.",
+            "Impersonate another person or a member of the Xindeler team.",
+            "Attempt to access accounts or parts of the system you're not authorized for.",
+            "Use the service for illegal activity."
+          ]
+        },
+        {
+          "heading": "6. Character names and content",
+          "body": [
+            "Character names and any content you generate within the game (chat, etc.) must comply with the previous point. We reserve the right to change or remove a character name we consider offensive, and to moderate in-game content."
+          ]
+        },
+        {
+          "heading": "7. Intellectual property",
+          "body": [
+            "Xindeler's engine and much of its code are free software under the GPL-3.0 license (see the license link in the footer) — inherited and adapted from Veloren. The name \"Xindeler\", its visual identity, and the project's own narrative and artistic content are not covered by that license."
+          ]
+        },
+        {
+          "heading": "8. Items and in-game economy",
+          "body": [
+            "Any currency, item, or virtual resource within Xindeler has no real monetary value, cannot be exchanged for money, and exists only within the game. We reserve the right to adjust the game's economy at any time."
+          ]
+        },
+        {
+          "heading": "9. Suspension and account closure",
+          "body": [
+            "We may suspend or close your account if you violate these terms, without prior notice in serious cases. You can delete your own account at any time from the Account screen — see the Privacy Policy for what happens to your data in that case."
+          ]
+        },
+        {
+          "heading": "10. No warranties",
+          "body": [
+            "Xindeler is provided \"as is\", without warranties of any kind, express or implied. To the extent permitted by law, we're not liable for indirect damages arising from use of the service, including loss of game progress during development."
+          ]
+        },
+        {
+          "heading": "11. Changes to these terms",
+          "body": [
+            "We may update these terms as the project moves forward. If a change is significant, we'll make it noticeable on the site (and by email where relevant)."
+          ]
+        },
+        {
+          "heading": "12. Governing law",
+          "body": [
+            "These terms are governed by the laws of Argentina."
+          ]
+        },
+        {
+          "heading": "13. Contact",
+          "body": [
+            "Questions about these terms: reach out on Discord (link in the footer)."
+          ]
+        }
+      ]
+    }
   }
 }

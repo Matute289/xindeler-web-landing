@@ -1,10 +1,11 @@
 import { BookOpen, FileText, Download, MessageCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import GitHubIcon from './GitHubIcon';
 
 const LINKS_COMMUNITY = [
   { key: 'github',  href: 'https://github.com/Matute289/xindeler-new-horizon', icon: GitHubIcon },
-  { key: 'discord', href: '#',                                               icon: MessageCircle },
+  { key: 'discord', href: 'https://discord.gg/Jpg9scQE',                    icon: MessageCircle },
   { key: 'wiki',    href: 'https://wiki.xindeler.com',         icon: BookOpen      },
 ];
 
@@ -89,9 +90,17 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-gray-600 text-xs font-cinzel tracking-wide text-center">
-            {t('footer.copyright')}
-          </p>
+          <div className="flex items-center gap-4">
+            <p className="text-gray-600 text-xs font-cinzel tracking-wide text-center">
+              {t('footer.copyright')}
+            </p>
+            <Link to="/privacy" className="text-gray-600 hover:text-x-gold text-xs transition-colors">
+              {t('legal.privacy.title')}
+            </Link>
+            <Link to="/terms" className="text-gray-600 hover:text-x-gold text-xs transition-colors">
+              {t('legal.terms.title')}
+            </Link>
+          </div>
           <p className="text-gray-700 text-xs text-center">
             {t('footer.forkedFrom')}{' '}
             <a

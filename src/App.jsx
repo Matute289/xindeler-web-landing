@@ -25,6 +25,7 @@ import VerifyEmailPage from './pages/VerifyEmailPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import AccountPage from './pages/AccountPage';
+import LegalPage from './pages/LegalPage';
 import { useSession } from './hooks/useSession';
 
 function LandingHome() {
@@ -69,6 +70,8 @@ export default function App() {
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route path="/account" element={<AccountPage />} />
+      <Route path="/privacy" element={<LegalPage docKey="privacy" />} />
+      <Route path="/terms" element={<LegalPage docKey="terms" />} />
     </Routes>
   );
 }
