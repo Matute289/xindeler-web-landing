@@ -1,16 +1,23 @@
-# 006 — Visor de personajes en la pantalla de cuenta (BLOQUEADA: falta API en el game server)
+# 006 — Visor de personajes en la pantalla de cuenta
 
-**Estado:** `[ ]` Pendiente — **bloqueada por un gap arquitectónico cross-repo**. Actualización
-2026-08-15: la tab "Personajes" ya existe en `/account` como placeholder ("Próximamente") —
-`src/components/account/CharactersTab.jsx` — para no retrasar el resto de la pantalla (005, ya
-deployada). El blocker real ya tiene tarea propia del otro lado: **NH-79** en el backlog de
-`xindeler-new-horizon` (repo de diseño privado), con spec/plan/tasks completos, esperando que
-Matías responda su worksheet de decisiones (§9). Secuenciada por pedido de Matías justo después de
-NH-78 (2FA en el flujo de multijugador).
-**Prioridad:** Alta (mismo pedido de Matías que 005, pero no se puede implementar hoy)
-**Esfuerzo estimado:** sin estimar del lado de este repo — depende de un endpoint que todavía no
-existe en ningún otro repo
-**Depende de:** trabajo nuevo, no planificado todavía, en `xindeler-new-horizon` (game server). También depende de [007-sesion-web-autenticada.md](007-sesion-web-autenticada.md), ya que la pantalla de cuenta que aloja esta tab requiere sesión persistente igual que 005.
+**Estado:** `[ ]` Pendiente — **el blocker cross-repo ya se resolvió (2026-08-20), esta tarea queda
+desbloqueada**. El endpoint que faltaba (NH-79) está implementado, mergeado en los tres repos
+involucrados, y validado end-to-end en un ambiente local completo (los tres servicios corriendo a
+la vez: `xindeler-auth`, `xindeler-web-api`, `xindeler-new-horizon`) — se creó un personaje real
+por el protocolo del juego, se lo listó y renombró a través de `GET/POST /api/account/characters*`
+de `xindeler-web-api`, se probaron los casos de rechazo (nombre vacío, caracteres inválidos,
+personaje inexistente), y se lo eliminó, todo con la cadena de auth real (sin el stub de debug de
+la Fase 1 de NH-79). Detalle completo en la sección "Resolución" más abajo. La tab "Personajes" en
+`/account` sigue como placeholder ("Próximamente") —
+`src/components/account/CharactersTab.jsx` — implementarla contra el endpoint real es lo único que
+falta para cerrar esta tarea.
+**Prioridad:** Alta (mismo pedido de Matías que 005)
+**Esfuerzo estimado:** frontend puro ahora — consumir `GET /api/account/characters` y
+`POST /api/account/characters/{id}/rename`, ambos ya en producción del lado de `xindeler-web-api`
+una vez que el game server esté deployado (ver riesgo de topología en "Resolución")
+**Depende de:** [007-sesion-web-autenticada.md](007-sesion-web-autenticada.md) para la sesión
+persistente (ya resuelto — ver 008, navbar consciente de sesión, ya mergeada). El blocker de
+backend original (endpoint inexistente en `xindeler-new-horizon`) está resuelto — ver "Resolución".
 
 ---
 
@@ -107,6 +114,52 @@ esperar a este blocker.
 
 ---
 
+## Resolución (2026-08-20)
+
+El endpoint se diseñó e implementó en los tres repos, en el orden que pidió Matías
+(`xindeler-new-horizon` primero), respondiendo cada una de las "Decisiones a confirmar" de abajo:
+
+1. **Quién lo diseña/implementa:** las tres piezas, coordinadas cross-repo:
+   - `xindeler-new-horizon` (NH-79): endpoint in-process nuevo, `GET/POST /player_api/v1/characters*`
+     (loopback-only, PR #197 Fase 1 + PR #198 Fase 2 + PR #199 fix de un bug no relacionado que
+     bloqueaba el arranque local, `EventBus<DismissSummonEvent>` sin registrar).
+   - `xindeler-auth` (N-01): `CharacterAccessToken` acotado (60s, un solo uso) —
+     `POST /issue-character-access-token` / `POST /verify-character-access-token`, con dos
+     credenciales de servicio separadas que nunca se cruzan (PR #39 + PR #40, el wrapper de
+     cliente `authc`).
+   - `xindeler-web-api` (Fase F): el proxy público — `GET/POST /api/account/characters*` (PR #14).
+2. **Expuesto directo o vía proxy:** vía proxy — `xindeler-web-api`, nunca directo al game server
+   (mismo criterio que el resto de este backlog: nada server-to-server se llama directo desde el
+   frontend).
+3. **Autenticación:** token acotado nuevo (`CharacterAccessToken`), no el `AuthToken` de login —
+   ver Fase N de `xindeler-auth` para el porqué (dos modelos de confianza distintos, no se podían
+   compartir).
+4. **Jerarquía ciudad → reino → continente:** resuelto de forma más simple de lo esperado — la
+   respuesta trae `location: { site, kingdom, continent }`, con `kingdom`/`continent` en `null`
+   hasta que exista una jerarquía real de mundo consultable (no bloqueante para esta tarea, el
+   frontend puede mostrar solo `site` por ahora).
+5. **Rename, mismo endpoint o separado:** dos rutas separadas bajo el mismo namespace —
+   `GET .../characters` (lectura) y `POST .../characters/{id}/rename` (escritura), no un único
+   endpoint combinado.
+6. **005 sola primero:** así se hizo — 005 y 008 (navbar) ya están deployadas, esta tarea quedó
+   como la única pieza pendiente de la pantalla de cuenta.
+
+**Validado end-to-end**, no solo revisado por código: se levantaron los tres servicios en local
+(`xindeler-auth` + `xindeler-web-api` + `xindeler-new-horizon`), se creó una cuenta de prueba real,
+se creó un personaje por el protocolo real del juego (no un insert a mano), y se lo listó,
+renombró, y borró a través de `xindeler-web-api` — incluyendo los casos de rechazo (nombre vacío →
+`422`, caracteres inválidos → `409` reenviado desde el game server, personaje inexistente → `409`).
+La cadena de autenticación real (sin el stub de debug de la Fase 1 de NH-79) funcionó de punta a
+punta.
+
+**Riesgo que sigue abierto, no bloquea esta tarea:** el game server (`xindeler-new-horizon`)
+todavía no está deployado en ningún lado — la prueba de arriba fue 100% local. `xindeler-web-api`
+espera al game server en `WEB_API_GAME_SERVER_PLAYER_API_URL` (loopback-only por diseño de ese
+repo, NH-75), así que ambos servicios van a tener que compartir host cuando se deploye — decisión
+de infraestructura pendiente, no de este repo.
+
+---
+
 ## Estructura propuesta (para cuando el endpoint exista del lado de `xindeler-new-horizon`)
 
 ```
@@ -139,6 +192,9 @@ src/components/account/
 ---
 
 ## Decisiones a confirmar
+
+**Las seis quedaron respondidas — ver "Resolución" arriba.** Se deja el registro original de las
+preguntas como referencia histórica de por qué se tomó cada decisión.
 
 1. **¿Quién diseña e implementa el endpoint de lectura de personajes en `xindeler-new-horizon`, y
    cuándo entra en su backlog?** Esto bloquea todo lo demás en esta tarea — no lo puede resolver
