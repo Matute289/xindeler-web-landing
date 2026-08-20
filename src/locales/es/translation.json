@@ -385,6 +385,12 @@
       }
     ]
   },
+  "cookieConsent": {
+    "text": "Usamos cookies técnicas necesarias para el login y, si lo permitís, cookies de Google Analytics para entender el uso agregado de la página. Podés elegir. Más detalle en nuestra",
+    "acceptBtn": "Aceptar",
+    "declineBtn": "Solo esenciales",
+    "preferencesLink": "Preferencias de cookies"
+  },
   "footer": {
     "desc": "Un MMORPG de código abierto construido en Rust. Explora, crea, combate y da forma a un mundo vivo junto a miles de aventureros.",
     "community": "Comunidad",
@@ -630,8 +636,8 @@
         {
           "heading": "5. Cookies y almacenamiento local",
           "body": [
-            "Usamos una cookie técnica de sesión (necesaria para que funcione el login) y las cookies que pone Google Analytics para medir el uso agregado de la página. Tu idioma elegido (español/inglés) se guarda en el almacenamiento local de tu navegador, no en una cookie.",
-            "Hoy no mostramos un banner de consentimiento antes de activar las cookies de Analytics."
+            "Usamos una cookie técnica de sesión (necesaria para que funcione el login, no se puede desactivar) y, solo si lo aceptás en el banner que te mostramos al entrar, las cookies que pone Google Analytics para medir el uso agregado de la página. Tu idioma elegido (español/inglés) se guarda en el almacenamiento local de tu navegador, no en una cookie.",
+            "Podés cambiar tu elección sobre Analytics en cualquier momento desde \"Preferencias de cookies\", en el pie de página."
           ]
         },
         {

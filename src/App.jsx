@@ -21,19 +21,22 @@ import EasterEgg from './components/EasterEgg';
 import AmbientSound from './components/AmbientSound';
 import Analytics from './components/Analytics';
 import AuthModal from './components/AuthModal';
+import CookieConsent from './components/CookieConsent';
 import VerifyEmailPage from './pages/VerifyEmailPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import AccountPage from './pages/AccountPage';
 import LegalPage from './pages/LegalPage';
 import { useSession } from './hooks/useSession';
+import { useCookieConsent } from './hooks/useCookieConsent';
 
 function LandingHome() {
   const [authModal, setAuthModal] = useState(null); // null | 'register' | 'login'
   const { session, refreshSession } = useSession();
+  const { consent, accept, decline, reset } = useCookieConsent();
   return (
     <div className="min-h-screen bg-x-dark">
-      <Analytics />
+      {consent === 'accepted' && <Analytics />}
       <LoadingScreen />
       <EasterEgg />
       <AmbientSound />
@@ -54,10 +57,11 @@ function LandingHome() {
         <GitHubStats />
         <DownloadSection />
       </main>
-      <Footer />
+      <Footer onOpenCookiePreferences={reset} />
       {authModal && (
         <AuthModal mode={authModal} onClose={() => setAuthModal(null)} onLoggedIn={refreshSession} />
       )}
+      <CookieConsent consent={consent} onAccept={accept} onDecline={decline} />
     </div>
   );
 }

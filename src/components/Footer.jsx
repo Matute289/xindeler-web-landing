@@ -15,7 +15,7 @@ const LINKS_RESOURCES = [
   { key: 'license',   href: 'https://github.com/Matute289/xindeler-new-horizon/blob/development/LICENSE', icon: FileText, labelOverride: 'License (GPL)' },
 ];
 
-export default function Footer() {
+export default function Footer({ onOpenCookiePreferences }) {
   const { t } = useTranslation();
 
   return (
@@ -100,6 +100,14 @@ export default function Footer() {
             <Link to="/terms" className="text-gray-600 hover:text-x-gold text-xs transition-colors">
               {t('legal.terms.title')}
             </Link>
+            {onOpenCookiePreferences && (
+              <button
+                onClick={onOpenCookiePreferences}
+                className="text-gray-600 hover:text-x-gold text-xs transition-colors"
+              >
+                {t('cookieConsent.preferencesLink')}
+              </button>
+            )}
           </div>
           <p className="text-gray-700 text-xs text-center">
             {t('footer.forkedFrom')}{' '}
