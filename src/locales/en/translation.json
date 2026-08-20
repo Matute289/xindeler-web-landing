@@ -385,6 +385,12 @@
       }
     ]
   },
+  "cookieConsent": {
+    "text": "We use technical cookies needed for login and, if you allow it, Google Analytics cookies to understand aggregate page usage. It's your choice. More detail in our",
+    "acceptBtn": "Accept",
+    "declineBtn": "Essential only",
+    "preferencesLink": "Cookie preferences"
+  },
   "footer": {
     "desc": "An open-source MMORPG built in Rust. Explore, craft, fight and shape a living world alongside thousands of adventurers.",
     "community": "Community",
@@ -630,8 +636,8 @@
         {
           "heading": "5. Cookies and local storage",
           "body": [
-            "We use a technical session cookie (needed for login to work) and the cookies Google Analytics sets to measure aggregate page usage. Your chosen language (Spanish/English) is saved in your browser's local storage, not in a cookie.",
-            "We don't currently show a consent banner before Analytics cookies are activated."
+            "We use a technical session cookie (needed for login to work, can't be turned off) and, only if you accept it in the banner we show when you arrive, the cookies Google Analytics sets to measure aggregate page usage. Your chosen language (Spanish/English) is saved in your browser's local storage, not in a cookie.",
+            "You can change your choice about Analytics at any time from \"Cookie preferences\" in the footer."
           ]
         },
         {
