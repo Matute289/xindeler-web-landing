@@ -33,6 +33,7 @@ function mapErrorCode(code, t) {
         case 'OAUTH_PENDING_TOKEN_INVALID': return t('auth.oauthCallback.errorPendingExpired');
         case 'USERNAME_UNAVAILABLE': return t('auth.oauthCallback.errorUsernameTaken');
         case 'USERNAME_RESERVED': return t('auth.oauthCallback.errorUsernameReserved');
+        case 'RATE_LIMITED': return t('auth.errorRateLimited');
         default: return t('auth.oauthCallback.errorGeneric');
     }
 }

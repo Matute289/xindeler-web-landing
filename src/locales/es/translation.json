@@ -431,6 +431,7 @@
     "errorUserExists": "El nombre de usuario ya existe.",
     "errorInvalidLogin": "Usuario o contraseña incorrectos.",
     "errorNetwork": "Error de red. Revisá tu conexión e intentá de nuevo.",
+    "errorRateLimited": "Demasiados intentos. Esperá unos minutos y volvé a intentarlo.",
     "errorUnknown": "Ocurrió un error inesperado. Intentá de nuevo.",
     "legacyModal": {
       "title": "Confirmá tu email",

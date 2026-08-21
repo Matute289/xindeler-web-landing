@@ -431,6 +431,7 @@
     "errorUserExists": "That username is already taken.",
     "errorInvalidLogin": "Invalid username or password.",
     "errorNetwork": "Network error. Check your connection and try again.",
+    "errorRateLimited": "Too many attempts. Please wait a few minutes and try again.",
     "errorUnknown": "An unexpected error occurred. Please try again.",
     "legacyModal": {
       "title": "Confirm your email",

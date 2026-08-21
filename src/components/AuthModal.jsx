@@ -228,6 +228,7 @@ export default function AuthModal({ mode, onClose, onLoggedIn }) {
                 });
                 if (res.ok) { setSuccess(t('auth.registerSuccess')); setPassword(''); setConfirm(''); }
                 else if (res.status === 409) setError(t('auth.errorUserExists'));
+                else if (res.status === 429) setError(t('auth.errorRateLimited'));
                 else setError(t('auth.errorUnknown'));
             } else {
                 const res = await fetch(`${WEB_API}/session/login`, {
@@ -260,6 +261,7 @@ export default function AuthModal({ mode, onClose, onLoggedIn }) {
                     }
                 }
                 else if (res.status === 401) setError(t('auth.errorInvalidLogin'));
+                else if (res.status === 429) setError(t('auth.errorRateLimited'));
                 else setError(t('auth.errorUnknown'));
             }
         } catch {
@@ -297,6 +299,7 @@ export default function AuthModal({ mode, onClose, onLoggedIn }) {
                 if (body?.code === 'TOTP_INVALID_CODE') setTotpError(t('auth.totpErrorInvalidCode'));
                 else if (body?.code === 'TOTP_CHALLENGE_INVALID') setTotpError(t('auth.totpErrorChallengeExpired'));
                 else if (body?.code === 'ACCOUNT_2FA_LOCKED') setTotpError(t('auth.totpErrorLocked'));
+                else if (res.status === 429) setTotpError(t('auth.errorRateLimited'));
                 else setTotpError(t('auth.errorUnknown'));
             }
         } catch {
