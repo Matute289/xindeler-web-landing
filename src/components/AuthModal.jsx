@@ -4,6 +4,8 @@ import { X, Eye, EyeOff, UserPlus, LogIn } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { netPrehash } from '../lib/netPrehash';
 import { Link } from 'react-router-dom';
+import DiscordIcon from './DiscordIcon';
+import GoogleIcon from './GoogleIcon';
 
 const AUTH_API = 'https://auth.xindeler.com';
 // Login goes through xindeler-web-api instead of straight to AUTH_API — it's
@@ -145,6 +147,12 @@ export default function AuthModal({ mode, onClose, onLoggedIn }) {
     const switchTab = (newTab) => {
         setTab(newTab);
         clearForm();
+    };
+
+    // Plain navigation, no URL built here — xindeler-auth owns the
+    // authorize-URL construction (state/PKCE/scopes) entirely server-side.
+    const startOAuth = (provider) => {
+        window.location.href = `${AUTH_API}/oauth/${provider}/start`;
     };
 
     // Consulta la disponibilidad del nombre mientras se escribe, solo al
@@ -549,7 +557,31 @@ export default function AuthModal({ mode, onClose, onLoggedIn }) {
                                 </button>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="p-6 flex flex-col gap-4">
+                            <div className="px-6 pt-6 flex flex-col gap-2.5">
+                                <button
+                                    type="button"
+                                    onClick={() => startOAuth('discord')}
+                                    className="w-full flex items-center justify-center gap-2.5 py-2.5 font-cinzel text-xs tracking-wider text-white bg-[#5865F2] rounded hover:bg-[#4752c4] transition-colors"
+                                >
+                                    <DiscordIcon size={15} />
+                                    {t('auth.oauth.continueWithDiscord')}
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => startOAuth('google')}
+                                    className="w-full flex items-center justify-center gap-2.5 py-2.5 font-cinzel text-xs tracking-wider text-gray-800 bg-white rounded hover:bg-gray-100 transition-colors"
+                                >
+                                    <GoogleIcon size={15} />
+                                    {t('auth.oauth.continueWithGoogle')}
+                                </button>
+                                <div className="flex items-center gap-3 pt-1">
+                                    <div className="flex-1 h-px bg-white/10" />
+                                    <span className="text-[11px] text-gray-600">{t('auth.oauth.divider')}</span>
+                                    <div className="flex-1 h-px bg-white/10" />
+                                </div>
+                            </div>
+
+                            <form onSubmit={handleSubmit} className="p-6 pt-4 flex flex-col gap-4">
                                 <InputField
                                     label={t('auth.username')}
                                     hint={t('auth.usernameHint')}

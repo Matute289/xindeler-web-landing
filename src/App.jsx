@@ -23,6 +23,7 @@ import Analytics from './components/Analytics';
 import AuthModal from './components/AuthModal';
 import CookieConsent from './components/CookieConsent';
 import VerifyEmailPage from './pages/VerifyEmailPage';
+import OAuthCallbackPage from './pages/OAuthCallbackPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import AccountPage from './pages/AccountPage';
@@ -71,6 +72,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<LandingHome />} />
       <Route path="/verify-email" element={<VerifyEmailPage />} />
+      <Route path="/oauth/callback" element={<OAuthCallbackPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route path="/account" element={<AccountPage />} />
