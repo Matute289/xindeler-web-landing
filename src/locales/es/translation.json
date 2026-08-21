@@ -488,7 +488,30 @@
     "totpErrorInvalidCode": "El código es incorrecto.",
     "totpErrorChallengeExpired": "Esta verificación expiró o ya fue usada. Iniciá sesión de nuevo.",
     "totpErrorLocked": "Esta cuenta está bloqueada por intentos fallidos repetidos. Contactá a soporte.",
-    "goToAccount": "Ir a mi cuenta"
+    "goToAccount": "Ir a mi cuenta",
+    "oauth": {
+      "continueWithDiscord": "Continuar con Discord",
+      "continueWithGoogle": "Continuar con Google",
+      "divider": "o con usuario y contraseña"
+    },
+    "oauthCallback": {
+      "loading": "Conectando tu cuenta…",
+      "errorGeneric": "Algo salió mal al iniciar sesión. Volvé a intentarlo.",
+      "errorProvider": "Hubo un problema con el proveedor. Intentá de nuevo.",
+      "errorEmailNotVerified": "Tu cuenta no tiene el email verificado del lado del proveedor.",
+      "errorAccountHas2fa": "Ya existe una cuenta con este email que tiene verificación en dos pasos activada. Iniciá sesión con tu usuario y contraseña.",
+      "errorPendingExpired": "Esta solicitud de registro expiró o no es válida. Volvé a intentar desde el principio.",
+      "errorUsernameTaken": "Ese nombre de usuario ya está en uso.",
+      "errorUsernameReserved": "Ese nombre está reservado temporalmente.",
+      "backHome": "Volver al inicio",
+      "reviewTitle": "Confirmá tu nombre de usuario",
+      "reviewDesc": "Te sugerimos este nombre a partir de tu cuenta. Podés cambiarlo antes de crear tu cuenta en Xindeler.",
+      "usernameLabel": "Nombre de usuario",
+      "confirmBtn": "Crear cuenta",
+      "confirming": "Creando cuenta…",
+      "totpTitle": "Verificación en dos pasos",
+      "totpDesc": "Esta cuenta tiene 2FA activado. Ingresá el código de tu app de autenticación."
+    }
   },
   "account": {
     "title": "Mi cuenta",

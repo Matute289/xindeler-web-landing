@@ -22,7 +22,7 @@
 
 | # | Tarea | Archivo spec | Estado |
 |---|-------|--------------|--------|
-| 009 | Botones "Continuar con Discord" / "Continuar con Google" en el modal de login/registro | — | `[ ]` — bloqueada, esperando la implementación del backend en `xindeler-auth` (G-05). Spec + plan ya escritos ahí: `docs/superpowers/specs/2026-08-16-oauth-discord-google-design.md` y `docs/superpowers/plans/2026-08-16-oauth-discord-google.md`. Cuando esté deployado, el flujo del lado landing es: el botón navega directo a `https://auth.xindeler.com/oauth/{discord,google}/start` (nada de armar la URL de autorización acá, el backend lo hace todo); una página nueva en `/oauth/callback` lee `window.location.hash` (`#token=...` en éxito, `#error=<código>` en fallo) y sigue el mismo camino que ya usa el login con password una vez que tiene el token. No hay trabajo de backend propio de este repo, es 100% UI |
+| 009 | Botones "Continuar con Discord" / "Continuar con Google" en el modal de login/registro | — | `[~]` — implementada, pendiente de verificación manual con proveedores reales. G-05 (`xindeler-auth`) ya está en producción. Pedido explícito de Matías: cuenta nueva vía OAuth no se auto-crea al toque, primero se revisa/edita el username — ese paso (`OAuthPendingCache` + `POST /oauth/confirm-registration`) se agregó en `xindeler-auth#49` (sin mergear todavía). `xindeler-web-api#21` suma `POST /api/session/oauth` para canjear el token por cookie de sesión. Acá: botones en `AuthModal.jsx` (navegan directo a `/oauth/{provider}/start`) + página nueva `/oauth/callback` que maneja los cuatro casos del hash (`#token=`, `#challenge_id=`, `#pending_token=&suggested_username=` con pantalla de revisión, `#error=`) |
 
 ## Prioridad Baja
 

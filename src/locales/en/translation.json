@@ -488,7 +488,30 @@
     "totpErrorInvalidCode": "The code is incorrect.",
     "totpErrorChallengeExpired": "This verification expired or was already used. Please log in again.",
     "totpErrorLocked": "This account is locked after repeated failed attempts. Contact support.",
-    "goToAccount": "Go to my account"
+    "goToAccount": "Go to my account",
+    "oauth": {
+      "continueWithDiscord": "Continue with Discord",
+      "continueWithGoogle": "Continue with Google",
+      "divider": "or with username and password"
+    },
+    "oauthCallback": {
+      "loading": "Connecting your account…",
+      "errorGeneric": "Something went wrong signing you in. Please try again.",
+      "errorProvider": "There was a problem with the provider. Please try again.",
+      "errorEmailNotVerified": "Your account's email isn't verified on the provider's side.",
+      "errorAccountHas2fa": "An account with this email already has two-factor authentication enabled. Log in with your username and password instead.",
+      "errorPendingExpired": "This registration attempt expired or is no longer valid. Please start over.",
+      "errorUsernameTaken": "That username is already taken.",
+      "errorUsernameReserved": "That username is temporarily reserved.",
+      "backHome": "Back to home",
+      "reviewTitle": "Confirm your username",
+      "reviewDesc": "We suggested this name from your account. You can change it before creating your Xindeler account.",
+      "usernameLabel": "Username",
+      "confirmBtn": "Create account",
+      "confirming": "Creating account…",
+      "totpTitle": "Two-factor verification",
+      "totpDesc": "This account has 2FA enabled. Enter the code from your authenticator app."
+    }
   },
   "account": {
     "title": "My account",
