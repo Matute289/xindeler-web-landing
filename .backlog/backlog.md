@@ -22,7 +22,7 @@
 
 | # | Tarea | Archivo spec | Estado |
 |---|-------|--------------|--------|
-| 009 | Botones "Continuar con Discord" / "Continuar con Google" en el modal de login/registro | — | `[~]` — implementada, pendiente de verificación manual con proveedores reales. G-05 (`xindeler-auth`) ya está en producción. Pedido explícito de Matías: cuenta nueva vía OAuth no se auto-crea al toque, primero se revisa/edita el username — ese paso (`OAuthPendingCache` + `POST /oauth/confirm-registration`) se agregó en `xindeler-auth#49` (sin mergear todavía). `xindeler-web-api#21` suma `POST /api/session/oauth` para canjear el token por cookie de sesión. Acá: botones en `AuthModal.jsx` (navegan directo a `/oauth/{provider}/start`) + página nueva `/oauth/callback` que maneja los cuatro casos del hash (`#token=`, `#challenge_id=`, `#pending_token=&suggested_username=` con pantalla de revisión, `#error=`) |
+| 009 | Botones "Continuar con Discord" / "Continuar con Google" en el modal de login/registro | — | `[x]` — cerrada, verificada end-to-end en producción real 2026-08-21 con la cuenta real de Matías (Discord y Google, cuenta nueva con revisión de username, cuenta ya vinculada). En el proceso se encontraron y corrigieron dos bugs reales de 2FA no relacionados con OAuth en sí (`xindeler-web-landing#65`/`#66`), ver tarea 005 |
 
 ## Prioridad Baja
 
