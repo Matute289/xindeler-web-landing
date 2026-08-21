@@ -1,13 +1,16 @@
 # 005 — Pantalla de cuenta del jugador: sesión, seguridad (2FA) y nombre de usuario
 
-**Estado:** `[x]` Implementada (2026-08-15) — backend (`xindeler-web-api#11`) y frontend
-(`xindeler-web-landing#45`) completos, código verificado (build/test/lint en verde en ambos repos,
-74 tests de integración en el backend). **Pendiente de verificación manual con sesión real en el
-browser** — el smoke test llegó hasta el registro y el manejo de `EMAIL_VERIFICATION_REQUIRED`
-contra producción real, pero no pudo completar un login (la cuenta de prueba quedó pendiente de
-verificar email, sin acceso a esa bandeja desde acá). Confirmar el flujo completo (2FA
-enroll→confirm→backup codes, cambiar contraseña, eliminar cuenta, cooldown de username) con una
-cuenta real antes de considerarla verificada de punta a punta.
+**Estado:** `[x]` Cerrada — verificada end-to-end contra producción real 2026-08-21, dos veces:
+primero con la cuenta real de Matías (login con 2FA — encontró y corrigió dos bugs reales, ver
+`xindeler-web-landing#65`/`#66`), después con una cuenta de prueba descartable (registro real vía
+`mailinator.com`, verificación de email, prehash calculado con el `netPrehash.js` real del
+frontend, códigos TOTP generados con una implementación RFC 6238 propia): enroll→confirm→backup
+codes, login con desafío 2FA (202) y canje del código, disable (con revocación de sesión
+confirmada), cambiar contraseña (con revocación de sesión confirmada), cambiar username (con
+revocación de sesión confirmada), cooldown de cambio de username (`USERNAME_CHANGE_COOLDOWN`
+confirmado, sesión no revocada tras un fallo), eliminar cuenta (login posterior confirmado
+rechazado). También confirmado: el sistema TOTP rechaza reutilizar el mismo código dentro de la
+misma ventana de 30s (anti-replay funcionando).
 **Prioridad:** Alta
 **Esfuerzo estimado:** L (pantalla nueva con dos tabs, más cambiar contraseña y eliminar cuenta
 sumados el 2026-08-15)
