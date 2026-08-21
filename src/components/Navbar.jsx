@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Download, UserPlus, LogIn, User, ChevronDown, LogOut } from 'lucide-react';
+import { Menu, X, Download, LogIn, User, ChevronDown, LogOut } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 
@@ -153,11 +153,11 @@ export default function Navbar({ onOpenAuth, session, refreshSession }) {
             </div>
           ) : onOpenAuth && (
             <button
-              onClick={() => onOpenAuth('register')}
+              onClick={() => onOpenAuth('login')}
               className="flex items-center gap-2 px-4 py-2 font-cinzel text-xs tracking-wider text-x-gold border border-x-gold/40 rounded hover:bg-x-gold/10 transition-colors duration-300"
             >
-              <UserPlus size={13} />
-              {t('nav.register')}
+              <LogIn size={13} />
+              {t('nav.login')}
             </button>
           )}
           <button
