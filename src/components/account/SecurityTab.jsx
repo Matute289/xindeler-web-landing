@@ -237,7 +237,7 @@ export default function SecurityTab({ session, onSessionInvalidated, onTotpChang
                 <h3 className="font-cinzel text-sm tracking-widest uppercase text-x-gold">
                     {t('account.security.totp.enrollTitle')}
                 </h3>
-                <p className="text-sm text-gray-400">{t('account.security.totp.enrollPasswordLabel')}</p>
+                <p className="text-sm text-gray-400">{t('account.security.totp.enrollIntro')}</p>
                 <Field
                     label={t('account.security.totp.enrollPasswordLabel')}
                     type="password"
