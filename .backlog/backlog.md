@@ -14,7 +14,7 @@
 | 003 | Wiki del juego — VitePress, nuevo repo, contenido bilingüe | [003-wiki.md](tasks/003-wiki.md) | `[x]` |
 | 004 | Portal de documentación técnica — Docusaurus, nuevo repo, ORACLE+AURORA | [004-docs.md](tasks/004-docs.md) | `[x]` — redirigido a `xindeler-documentation`, ver su backlog propio |
 | 005 | Pantalla de cuenta del jugador — sesión, seguridad (2FA) y nombre de usuario | [005-cuenta-jugador-seguridad.md](tasks/005-cuenta-jugador-seguridad.md) | `[~]` — implementada, pendiente de verificación manual con sesión real |
-| 006 | Visor de personajes en la pantalla de cuenta — frontend implementado, falta validar contra producción | [006-cuenta-jugador-personajes.md](tasks/006-cuenta-jugador-personajes.md) | `[~]` — `CharactersTab.jsx` ya consume `GET/POST /api/account/characters*` de verdad (2026-08-20); falta confirmar contra el game server real una vez que BL-83 (`xindeler-new-horizon`) deploye la versión con NH-79 |
+| 006 | Visor de personajes en la pantalla de cuenta | [006-cuenta-jugador-personajes.md](tasks/006-cuenta-jugador-personajes.md) | `[x]` — cerrada, verificada end-to-end contra producción real 2026-08-21 (cuenta + personaje real, list/rename desde la UI real) |
 | 007 | Sesión web autenticada — cómo la landing recuerda quién está logueado | [007-sesion-web-autenticada.md](tasks/007-sesion-web-autenticada.md) | `[x]` — deployada en producción real el 2026-08-15 (`xindeler-web-api`, ver su `.backlog/README.md`) |
 | 008 | Navbar consciente de sesión — botón de usuario + menú desplegable a Cuenta | [008-navbar-sesion.md](tasks/008-navbar-sesion.md) | `[x]` — implementada y probada de punta a punta con una cuenta real (desktop + mobile) |
 

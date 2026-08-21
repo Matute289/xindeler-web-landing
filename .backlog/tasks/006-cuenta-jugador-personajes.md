@@ -1,27 +1,38 @@
 # 006 — Visor de personajes en la pantalla de cuenta
 
-**Estado:** `[~]` Frontend implementado (2026-08-20), **falta la verificación final contra
-producción real**. El endpoint (NH-79) está implementado, mergeado en los tres repos, y validado
-end-to-end en un ambiente local completo (los tres servicios corriendo a la vez: `xindeler-auth`,
-`xindeler-web-api`, `xindeler-new-horizon`) — se creó un personaje real por el protocolo del juego,
-se lo listó y renombró a través de `GET/POST /api/account/characters*` de `xindeler-web-api`, se
-probaron los casos de rechazo (nombre vacío, caracteres inválidos, personaje inexistente), y se lo
-eliminó, todo con la cadena de auth real (sin el stub de debug de la Fase 1 de NH-79). Detalle
-completo en la sección "Resolución" más abajo.
+**Estado:** `[x]` **Cerrada — verificada end-to-end contra producción real (2026-08-21).** El
+endpoint (NH-79) está implementado, mergeado en los tres repos, y el frontend (`CharactersTab.jsx`)
+consume `GET/POST /api/account/characters*` de verdad: lista con nivel/clase/ubicación, borde y
+color por clase (paleta propia de Xindeler, 15 clases reales de `ClassKind`), badge de nivel, y
+rename inline con manejo de error mostrando el mensaje real del server.
 
-La tab "Personajes" en `/account` ya no es un placeholder — `CharactersTab.jsx` consume
-`GET/POST /api/account/characters*` de verdad: lista con nivel/clase/ubicación, borde y color por
-clase (paleta propia de Xindeler, 15 clases reales de `ClassKind`), badge de nivel, y rename inline
-con manejo de error mostrando el mensaje real del server (nombre vacío, duplicado, etc.). Probado
-en el navegador (ES/EN) con la respuesta de la API simulada — **sin probar todavía contra el
-endpoint real**, porque el game server en el VPS sigue con la versión vieja (BL-83 en
-`xindeler-new-horizon`, sin correr todavía). Cuando ese deploy esté hecho, falta: (1) confirmar que
-la tab funciona con datos reales de producción, (2) el estado de carga cuando el game server
-todavía no tiene NH-79 (hoy cae en el estado de error genérico "no pudimos cargar", que es
-razonable pero no se probó contra el 502 real de `xindeler-web-api`).
+**Verificación final en producción (2026-08-21):** cuenta de prueba real registrada en
+`xindeler.com`, verificada por email de verdad, personaje real creado contra el game server
+productivo (`216.238.126.97:14004`) por el protocolo real del juego (cliente headless, no un
+insert de SQL a mano), listado y renombrado desde la UI real de `/account` (no simulado), y
+finalmente el personaje y la cuenta se eliminaron. Sin blockers pendientes.
+
+**Bugs de infra encontrados y arreglados en el camino de esta verificación** (ninguno era de este
+repo, pero bloqueaban que la feature funcionara en producción):
+1. Línea duplicada en `sasl_passwd` del `docker-mailserver` del VPS — rompía **todo** el envío de
+   email saliente hacia dominios externos (no solo Xindeler). Arreglado + cola de mails atascados
+   reenviada.
+2. `nginx` de `xindeler.com` no tenía fallback a `index.html` para rutas de la SPA
+   (`try_files ... =404` en vez de `try_files ... /index.html`) — cualquier link directo (`/account`,
+   `/privacy`, `/terms`, y crítico: el link de verificación de email) rompía con un 404 crudo.
+   Arreglado.
+3. Warning cosmético de MIME type duplicado en `docs.xindeler.com` (`gzip_types` listaba
+   `text/html`, que nginx ya comprime por default). Arreglado de paso.
+4. `WEB_API_SERVICE_TOKEN` tenía valores **distintos** en el `.env` de `xindeler-auth` y el de
+   `xindeler-web-api` — tienen que ser el mismo secreto compartido (diseño de la Fase N de
+   `xindeler-auth`). Por eso `xindeler-auth` rechazaba con `401 SERVICE_AUTH_REQUIRED` cada pedido
+   de token de personajes. Sincronizados + reinicio de `xindeler-auth.service`.
+
+De paso también se simplificó `/verify-email` (PR #58): página minimalista sin logo/tarjeta/CTA,
+mensaje de error unificado con redirect automático a `/` a los 5 segundos para cualquier fallo
+(sin token, inválido, vencido, ya usado).
 **Prioridad:** Alta (mismo pedido de Matías que 005)
-**Esfuerzo estimado:** hecho — solo falta la verificación final una vez que el game server esté
-actualizado en producción (ver riesgo de topología en "Resolución")
+**Esfuerzo estimado:** hecho por completo
 **Depende de:** [007-sesion-web-autenticada.md](007-sesion-web-autenticada.md) para la sesión
 persistente (ya resuelto — ver 008, navbar consciente de sesión, ya mergeada). El blocker de
 backend original (endpoint inexistente en `xindeler-new-horizon`) está resuelto — ver "Resolución".
