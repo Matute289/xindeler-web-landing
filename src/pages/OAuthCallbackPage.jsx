@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
@@ -96,8 +96,17 @@ export default function OAuthCallbackPage() {
             });
     }, [t]);
 
+    // A raw AuthToken is single-use server-side — if this effect re-fires
+    // (e.g. `t`'s identity changing re-creates `exchangeToken`), retrying
+    // the exchange would hit an already-consumed token and stomp a real
+    // 'success' with a spurious 'error'. This ref makes the direct-token
+    // exchange fire at most once no matter how many times the effect runs.
+    const exchangedRef = useRef(false);
     useEffect(() => {
-        if (parsed.token) exchangeToken(parsed.token);
+        if (parsed.token && !exchangedRef.current) {
+            exchangedRef.current = true;
+            exchangeToken(parsed.token);
+        }
     }, [parsed.token, exchangeToken]);
 
     useEffect(() => {
