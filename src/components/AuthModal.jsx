@@ -127,16 +127,13 @@ export default function AuthModal({ mode, onClose, onLoggedIn }) {
         onLoggedInRef.current = onLoggedIn;
     });
 
-    // A successful login closes the modal on its own — the "Ir a mi cuenta"
-    // link below still lets someone jump there immediately without waiting.
-    // onLoggedIn fires right away (not after the delay) so callers relying
-    // on it — e.g. the navbar swapping to the logged-in state — don't wait
-    // on a timer that exists purely for the modal's own UX.
+    // A successful login closes the modal right away — no success message
+    // flash first (Matías: a message that appears just to immediately
+    // disappear reads as broken, not as confirmation).
     useEffect(() => {
         if (!success || tab !== 'login') return;
         onLoggedInRef.current?.();
-        const timer = setTimeout(() => onCloseRef.current(), 1200);
-        return () => clearTimeout(timer);
+        onCloseRef.current();
     }, [success, tab]);
 
     // Clear form fields when switching tabs — called explicitly by switchTab()
@@ -238,12 +235,16 @@ export default function AuthModal({ mode, onClose, onLoggedIn }) {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password_prehash: prehash }),
                 });
-                if (res.ok) { setSuccess(t('auth.loginSuccess')); setPassword(''); }
-                else if (res.status === 202) {
+                // 202 must be checked before the generic res.ok — fetch's
+                // Response.ok is true for the entire 200-299 range, so a
+                // 202 TOTP challenge would otherwise always match the
+                // success branch first and never reach this one.
+                if (res.status === 202) {
                     const body = await res.json();
                     setTotpChallenge({ challengeId: body.challenge_id });
                     setPassword('');
                 }
+                else if (res.ok) { setSuccess(t('auth.loginSuccess')); setPassword(''); }
                 else if (res.status === 403) {
                     // Only the specific EMAIL_VERIFICATION_REQUIRED code opens the legacy
                     // modal. Any other 403 (or a 403 with an unexpected/unparseable body)
@@ -623,15 +624,10 @@ export default function AuthModal({ mode, onClose, onLoggedIn }) {
                                 )}
 
                                 {error && <p className="text-xs text-red-400 bg-red-900/20 border border-red-500/20 rounded px-3 py-2">{error}</p>}
-                                {success && <p className="text-xs text-green-400 bg-green-900/20 border border-green-500/20 rounded px-3 py-2">{success}</p>}
-                                {success && tab === 'login' && (
-                                    <Link
-                                        to="/account"
-                                        onClick={onClose}
-                                        className="text-xs text-center text-x-gold hover:text-x-gold/80 transition-colors"
-                                    >
-                                        {t('auth.goToAccount')}
-                                    </Link>
+                                {/* login's success closes the modal immediately (see the effect
+                                    above) — showing this message here would just flash and vanish */}
+                                {success && tab !== 'login' && (
+                                    <p className="text-xs text-green-400 bg-green-900/20 border border-green-500/20 rounded px-3 py-2">{success}</p>
                                 )}
 
                                 {!success && (
