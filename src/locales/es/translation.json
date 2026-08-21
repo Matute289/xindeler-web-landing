@@ -511,6 +511,7 @@
         "enrollTitle": "Activar verificación en dos pasos",
         "enrollDesc": "Escaneá este código con tu app autenticadora, o ingresá la clave manualmente.",
         "enrollManualKey": "Clave manual:",
+        "qrRotatesIn": "Se renueva en {{seconds}}s",
         "enrollIntro": "Confirmá tu contraseña para empezar. En el siguiente paso te vamos a mostrar un código QR para escanear con tu app autenticadora (Google Authenticator, Authy, etc.).",
         "enrollPasswordLabel": "Confirmá tu contraseña",
         "enrollNextBtn": "Siguiente",
