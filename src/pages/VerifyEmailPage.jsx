@@ -1,14 +1,21 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { CheckCircle, XCircle, Loader2 } from 'lucide-react';
 
 const AUTH_API = 'https://auth.xindeler.com';
+const ERROR_REDIRECT_DELAY_MS = 5000;
 
+// Reached only via the emailed verification link — never linked from
+// anywhere in the app itself. The visitor isn't going anywhere else in
+// the app from here, so this is deliberately a dead end: one sentence,
+// no logo, no card, no navigation. Anything other than a real, valid
+// token (missing, malformed, expired, already used) bounces home after
+// a few seconds rather than leaving a stranded page up.
 export default function VerifyEmailPage() {
     const { t } = useTranslation();
     const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
 
     // Read and validate token at initialization — avoids synchronous setState in effect
     const [token] = useState(() => {
@@ -23,57 +30,35 @@ export default function VerifyEmailPage() {
         window.history.replaceState(null, '', window.location.pathname);
         fetch(`${AUTH_API}/verify-email?token=${encodeURIComponent(token)}`)
             .then(res => { setStatus(res.ok ? 'success' : 'error'); })
-            .catch(() => { setStatus('network-error'); });
+            .catch(() => { setStatus('error'); });
     }, [token]);
 
-    const icon = {
-        success: <CheckCircle size={48} className="text-green-400" />,
-        loading: <Loader2 size={48} className="text-x-gold animate-spin" />,
-        error: <XCircle size={48} className="text-red-400" />,
-        'network-error': <XCircle size={48} className="text-red-400" />,
-    }[status];
+    useEffect(() => {
+        if (status !== 'error') return;
+        const timer = setTimeout(() => navigate('/'), ERROR_REDIRECT_DELAY_MS);
+        return () => clearTimeout(timer);
+    }, [status, navigate]);
 
     const message = {
-        success: t('auth.verifyEmail.success'),
         loading: t('auth.verifyEmail.loading'),
-        'network-error': t('auth.verifyEmail.errorNetwork'),
-        error: t('auth.verifyEmail.errorInvalid'),
+        success: t('auth.verifyEmail.success'),
+        error: t('auth.verifyEmail.error'),
     }[status];
 
     return (
-        <div className="min-h-screen bg-x-dark flex flex-col items-center justify-center p-4">
-            <Link
-                to="/"
-                className="font-cinzel-dec text-2xl font-bold text-white hover:text-x-gold transition-colors mb-12"
-                style={{ textShadow: '0 0 20px rgba(212,160,23,0.3)' }}
-            >
-                XINDELER
-            </Link>
-            <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
+        <div className="min-h-screen bg-x-dark flex items-center justify-center p-4">
+            <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={{ duration: 0.4 }}
-                className="w-full max-w-sm bg-x-navy border border-white/10 rounded-lg p-8 flex flex-col items-center gap-6 text-center shadow-2xl shadow-black/50"
-            >
-                <h1 className="font-cinzel text-lg tracking-widest uppercase text-white">
-                    {t('auth.verifyEmail.title')}
-                </h1>
-                {icon}
-                <p className={`text-sm leading-relaxed ${
+                className={`text-sm text-center ${
                     status === 'success' ? 'text-green-300'
-                    : status === 'loading' ? 'text-gray-300'
-                    : 'text-red-300'
-                }`}>
-                    {message}
-                </p>
-                <Link
-                    to="/"
-                    className="mt-2 px-6 py-2.5 font-cinzel text-xs tracking-wider text-black bg-x-gold rounded hover:bg-x-gold/90 transition-colors"
-                    style={{ boxShadow: '0 2px 12px rgba(212,160,23,0.35)' }}
-                >
-                    {t('auth.verifyEmail.backHome')}
-                </Link>
-            </motion.div>
+                    : status === 'error' ? 'text-red-300'
+                    : 'text-gray-300'
+                }`}
+            >
+                {message}
+            </motion.p>
         </div>
     );
 }

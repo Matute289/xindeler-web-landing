@@ -449,12 +449,9 @@
       "back": "Back to sign in"
     },
     "verifyEmail": {
-      "title": "Verifying your email",
       "loading": "Verifying…",
-      "success": "Email verified! You can now sign in to the game with your username.",
-      "errorInvalid": "The link is invalid, has already been used, or expired. If your account still isn't verified, sign up again to get a new link.",
-      "errorNetwork": "Network error during verification. Please try again.",
-      "backHome": "Back to home"
+      "success": "Email verified, thank you! You can now close this page.",
+      "error": "This request can't be completed!"
     },
     "forgotPasswordPage": {
       "title": "Recover your password",
