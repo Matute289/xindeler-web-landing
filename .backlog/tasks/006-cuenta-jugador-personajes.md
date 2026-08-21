@@ -1,20 +1,27 @@
 # 006 — Visor de personajes en la pantalla de cuenta
 
-**Estado:** `[ ]` Pendiente — **el blocker cross-repo ya se resolvió (2026-08-20), esta tarea queda
-desbloqueada**. El endpoint que faltaba (NH-79) está implementado, mergeado en los tres repos
-involucrados, y validado end-to-end en un ambiente local completo (los tres servicios corriendo a
-la vez: `xindeler-auth`, `xindeler-web-api`, `xindeler-new-horizon`) — se creó un personaje real
-por el protocolo del juego, se lo listó y renombró a través de `GET/POST /api/account/characters*`
-de `xindeler-web-api`, se probaron los casos de rechazo (nombre vacío, caracteres inválidos,
-personaje inexistente), y se lo eliminó, todo con la cadena de auth real (sin el stub de debug de
-la Fase 1 de NH-79). Detalle completo en la sección "Resolución" más abajo. La tab "Personajes" en
-`/account` sigue como placeholder ("Próximamente") —
-`src/components/account/CharactersTab.jsx` — implementarla contra el endpoint real es lo único que
-falta para cerrar esta tarea.
+**Estado:** `[~]` Frontend implementado (2026-08-20), **falta la verificación final contra
+producción real**. El endpoint (NH-79) está implementado, mergeado en los tres repos, y validado
+end-to-end en un ambiente local completo (los tres servicios corriendo a la vez: `xindeler-auth`,
+`xindeler-web-api`, `xindeler-new-horizon`) — se creó un personaje real por el protocolo del juego,
+se lo listó y renombró a través de `GET/POST /api/account/characters*` de `xindeler-web-api`, se
+probaron los casos de rechazo (nombre vacío, caracteres inválidos, personaje inexistente), y se lo
+eliminó, todo con la cadena de auth real (sin el stub de debug de la Fase 1 de NH-79). Detalle
+completo en la sección "Resolución" más abajo.
+
+La tab "Personajes" en `/account` ya no es un placeholder — `CharactersTab.jsx` consume
+`GET/POST /api/account/characters*` de verdad: lista con nivel/clase/ubicación, borde y color por
+clase (paleta propia de Xindeler, 15 clases reales de `ClassKind`), badge de nivel, y rename inline
+con manejo de error mostrando el mensaje real del server (nombre vacío, duplicado, etc.). Probado
+en el navegador (ES/EN) con la respuesta de la API simulada — **sin probar todavía contra el
+endpoint real**, porque el game server en el VPS sigue con la versión vieja (BL-83 en
+`xindeler-new-horizon`, sin correr todavía). Cuando ese deploy esté hecho, falta: (1) confirmar que
+la tab funciona con datos reales de producción, (2) el estado de carga cuando el game server
+todavía no tiene NH-79 (hoy cae en el estado de error genérico "no pudimos cargar", que es
+razonable pero no se probó contra el 502 real de `xindeler-web-api`).
 **Prioridad:** Alta (mismo pedido de Matías que 005)
-**Esfuerzo estimado:** frontend puro ahora — consumir `GET /api/account/characters` y
-`POST /api/account/characters/{id}/rename`, ambos ya en producción del lado de `xindeler-web-api`
-una vez que el game server esté deployado (ver riesgo de topología en "Resolución")
+**Esfuerzo estimado:** hecho — solo falta la verificación final una vez que el game server esté
+actualizado en producción (ver riesgo de topología en "Resolución")
 **Depende de:** [007-sesion-web-autenticada.md](007-sesion-web-autenticada.md) para la sesión
 persistente (ya resuelto — ver 008, navbar consciente de sesión, ya mergeada). El blocker de
 backend original (endpoint inexistente en `xindeler-new-horizon`) está resuelto — ver "Resolución".

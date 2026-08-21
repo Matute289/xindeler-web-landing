@@ -583,7 +583,34 @@
     "accountDeletedNotice": "Your account has been deleted.",
     "tabCharacters": "Characters",
     "characters": {
-      "comingSoon": "There's no way to read your characters from here yet — this section is on its way."
+      "loading": "Loading your characters…",
+      "errorLoad": "We couldn't load your characters right now. The server might be restarting — try again in a bit.",
+      "retryBtn": "Retry",
+      "empty": "You haven't created a character yet. Log into the game to create your first one.",
+      "locationUnknown": "No location recorded yet",
+      "renameBtn": "Rename",
+      "renameLabel": "New name",
+      "renameSubmit": "Save",
+      "renameCancel": "Cancel",
+      "renameSuccess": "Done! The name was updated.",
+      "errorEmptyName": "The name can't be empty.",
+      "classNames": {
+        "Adventurer": "Adventurer",
+        "Warrior": "Warrior",
+        "Mage": "Mage",
+        "Cleric": "Cleric",
+        "Rogue": "Rogue",
+        "Barbarian": "Barbarian",
+        "Sorcerer": "Sorcerer",
+        "Warlock": "Warlock",
+        "Bard": "Bard",
+        "Paladin": "Paladin",
+        "Druid": "Druid",
+        "Ranger": "Ranger",
+        "Monk": "Monk",
+        "Artificer": "Artificer",
+        "BloodSlayer": "Blood Slayer"
+      }
     }
   },
   "legal": {
