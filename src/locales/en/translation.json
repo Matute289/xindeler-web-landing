@@ -511,6 +511,7 @@
         "enrollTitle": "Turn on two-factor verification",
         "enrollDesc": "Scan this code with your authenticator app, or enter the key manually.",
         "enrollManualKey": "Manual key:",
+        "qrRotatesIn": "Renews in {{seconds}}s",
         "enrollIntro": "Confirm your password to get started. In the next step we'll show you a QR code to scan with your authenticator app (Google Authenticator, Authy, etc.).",
         "enrollPasswordLabel": "Confirm your password",
         "enrollNextBtn": "Next",

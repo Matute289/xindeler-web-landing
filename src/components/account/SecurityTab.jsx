@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ShieldCheck, ShieldOff } from 'lucide-react';
 import { netPrehash } from '../../lib/netPrehash';
 
 const WEB_API = '/api';
+// A pending (unconfirmed) TOTP secret shouldn't sit valid indefinitely on
+// screen — the server already re-generates a fresh one on every /2fa/enroll
+// call (see xindeler-auth's totp.rs::enroll), so we just call it again on a
+// timer while this screen is open and swap the displayed QR in place.
+const QR_ROTATE_SECONDS = 30;
 
 function Field({ label, value, onChange, type = 'text', autoComplete }) {
     return (
@@ -51,6 +56,43 @@ export default function SecurityTab({ session, onSessionInvalidated, onTotpChang
     const [enrollment, setEnrollment] = useState(null); // { secretBase32, qrPngBase64 }
     const [confirmCode, setConfirmCode] = useState('');
     const [backupCodes, setBackupCodes] = useState(null);
+    const [qrSecondsLeft, setQrSecondsLeft] = useState(QR_ROTATE_SECONDS);
+
+    // While the QR is on screen, request a fresh secret from the server
+    // every QR_ROTATE_SECONDS and swap it in — an unconfirmed secret
+    // shouldn't stay valid (and scannable) forever. `qrSecondsLeft` is
+    // already QR_ROTATE_SECONDS on every path that leads into this view
+    // (the initial useState default, and resetToMain()), so this effect
+    // only ever needs to start the ticking, never reset the count itself.
+    useEffect(() => {
+        if (view !== 'confirm') return;
+        const rotateQr = async () => {
+            try {
+                const passwordPrehash = await netPrehash(enrollPassword);
+                const res = await fetch(`${WEB_API}/account/2fa/enroll`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password_prehash: passwordPrehash }),
+                });
+                if (res.ok) {
+                    const body = await res.json();
+                    setEnrollment({ secretBase32: body.secret_base32, qrPngBase64: body.qr_png_base64 });
+                }
+            } catch {
+                // Network hiccup — leave the current QR up, next tick retries.
+            }
+        };
+        const id = setInterval(() => {
+            setQrSecondsLeft(s => {
+                if (s <= 1) {
+                    rotateQr();
+                    return QR_ROTATE_SECONDS;
+                }
+                return s - 1;
+            });
+        }, 1000);
+        return () => clearInterval(id);
+    }, [view, enrollPassword]);
 
     // Disable flow state
     const [disablePassword, setDisablePassword] = useState('');
@@ -74,6 +116,7 @@ export default function SecurityTab({ session, onSessionInvalidated, onTotpChang
         setEnrollment(null);
         setConfirmCode('');
         setBackupCodes(null);
+        setQrSecondsLeft(QR_ROTATE_SECONDS);
         setDisablePassword('');
         setDisableCode('');
         setCurrentPassword('');
@@ -273,11 +316,22 @@ export default function SecurityTab({ session, onSessionInvalidated, onTotpChang
                     {t('account.security.totp.confirmTitle')}
                 </h3>
                 <p className="text-sm text-gray-400">{t('account.security.totp.enrollDesc')}</p>
-                <img
-                    src={`data:image/png;base64,${enrollment.qrPngBase64}`}
-                    alt="QR"
-                    className="w-40 h-40 self-center bg-white rounded p-2"
-                />
+                <div className="self-center flex flex-col items-center gap-2">
+                    <img
+                        src={`data:image/png;base64,${enrollment.qrPngBase64}`}
+                        alt="QR"
+                        className="w-40 h-40 bg-white rounded p-2"
+                    />
+                    <div className="w-40 h-0.5 bg-white/10 rounded-full overflow-hidden">
+                        <div
+                            className="h-full bg-x-gold transition-[width] duration-1000 ease-linear"
+                            style={{ width: `${(qrSecondsLeft / QR_ROTATE_SECONDS) * 100}%` }}
+                        />
+                    </div>
+                    <p className="text-xs text-gray-500">
+                        {t('account.security.totp.qrRotatesIn', { seconds: qrSecondsLeft })}
+                    </p>
+                </div>
                 <p className="text-xs text-gray-500 text-center break-all">
                     {t('account.security.totp.enrollManualKey')} {enrollment.secretBase32}
                 </p>
