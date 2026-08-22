@@ -432,6 +432,8 @@
     "errorInvalidLogin": "Invalid username or password.",
     "errorNetwork": "Network error. Check your connection and try again.",
     "errorRateLimited": "Too many attempts. Please wait a few minutes and try again.",
+    "errorAccountTempLocked": "You failed to log in too many times in a row. Your account is temporarily locked — you can try again after {{time}}.",
+    "errorAccountPermLocked": "Your account was locked after repeated failed attempts and needs to be restored by an administrator. We sent you an email with instructions to recover it.",
     "errorUnknown": "An unexpected error occurred. Please try again.",
     "legacyModal": {
       "title": "Confirm your email",
