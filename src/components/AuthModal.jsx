@@ -247,20 +247,34 @@ export default function AuthModal({ mode, onClose, onLoggedIn }) {
                 }
                 else if (res.ok) { setSuccess(t('auth.loginSuccess')); setPassword(''); }
                 else if (res.status === 403) {
-                    // Only the specific EMAIL_VERIFICATION_REQUIRED code opens the legacy
-                    // modal. Any other 403 (or a 403 with an unexpected/unparseable body)
-                    // falls through to the exact same generic message as 401, so this
-                    // branch never leaks more than the pre-existing invalid-login case did.
+                    // EMAIL_VERIFICATION_REQUIRED opens the legacy modal, ACCOUNT_NOT_ACTIVE
+                    // is the permanent lockout (G-08's second-cycle escalation, or any other
+                    // moderation ban) and gets its own copy. Any other 403 (or a 403 with an
+                    // unexpected/unparseable body) falls through to the generic invalid-login
+                    // message, so this branch never leaks more than it used to.
                     let body = null;
                     try { body = await res.json(); } catch { /* fall through to generic error */ }
                     if (body && body.code === 'EMAIL_VERIFICATION_REQUIRED') {
                         legacyTokenRef.current = body.completion_token;
                         setLegacyModal({ deadline: body.deadline, completionToken: body.completion_token });
+                    } else if (body && body.code === 'ACCOUNT_NOT_ACTIVE') {
+                        setError(t('auth.errorAccountPermLocked'));
                     } else {
                         setError(t('auth.errorInvalidLogin'));
                     }
                 }
                 else if (res.status === 401) setError(t('auth.errorInvalidLogin'));
+                else if (res.status === 423) {
+                    // G-08: three wrong passwords in a row locks the account for an hour.
+                    // Distinct from ACCOUNT_NOT_ACTIVE above — this one clears itself.
+                    let body = null;
+                    try { body = await res.json(); } catch { /* fall through to generic error */ }
+                    if (body && body.code === 'ACCOUNT_LOGIN_LOCKED' && body.locked_until) {
+                        setError(t('auth.errorAccountTempLocked', { time: formatDeadline(body.locked_until) }));
+                    } else {
+                        setError(t('auth.errorUnknown'));
+                    }
+                }
                 else if (res.status === 429) setError(t('auth.errorRateLimited'));
                 else setError(t('auth.errorUnknown'));
             }
