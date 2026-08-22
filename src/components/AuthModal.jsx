@@ -87,8 +87,9 @@ export default function AuthModal({ mode, onClose, onLoggedIn }) {
     const [totpError, setTotpError] = useState('');
 
     // Legacy account modal — shown when login returns 403 EMAIL_VERIFICATION_REQUIRED.
-    // completionToken is a bearer credential: only ever attached as the Authorization
-    // header on /account-email and /resend-verification, never logged or displayed.
+    // completionToken is a bearer credential: only ever sent as `completion_token`
+    // in the JSON body of /account/account-email and /account/resend-verification,
+    // never logged or displayed.
     const [legacyModal, setLegacyModal] = useState(null); // { deadline, completionToken }
     const [legacyEmail, setLegacyEmail] = useState('');
     const [legacyEmailLoading, setLegacyEmailLoading] = useState(false);
