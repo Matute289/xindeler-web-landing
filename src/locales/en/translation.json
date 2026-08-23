@@ -429,6 +429,8 @@
     "errorPasswordShort": "Password must be at least 8 characters.",
     "errorUsernameFormat": "Username must be 3–32 characters (letters, numbers, - or _).",
     "errorUserExists": "That username is already taken.",
+    "errorUsernameReserved": "That username is temporarily reserved.",
+    "errorInvalidEmail": "That email address can't be used. Try a different one.",
     "errorInvalidLogin": "Invalid username or password.",
     "errorNetwork": "Network error. Check your connection and try again.",
     "errorRateLimited": "Too many attempts. Please wait a few minutes and try again.",

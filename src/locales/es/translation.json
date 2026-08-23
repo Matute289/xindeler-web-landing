@@ -429,6 +429,8 @@
     "errorPasswordShort": "La contraseña debe tener al menos 8 caracteres.",
     "errorUsernameFormat": "El usuario debe tener 3–32 caracteres (letras, números, - o _).",
     "errorUserExists": "El nombre de usuario ya existe.",
+    "errorUsernameReserved": "Ese nombre está temporalmente reservado.",
+    "errorInvalidEmail": "Ese email no se puede usar. Probá con otro.",
     "errorInvalidLogin": "Usuario o contraseña incorrectos.",
     "errorNetwork": "Error de red. Revisá tu conexión e intentá de nuevo.",
     "errorRateLimited": "Demasiados intentos. Esperá unos minutos y volvé a intentarlo.",

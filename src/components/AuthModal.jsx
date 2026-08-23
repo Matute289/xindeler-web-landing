@@ -7,12 +7,11 @@ import { Link } from 'react-router-dom';
 import DiscordIcon from './DiscordIcon';
 import GoogleIcon from './GoogleIcon';
 
+// xindeler-auth is closed to the outside world except /oauth/* — this is
+// the only call in this file that still hits it directly, since the OAuth
+// authorize-URL (state/PKCE/scopes) is built entirely server-side there.
+// Everything else goes through xindeler-web-api.
 const AUTH_API = 'https://auth.xindeler.com';
-// Login goes through xindeler-web-api instead of straight to AUTH_API — it's
-// the only call in this file that needs to establish a session cookie
-// (same-origin proxy, see /api/session/login). Registration and the legacy
-// account-recovery flow below don't touch sessions, so they keep calling
-// AUTH_API directly.
 const WEB_API = '/api';
 
 function isValidUsername(u) {
@@ -88,8 +87,9 @@ export default function AuthModal({ mode, onClose, onLoggedIn }) {
     const [totpError, setTotpError] = useState('');
 
     // Legacy account modal — shown when login returns 403 EMAIL_VERIFICATION_REQUIRED.
-    // completionToken is a bearer credential: only ever attached as the Authorization
-    // header on /account-email and /resend-verification, never logged or displayed.
+    // completionToken is a bearer credential: only ever sent as `completion_token`
+    // in the JSON body of /account/account-email and /account/resend-verification,
+    // never logged or displayed.
     const [legacyModal, setLegacyModal] = useState(null); // { deadline, completionToken }
     const [legacyEmail, setLegacyEmail] = useState('');
     const [legacyEmailLoading, setLegacyEmailLoading] = useState(false);
@@ -168,7 +168,7 @@ export default function AuthModal({ mode, onClose, onLoggedIn }) {
         const timer = setTimeout(async () => {
             try {
                 const res = await fetch(
-                    `${AUTH_API}/check-username?username=${encodeURIComponent(username)}`,
+                    `${WEB_API}/account/check-username?username=${encodeURIComponent(username)}`,
                     { signal: controller.signal },
                 );
                 if (!res.ok) return;
@@ -221,15 +221,21 @@ export default function AuthModal({ mode, onClose, onLoggedIn }) {
         try {
             const prehash = await netPrehash(password);
             if (tab === 'register') {
-                const res = await fetch(`${AUTH_API}/register`, {
+                const res = await fetch(`${WEB_API}/account/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password: prehash, email: email || null }),
+                    body: JSON.stringify({ username, password_prehash: prehash, email: email || null }),
                 });
                 if (res.ok) { setSuccess(t('auth.registerSuccess')); setPassword(''); setConfirm(''); }
-                else if (res.status === 409) setError(t('auth.errorUserExists'));
-                else if (res.status === 429) setError(t('auth.errorRateLimited'));
-                else setError(t('auth.errorUnknown'));
+                else {
+                    let body = null;
+                    try { body = await res.json(); } catch { /* fall through to generic error */ }
+                    if (body?.code === 'USERNAME_UNAVAILABLE') setError(t('auth.errorUserExists'));
+                    else if (body?.code === 'USERNAME_RESERVED') setError(t('auth.errorUsernameReserved'));
+                    else if (body?.code === 'INVALID_EMAIL') setError(t('auth.errorInvalidEmail'));
+                    else if (res.status === 429) setError(t('auth.errorRateLimited'));
+                    else setError(t('auth.errorUnknown'));
+                }
             } else {
                 const res = await fetch(`${WEB_API}/session/login`, {
                     method: 'POST',
@@ -360,13 +366,10 @@ export default function AuthModal({ mode, onClose, onLoggedIn }) {
         if (!legacyEmail) { setLegacyEmailError(t('auth.legacyModal.errorEmailRequired')); return; }
         setLegacyEmailLoading(true);
         try {
-            const res = await fetch(`${AUTH_API}/account-email`, {
+            const res = await fetch(`${WEB_API}/account/account-email`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${requestToken}`,
-                },
-                body: JSON.stringify({ email: legacyEmail }),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ completion_token: requestToken, email: legacyEmail }),
             });
             // The modal was closed (or closed and reopened for a new session)
             // while this request was in flight — discard the stale result.
@@ -391,13 +394,10 @@ export default function AuthModal({ mode, onClose, onLoggedIn }) {
         setLegacyResendError(''); setLegacyResendSuccess('');
         setLegacyResendLoading(true);
         try {
-            const res = await fetch(`${AUTH_API}/resend-verification`, {
+            const res = await fetch(`${WEB_API}/account/resend-verification`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${requestToken}`,
-                },
-                body: JSON.stringify({}),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ completion_token: requestToken }),
             });
             if (legacyTokenRef.current !== requestToken) return;
             if (res.ok) {

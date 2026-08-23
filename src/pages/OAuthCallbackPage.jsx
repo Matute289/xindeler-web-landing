@@ -125,7 +125,7 @@ export default function OAuthCallbackPage() {
         const timer = setTimeout(async () => {
             try {
                 const res = await fetch(
-                    `${AUTH_API}/check-username?username=${encodeURIComponent(username)}`,
+                    `${WEB_API}/account/check-username?username=${encodeURIComponent(username)}`,
                     { signal: controller.signal },
                 );
                 if (!res.ok) return;

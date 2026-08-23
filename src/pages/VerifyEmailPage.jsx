@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 
-const AUTH_API = 'https://auth.xindeler.com';
+const WEB_API = '/api';
 const ERROR_REDIRECT_DELAY_MS = 5000;
 
 // Reached only via the emailed verification link — never linked from
@@ -28,7 +28,7 @@ export default function VerifyEmailPage() {
         if (!token) return;
         // Strip token from URL so it can't leak into referrer headers or browser history
         window.history.replaceState(null, '', window.location.pathname);
-        fetch(`${AUTH_API}/verify-email?token=${encodeURIComponent(token)}`)
+        fetch(`${WEB_API}/account/verify-email?token=${encodeURIComponent(token)}`)
             .then(res => { setStatus(res.ok ? 'success' : 'error'); })
             .catch(() => { setStatus('error'); });
     }, [token]);
