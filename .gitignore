@@ -31,5 +31,9 @@ CLAUDE.local.md
 *.sln
 *.sw?
 
-# superpowers brainstorming visual companion (ephemeral mockups)
+# superpowers brainstorming visual companion (ephemeral mockups) and
+# subagent-driven-development workspaces both live under .superpowers/
 .superpowers/
+
+# local git worktrees
+.worktrees/
