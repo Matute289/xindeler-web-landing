@@ -637,6 +637,25 @@
         "Monk": "Monje",
         "Artificer": "Artífice",
         "BloodSlayer": "Verdugo de Sangre"
+      },
+      "scene": {
+        "selectTooltip": "Seleccionar"
+      },
+      "modal": {
+        "portraitPlaceholder": "Placeholder",
+        "level": "Nivel {{level}}",
+        "race": "Raza",
+        "class": "Clase",
+        "location": "Ubicación",
+        "close": "Cerrar",
+        "raceNames": {
+          "Human": "Humano",
+          "Dwarf": "Enano",
+          "Elf": "Elfo",
+          "Orc": "Orco",
+          "Danari": "Gnomo",
+          "Draugr": "Dhampiro"
+        }
       }
     }
   },

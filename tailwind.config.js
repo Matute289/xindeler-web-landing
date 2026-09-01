@@ -35,6 +35,12 @@ export default {
         'pulse-slow': 'pulse 4s ease-in-out infinite',
         'spin-slow': 'spin 20s linear infinite',
         'typing': 'typing 2s steps(30) forwards',
+        'campfire-pulse': 'campfirePulse 2.4s ease-in-out infinite',
+        'campfire-flicker-outer': 'campfireFlickerOuter 1.6s ease-in-out infinite',
+        'campfire-flicker-mid': 'campfireFlickerMid 1.1s ease-in-out infinite',
+        'campfire-flicker-inner': 'campfireFlickerInner 0.8s ease-in-out infinite',
+        'campfire-core-pulse': 'campfireCorePulse 1.8s ease-in-out infinite',
+        'campfire-ember-rise': 'campfireEmberRise 3s ease-in infinite',
       },
       keyframes: {
         float: {
@@ -58,6 +64,33 @@ export default {
         typing: {
           from: { width: '0' },
           to: { width: '100%' },
+        },
+        campfirePulse: {
+          '0%, 100%': { opacity: '0.75', transform: 'translate(-50%, -50%) scale(1)' },
+          '50%': { opacity: '1', transform: 'translate(-50%, -50%) scale(1.1)' },
+        },
+        campfireFlickerOuter: {
+          '0%, 100%': { transform: 'scaleY(1) scaleX(1) skewX(0deg)' },
+          '30%': { transform: 'scaleY(1.12) scaleX(0.92) skewX(-2deg)' },
+          '60%': { transform: 'scaleY(0.94) scaleX(1.05) skewX(2deg)' },
+        },
+        campfireFlickerMid: {
+          '0%, 100%': { transform: 'scaleY(1) skewX(0deg)' },
+          '40%': { transform: 'scaleY(1.18) skewX(3deg)' },
+          '75%': { transform: 'scaleY(0.9) skewX(-3deg)' },
+        },
+        campfireFlickerInner: {
+          '0%, 100%': { transform: 'scaleY(1)', opacity: '1' },
+          '50%': { transform: 'scaleY(1.25)', opacity: '0.85' },
+        },
+        campfireCorePulse: {
+          '0%, 100%': { opacity: '0.9' },
+          '50%': { opacity: '1', transform: 'translate(-50%, -50%) scale(1.15)' },
+        },
+        campfireEmberRise: {
+          '0%': { transform: 'translate(0, 0)', opacity: '0' },
+          '15%': { opacity: '1' },
+          '100%': { transform: 'translate(var(--ember-x, 10px), -160px)', opacity: '0' },
         },
       },
       scale: {

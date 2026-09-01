@@ -637,6 +637,25 @@
         "Monk": "Monk",
         "Artificer": "Artificer",
         "BloodSlayer": "Blood Slayer"
+      },
+      "scene": {
+        "selectTooltip": "Select"
+      },
+      "modal": {
+        "portraitPlaceholder": "Placeholder",
+        "level": "Level {{level}}",
+        "race": "Race",
+        "class": "Class",
+        "location": "Location",
+        "close": "Close",
+        "raceNames": {
+          "Human": "Human",
+          "Dwarf": "Dwarf",
+          "Elf": "Elf",
+          "Orc": "Orc",
+          "Danari": "Gnome",
+          "Draugr": "Dhampir"
+        }
       }
     }
   },
