@@ -102,6 +102,15 @@ function CampfireFire() {
 function SceneCharacter({ character, layout, hovered, onHover, onSelect }) {
     const { t } = useTranslation();
     const color = classColor(character.class);
+    const selectLabel = `${character.name} — ${t('account.characters.scene.selectTooltip')}`;
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            if (e.key === ' ') e.preventDefault();
+            onSelect(character);
+        }
+    };
+
     return (
         <div
             className="absolute flex flex-col items-center cursor-pointer"
@@ -112,9 +121,15 @@ function SceneCharacter({ character, layout, hovered, onHover, onSelect }) {
                 transformOrigin: 'bottom center',
                 zIndex: layout.z,
             }}
+            role="button"
+            tabIndex={0}
+            aria-label={selectLabel}
             onMouseEnter={() => onHover(character.character_id)}
             onMouseLeave={() => onHover(null)}
+            onFocus={() => onHover(character.character_id)}
+            onBlur={() => onHover(null)}
             onClick={() => onSelect(character)}
+            onKeyDown={handleKeyDown}
         >
             {hovered && (
                 <div className="absolute left-1/2 -translate-x-1/2 bg-x-dark/95 border border-x-gold/40 text-x-gold-2 font-cinzel tracking-wider uppercase rounded whitespace-nowrap z-[5]"
@@ -172,7 +187,8 @@ function SceneCharacter({ character, layout, hovered, onHover, onSelect }) {
 
 export default function CampfireScene({ characters, onSelectCharacter }) {
     const [hoveredId, setHoveredId] = useState(null);
-    const layout = getCampfireLayout(characters.length);
+    const visibleCharacters = characters.slice(0, 5);
+    const layout = getCampfireLayout(visibleCharacters.length);
 
     return (
         <div
@@ -185,7 +201,7 @@ export default function CampfireScene({ characters, onSelectCharacter }) {
                 backgroundPosition: 'center',
             }}
         >
-            {characters.map((character, index) => (
+            {visibleCharacters.map((character, index) => (
                 <SceneCharacter
                     key={character.character_id}
                     character={character}

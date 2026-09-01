@@ -43,7 +43,7 @@ export default function AccountPage() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className="w-full max-w-lg bg-x-navy border border-white/10 rounded-lg shadow-2xl shadow-black/50"
+                className={`w-full ${tab === 'characters' ? 'max-w-6xl' : 'max-w-lg'} bg-x-navy border border-white/10 rounded-lg shadow-2xl shadow-black/50 transition-[max-width] duration-300`}
             >
                 {loading ? (
                     <p className="text-sm text-gray-400 text-center p-8">{t('account.loading')}</p>

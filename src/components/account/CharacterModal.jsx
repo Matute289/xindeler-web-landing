@@ -13,7 +13,7 @@ export default function CharacterModal({ character, onClose, onRename }) {
     const [value, setValue] = useState(character.name);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [portraitFailed, setPortraitFailed] = useState(false);
+    const [portraitLoaded, setPortraitLoaded] = useState(false);
     const [justRenamed, setJustRenamed] = useState(false);
 
     const handleKey = useCallback((e) => {
@@ -88,27 +88,22 @@ export default function CharacterModal({ character, onClose, onRename }) {
                     >
                         <X size={13} />
                     </button>
-                    {!portraitFailed ? (
-                        <img
-                            src={`${WEB_API}/account/characters/${character.character_id}/portrait`}
-                            alt=""
-                            className="absolute inset-0 w-full h-full object-cover"
-                            onError={() => setPortraitFailed(true)}
+                    <span className="absolute top-2.5 right-2.5 bg-black/55 border border-white/15 text-gray-400 text-[9px] uppercase tracking-wider px-2 py-1 rounded">
+                        {t('account.characters.modal.portraitPlaceholder')}
+                    </span>
+                    <div className="w-[74px] h-[150px] mb-2 relative">
+                        <div className="w-[34px] h-[34px] rounded-full mx-auto" style={{ background: `${color}cc` }} />
+                        <div
+                            className="w-[60px] h-[86px] mx-auto mt-1"
+                            style={{ background: `linear-gradient(160deg, ${color}, ${color}88)`, clipPath: 'polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%)' }}
                         />
-                    ) : (
-                        <>
-                            <span className="absolute top-2.5 right-2.5 bg-black/55 border border-white/15 text-gray-400 text-[9px] uppercase tracking-wider px-2 py-1 rounded">
-                                {t('account.characters.modal.portraitPlaceholder')}
-                            </span>
-                            <div className="w-[74px] h-[150px] mb-2 relative">
-                                <div className="w-[34px] h-[34px] rounded-full mx-auto" style={{ background: `${color}cc` }} />
-                                <div
-                                    className="w-[60px] h-[86px] mx-auto mt-1"
-                                    style={{ background: `linear-gradient(160deg, ${color}, ${color}88)`, clipPath: 'polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%)' }}
-                                />
-                            </div>
-                        </>
-                    )}
+                    </div>
+                    <img
+                        src={`${WEB_API}/account/characters/${character.character_id}/portrait`}
+                        alt=""
+                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-200 ${portraitLoaded ? 'opacity-100' : 'opacity-0'}`}
+                        onLoad={() => setPortraitLoaded(true)}
+                    />
                 </div>
                 <div className="p-4">
                     {!editing ? (
@@ -130,6 +125,7 @@ export default function CharacterModal({ character, onClose, onRename }) {
                                 value={value}
                                 onChange={(e) => setValue(e.target.value)}
                                 autoFocus
+                                aria-label={t('account.characters.renameLabel')}
                                 className="flex-1 min-w-0 bg-black/40 border border-white/10 rounded px-2.5 py-1.5 text-sm text-white focus:outline-none focus:border-x-gold/50"
                             />
                             <button
