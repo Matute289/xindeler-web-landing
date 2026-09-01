@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Pencil, Check, X, Loader2, MapPin } from 'lucide-react';
 import { classColor } from '../../lib/classPresentation';
 
@@ -13,6 +14,16 @@ export default function CharacterModal({ character, onClose, onRename }) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [portraitFailed, setPortraitFailed] = useState(false);
+    const [justRenamed, setJustRenamed] = useState(false);
+
+    const handleKey = useCallback((e) => {
+        if (e.key === 'Escape') onClose();
+    }, [onClose]);
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKey);
+        return () => document.removeEventListener('keydown', handleKey);
+    }, [handleKey]);
 
     const startEdit = () => {
         setValue(character.name);
@@ -47,6 +58,8 @@ export default function CharacterModal({ character, onClose, onRename }) {
             if (res.ok) {
                 onRename(character.character_id, trimmed);
                 setEditing(false);
+                setJustRenamed(true);
+                setTimeout(() => setJustRenamed(false), 2500);
                 return;
             }
             let body = null;
@@ -67,6 +80,14 @@ export default function CharacterModal({ character, onClose, onRename }) {
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="h-[220px] relative flex items-end justify-center" style={{ background: 'linear-gradient(160deg, #2a2833, #1a1822)' }}>
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        aria-label={t('account.characters.modal.close')}
+                        className="absolute top-2.5 left-2.5 z-10 w-[26px] h-[26px] rounded border border-white/15 bg-black/40 text-gray-300 hover:text-white flex items-center justify-center"
+                    >
+                        <X size={13} />
+                    </button>
                     {!portraitFailed ? (
                         <img
                             src={`${WEB_API}/account/characters/${character.character_id}/portrait`}
@@ -111,19 +132,42 @@ export default function CharacterModal({ character, onClose, onRename }) {
                                 autoFocus
                                 className="flex-1 min-w-0 bg-black/40 border border-white/10 rounded px-2.5 py-1.5 text-sm text-white focus:outline-none focus:border-x-gold/50"
                             />
-                            <button type="submit" disabled={loading} className="shrink-0 p-1.5 rounded bg-x-gold text-black disabled:opacity-50">
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                aria-label={t('account.characters.renameSubmit')}
+                                className="shrink-0 p-1.5 rounded bg-x-gold text-black disabled:opacity-50"
+                            >
                                 {loading ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />}
                             </button>
-                            <button type="button" onClick={cancelEdit} disabled={loading} className="shrink-0 p-1.5 rounded border border-white/15 text-gray-400">
+                            <button
+                                type="button"
+                                onClick={cancelEdit}
+                                disabled={loading}
+                                aria-label={t('account.characters.renameCancel')}
+                                className="shrink-0 p-1.5 rounded border border-white/15 text-gray-400"
+                            >
                                 <X size={14} />
                             </button>
                         </form>
                     )}
                     {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
+                    <AnimatePresence>
+                        {justRenamed && (
+                            <motion.p
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="text-xs text-emerald-400 mt-1"
+                            >
+                                {t('account.characters.renameSuccess')}
+                            </motion.p>
+                        )}
+                    </AnimatePresence>
                     <p className="text-xs text-gray-500 mt-1 font-cinzel">{t('account.characters.modal.level', { level: character.level })}</p>
                     <div className="mt-3 flex flex-col gap-1.5 text-sm text-gray-300">
                         {character.race && (
-                            <div><span className="text-gray-600 uppercase text-[10px] tracking-wide inline-block w-20">{t('account.characters.modal.race')}</span>{t(`account.characters.modal.raceNames.${character.race}`, character.race)}</div>
+                            <div><span className="text-gray-600 uppercase text-[10px] tracking-wide inline-block w-20">{t('account.characters.modal.race')}</span>{t(`account.characters.modal.raceNames.${character.race}`)}</div>
                         )}
                         <div><span className="text-gray-600 uppercase text-[10px] tracking-wide inline-block w-20">{t('account.characters.modal.class')}</span>{t(`account.characters.classNames.${character.class}`, character.class)}</div>
                         <div className="flex items-center gap-1.5">
