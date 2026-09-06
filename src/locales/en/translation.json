@@ -356,6 +356,7 @@
     "launcherNote": "Launcher support with auto-updates is coming soon.",
     "autoDetectBtn": "Download for your system",
     "autoDetectFailed": "We couldn't detect your system automatically — pick one manually:",
+    "manualSectionLabel": "Or pick manually:",
     "manualRetry": "Couldn't get the link. Try again.",
     "openSource": "Open Source",
     "gpl": "GPL Licensed",

@@ -60,10 +60,12 @@ export default function DownloadSection() {
   const { t } = useTranslation();
   const [autoState, setAutoState] = useState('idle'); // idle | loading | failed
   const [manualFailed, setManualFailed] = useState(null); // null | `${os}-${arch}`
+  const [manualPending, setManualPending] = useState(null); // null | `${os}-${arch}`
   const manualListRef = useRef(null);
 
   const handleAutoDownload = async () => {
     setAutoState('loading');
+    setManualFailed(null);
     const result = await resolveDownload();
     if (result.ok) {
       navigateTo(result.download_url);
@@ -71,18 +73,26 @@ export default function DownloadSection() {
       return;
     }
     setAutoState('failed');
-    manualListRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    manualListRef.current?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+    manualListRef.current?.focus();
   };
 
   const handleManualDownload = async (os, arch) => {
     const key = `${os}-${arch}`;
     setManualFailed(null);
-    const result = await resolveDownload({ os, arch });
-    if (result.ok) {
-      navigateTo(result.download_url);
-      return;
+    setManualPending(key);
+    if (autoState === 'failed') setAutoState('idle');
+    try {
+      const result = await resolveDownload({ os, arch });
+      if (result.ok) {
+        navigateTo(result.download_url);
+        return;
+      }
+      setManualFailed(key);
+    } finally {
+      setManualPending(null);
     }
-    setManualFailed(key);
   };
 
   return (
@@ -134,14 +144,19 @@ export default function DownloadSection() {
           {t('download.autoDetectBtn')}
         </motion.button>
 
-        {autoState === 'failed' && (
-          <p className="text-xs text-x-gold-2 mb-6">{t('download.autoDetectFailed')}</p>
-        )}
+        <p role="status" className={`text-xs text-x-gold-2 ${autoState === 'failed' ? 'mb-6' : ''}`}>
+          {autoState === 'failed' ? t('download.autoDetectFailed') : ''}
+        </p>
+
+        <p className="text-gray-500 text-xs font-cinzel tracking-widest uppercase mb-4 mt-6">
+          {t('download.manualSectionLabel')}
+        </p>
 
         {/* OS cards */}
         <motion.div
           ref={manualListRef}
-          className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 mt-6"
+          tabIndex={-1}
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -170,19 +185,25 @@ export default function DownloadSection() {
                 {archs.map(({ arch, os }) => {
                   const manifestArch = toManifestArch(arch);
                   const key = `${os}-${manifestArch}`;
+                  const isPending = manualPending === key;
                   return (
                     <div key={arch} className="flex flex-col items-center">
                       <button
                         type="button"
                         onClick={() => handleManualDownload(os, manifestArch)}
-                        className="flex flex-col items-center gap-1 py-3 px-2 w-full rounded-xl border border-white/10 text-gray-400 text-xs font-cinzel tracking-wide transition-all duration-200 group hover:border-x-gold/60 hover:text-x-gold-2 hover:bg-x-gold/12"
+                        disabled={isPending}
+                        className="flex flex-col items-center gap-1 py-3 px-2 w-full rounded-xl border border-white/10 text-gray-400 text-xs font-cinzel tracking-wide transition-all duration-200 group hover:border-x-gold/60 hover:text-x-gold-2 hover:bg-x-gold/12 disabled:opacity-60"
                       >
-                        <Download size={13} strokeWidth={1.8} className="opacity-70 group-hover:opacity-100" />
+                        {isPending ? (
+                          <Loader2 size={13} strokeWidth={1.8} className="animate-spin opacity-70" />
+                        ) : (
+                          <Download size={13} strokeWidth={1.8} className="opacity-70 group-hover:opacity-100" />
+                        )}
                         {arch}
                       </button>
-                      {manualFailed === key && (
-                        <p className="text-[10px] text-x-gold-2 mt-1">{t('download.manualRetry')}</p>
-                      )}
+                      <p role="status" className={`text-[10px] text-x-gold-2 ${manualFailed === key ? 'mt-1' : ''}`}>
+                        {manualFailed === key ? t('download.manualRetry') : ''}
+                      </p>
                     </div>
                   );
                 })}
