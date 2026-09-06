@@ -60,7 +60,7 @@ export default function DownloadSection() {
   const { t } = useTranslation();
   const [autoState, setAutoState] = useState('idle'); // idle | loading | failed
   const [manualFailed, setManualFailed] = useState(null); // null | `${os}-${arch}`
-  const [manualPending, setManualPending] = useState(null); // null | `${os}-${arch}`
+  const [manualPending, setManualPending] = useState(() => new Set()); // Set of `${os}-${arch}` keys, one per in-flight request
   const manualListRef = useRef(null);
 
   const handleAutoDownload = async () => {
@@ -73,7 +73,7 @@ export default function DownloadSection() {
       return;
     }
     setAutoState('failed');
-    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
     manualListRef.current?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
     manualListRef.current?.focus();
   };
@@ -81,7 +81,7 @@ export default function DownloadSection() {
   const handleManualDownload = async (os, arch) => {
     const key = `${os}-${arch}`;
     setManualFailed(null);
-    setManualPending(key);
+    setManualPending((prev) => new Set(prev).add(key));
     if (autoState === 'failed') setAutoState('idle');
     try {
       const result = await resolveDownload({ os, arch });
@@ -91,7 +91,11 @@ export default function DownloadSection() {
       }
       setManualFailed(key);
     } finally {
-      setManualPending(null);
+      setManualPending((prev) => {
+        const next = new Set(prev);
+        next.delete(key);
+        return next;
+      });
     }
   };
 
@@ -185,7 +189,7 @@ export default function DownloadSection() {
                 {archs.map(({ arch, os }) => {
                   const manifestArch = toManifestArch(arch);
                   const key = `${os}-${manifestArch}`;
-                  const isPending = manualPending === key;
+                  const isPending = manualPending.has(key);
                   return (
                     <div key={arch} className="flex flex-col items-center">
                       <button
