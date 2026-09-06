@@ -1,6 +1,9 @@
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Download, Monitor, Terminal, Apple, Info } from 'lucide-react';
+import { Download, Monitor, Terminal, Apple, Info, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+
+const WEB_API = '/api';
 
 const OS_DEFS = [
   {
@@ -8,8 +11,8 @@ const OS_DEFS = [
     nameKey: 'download.windows',
     subKey: 'download.windowsSub',
     archs: [
-      { arch: 'x86_64', href: 'https://downloads.xindeler.com' },
-      { arch: 'ARM64',  href: 'https://downloads.xindeler.com' },
+      { arch: 'x86_64', os: 'windows' },
+      { arch: 'ARM64',  os: 'windows' },
     ],
   },
   {
@@ -17,8 +20,8 @@ const OS_DEFS = [
     nameKey: 'download.linux',
     subKey: 'download.linuxSub',
     archs: [
-      { arch: 'x86_64', href: 'https://downloads.xindeler.com' },
-      { arch: 'ARM64',  href: 'https://downloads.xindeler.com' },
+      { arch: 'x86_64', os: 'linux' },
+      { arch: 'ARM64',  os: 'linux' },
     ],
   },
   {
@@ -26,14 +29,61 @@ const OS_DEFS = [
     nameKey: 'download.macos',
     subKey: 'download.macosSub',
     archs: [
-      { arch: 'x86_64',    href: 'https://downloads.xindeler.com' },
-      { arch: 'ARM64 (M)', href: 'https://downloads.xindeler.com' },
+      { arch: 'x86_64',    os: 'macos' },
+      { arch: 'ARM64 (M)', os: 'macos' },
     ],
   },
 ];
 
+// The manifest's arch values are lowercase ("x86_64"/"arm64"); the button
+// labels above keep the display forms ("ARM64", "ARM64 (M)") for readability.
+function toManifestArch(label) {
+  return label.toLowerCase().startsWith('arm64') ? 'arm64' : 'x86_64';
+}
+
+function navigateTo(url) {
+  window.location.href = url;
+}
+
+async function resolveDownload(params) {
+  const query = params ? `?${new URLSearchParams(params).toString()}` : '';
+  try {
+    const res = await fetch(`${WEB_API}/download${query}`);
+    if (!res.ok) return { ok: false };
+    return await res.json();
+  } catch {
+    return { ok: false };
+  }
+}
+
 export default function DownloadSection() {
   const { t } = useTranslation();
+  const [autoState, setAutoState] = useState('idle'); // idle | loading | failed
+  const [manualFailed, setManualFailed] = useState(null); // null | `${os}-${arch}`
+  const manualListRef = useRef(null);
+
+  const handleAutoDownload = async () => {
+    setAutoState('loading');
+    const result = await resolveDownload();
+    if (result.ok) {
+      navigateTo(result.download_url);
+      setAutoState('idle');
+      return;
+    }
+    setAutoState('failed');
+    manualListRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+
+  const handleManualDownload = async (os, arch) => {
+    const key = `${os}-${arch}`;
+    setManualFailed(null);
+    const result = await resolveDownload({ os, arch });
+    if (result.ok) {
+      navigateTo(result.download_url);
+      return;
+    }
+    setManualFailed(key);
+  };
 
   return (
     <section
@@ -69,9 +119,29 @@ export default function DownloadSection() {
           </p>
         </motion.div>
 
+        <motion.button
+          type="button"
+          onClick={handleAutoDownload}
+          disabled={autoState === 'loading'}
+          className="inline-flex items-center gap-2 px-8 py-3.5 mb-3 font-cinzel text-sm tracking-wider text-black bg-x-gold rounded-full hover:bg-x-gold/90 disabled:opacity-60 transition-colors"
+          style={{ boxShadow: '0 2px 16px rgba(212,160,23,0.4)' }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+        >
+          {autoState === 'loading' ? <Loader2 size={16} className="animate-spin" /> : <Download size={16} />}
+          {t('download.autoDetectBtn')}
+        </motion.button>
+
+        {autoState === 'failed' && (
+          <p className="text-xs text-x-gold-2 mb-6">{t('download.autoDetectFailed')}</p>
+        )}
+
         {/* OS cards */}
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8"
+          ref={manualListRef}
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 mt-6"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -97,18 +167,25 @@ export default function DownloadSection() {
 
               {/* Arch buttons */}
               <div className="grid grid-cols-2 gap-2 mt-auto">
-                {archs.map(({ arch, href }) => (
-                  <a
-                    key={arch}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center gap-1 py-3 px-2 rounded-xl border border-white/10 text-gray-400 text-xs font-cinzel tracking-wide transition-all duration-200 group hover:border-x-gold/60 hover:text-x-gold-2 hover:bg-x-gold/12"
-                  >
-                    <Download size={13} strokeWidth={1.8} className="opacity-70 group-hover:opacity-100" />
-                    {arch}
-                  </a>
-                ))}
+                {archs.map(({ arch, os }) => {
+                  const manifestArch = toManifestArch(arch);
+                  const key = `${os}-${manifestArch}`;
+                  return (
+                    <div key={arch} className="flex flex-col items-center">
+                      <button
+                        type="button"
+                        onClick={() => handleManualDownload(os, manifestArch)}
+                        className="flex flex-col items-center gap-1 py-3 px-2 w-full rounded-xl border border-white/10 text-gray-400 text-xs font-cinzel tracking-wide transition-all duration-200 group hover:border-x-gold/60 hover:text-x-gold-2 hover:bg-x-gold/12"
+                      >
+                        <Download size={13} strokeWidth={1.8} className="opacity-70 group-hover:opacity-100" />
+                        {arch}
+                      </button>
+                      {manualFailed === key && (
+                        <p className="text-[10px] text-x-gold-2 mt-1">{t('download.manualRetry')}</p>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           ))}
