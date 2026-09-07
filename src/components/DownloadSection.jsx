@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Download, Monitor, Terminal, Apple, Info, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-const WEB_API = '/api';
+const DEFAULT_API_BASE = '/api';
 
 const OS_DEFS = [
   {
@@ -47,10 +47,10 @@ function navigateTo(url) {
   window.location.href = url;
 }
 
-async function resolveDownload(params) {
+async function resolveDownload(apiBase, params) {
   const query = params ? `?${new URLSearchParams(params).toString()}` : '';
   try {
-    const res = await fetch(`${WEB_API}/download${query}`);
+    const res = await fetch(`${apiBase}/download${query}`);
     if (!res.ok) return { ok: false };
     return await res.json();
   } catch {
@@ -58,7 +58,7 @@ async function resolveDownload(params) {
   }
 }
 
-export default function DownloadSection() {
+export default function DownloadSection({ apiBase = DEFAULT_API_BASE, heading, eyebrow } = {}) {
   const { t } = useTranslation();
   const [autoState, setAutoState] = useState('idle'); // idle | loading | failed
   const [manualFailed, setManualFailed] = useState(null); // null | `${os}-${arch}`
@@ -68,7 +68,7 @@ export default function DownloadSection() {
   const handleAutoDownload = async () => {
     setAutoState('loading');
     setManualFailed(null);
-    const result = await resolveDownload();
+    const result = await resolveDownload(apiBase);
     if (result.ok) {
       navigateTo(result.download_url);
       setAutoState('idle');
@@ -86,7 +86,7 @@ export default function DownloadSection() {
     setManualPending((prev) => new Set(prev).add(key));
     if (autoState === 'failed') setAutoState('idle');
     try {
-      const result = await resolveDownload({ os, arch });
+      const result = await resolveDownload(apiBase, { os, arch });
       if (result.ok) {
         navigateTo(result.download_url);
         return;
@@ -122,12 +122,12 @@ export default function DownloadSection() {
           transition={{ duration: 0.8 }}
         >
           <Download size={40} className="text-x-gold mx-auto mb-6 opacity-80" strokeWidth={1.5} />
-          <p className="section-eyebrow">{t('download.eyebrow')}</p>
+          <p className="section-eyebrow">{eyebrow ?? t('download.eyebrow')}</p>
           <h2
             className="font-cinzel text-4xl md:text-6xl text-white mb-6 leading-tight"
             style={{ textShadow: '0 0 40px rgba(212,160,23,0.25)' }}
           >
-            {t('download.title')}
+            {heading ?? t('download.title')}
           </h2>
           <div className="gold-divider mb-8" />
           <p className="text-gray-400 text-base max-w-xl mx-auto mb-12 leading-relaxed">
