@@ -1,5 +1,29 @@
 [
   {
+    "id": "descargas-multiplataforma",
+    "date": "2026-09-07",
+    "title": "Descargá Xindeler en tu plataforma",
+    "summary": "El cliente de Xindeler ya se compila y publica para Windows, macOS y Linux, listo para que puedas descargarlo y sumarte a la aventura.",
+    "type": "added",
+    "category": "motor"
+  },
+  {
+    "id": "magia-ilusion-sigilo",
+    "date": "2026-08-06",
+    "title": "La ilusión se suma al arte arcano",
+    "summary": "Nuevos hechizos permiten disfrazar tu apariencia, engañar percepciones y ocultarte del ojo ajeno: la magia de Xindeler gana un arte de ilusión y sigilo.",
+    "type": "added",
+    "category": "gameplay"
+  },
+  {
+    "id": "maestria-arcana-tomos",
+    "date": "2026-08-01",
+    "title": "El Mago profundiza su dominio arcano",
+    "summary": "El Mago ahora perfecciona su maestría en cada fuente arcana que practica, y los tomos se vuelven objetos con verdadero peso: se transcriben, mejoran y atesoran.",
+    "type": "added",
+    "category": "gameplay"
+  },
+  {
     "id": "magia-nuevas-formas",
     "date": "2026-07-31",
     "title": "Nuevos hechizos toman forma",
