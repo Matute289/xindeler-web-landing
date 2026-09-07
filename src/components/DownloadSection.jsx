@@ -192,13 +192,17 @@ export default function DownloadSection() {
                   const manifestArch = toManifestArch(arch);
                   const key = `${os}-${manifestArch}`;
                   const isPending = manualPending.has(key);
+                  // A lone button (Windows, no ARM64) spans both grid tracks
+                  // and centers itself at half that width instead of
+                  // sticking to the first column's left edge.
+                  const isOnly = archs.length === 1;
                   return (
-                    <div key={arch} className="flex flex-col items-center">
+                    <div key={arch} className={`flex flex-col items-center ${isOnly ? 'col-span-2' : ''}`}>
                       <button
                         type="button"
                         onClick={() => handleManualDownload(os, manifestArch)}
                         disabled={isPending}
-                        className="flex flex-col items-center gap-1 py-3 px-2 w-full rounded-xl border border-white/10 text-gray-400 text-xs font-cinzel tracking-wide transition-all duration-200 group hover:border-x-gold/60 hover:text-x-gold-2 hover:bg-x-gold/12 disabled:opacity-60"
+                        className={`flex flex-col items-center gap-1 py-3 px-2 ${isOnly ? 'w-1/2' : 'w-full'} rounded-xl border border-white/10 text-gray-400 text-xs font-cinzel tracking-wide transition-all duration-200 group hover:border-x-gold/60 hover:text-x-gold-2 hover:bg-x-gold/12 disabled:opacity-60`}
                       >
                         {isPending ? (
                           <Loader2 size={13} strokeWidth={1.8} className="animate-spin opacity-70" />
