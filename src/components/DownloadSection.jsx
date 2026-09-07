@@ -10,9 +10,11 @@ const OS_DEFS = [
     icon: Monitor,
     nameKey: 'download.windows',
     subKey: 'download.windowsSub',
+    // No ARM64 build offered: a dependency's own support statement flags
+    // Windows ARM64 as too easy to break right now (per Mati, 2026-09-07) --
+    // not a temporary gap, an intentional exclusion.
     archs: [
       { arch: 'x86_64', os: 'windows' },
-      { arch: 'ARM64',  os: 'windows' },
     ],
   },
   {
@@ -185,7 +187,7 @@ export default function DownloadSection() {
               </div>
 
               {/* Arch buttons */}
-              <div className="grid grid-cols-2 gap-2 mt-auto">
+              <div className={`grid ${archs.length > 1 ? 'grid-cols-2' : 'grid-cols-1 max-w-[10rem] mx-auto'} gap-2 mt-auto`}>
                 {archs.map(({ arch, os }) => {
                   const manifestArch = toManifestArch(arch);
                   const key = `${os}-${manifestArch}`;
