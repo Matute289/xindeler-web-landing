@@ -32,3 +32,12 @@ jobs:
             -e "ssh -i ~/.ssh/deploy_key" \
             dist/ \
             "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.VPS_DEPLOY_PATH }}"
+
+      - name: Deploy downloads page to VPS
+        run: |
+          rsync -avz \
+            -e "ssh -i ~/.ssh/deploy_key" \
+            dist/downloads.html "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.VPS_DOWNLOADS_DEPLOY_PATH }}/index.html"
+          rsync -avz \
+            -e "ssh -i ~/.ssh/deploy_key" \
+            dist/assets/ "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.VPS_DOWNLOADS_DEPLOY_PATH }}/assets/"
