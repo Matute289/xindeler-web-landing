@@ -1,7 +1,10 @@
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Check, Zap, Clock } from 'lucide-react';
+import { Check, Zap, Clock, ChevronUp, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import roadmapData from '../data/roadmap.json';
+
+const BOX_MAX_HEIGHT = 640;
 
 const VALID_STATUS = new Set(['completed', 'in-progress', 'upcoming']);
 const ITEMS_PER_PHASE = 4;
@@ -54,6 +57,24 @@ const STATUS_CONFIG = {
 
 export default function Roadmap() {
   const { t } = useTranslation();
+  const scrollRef = useRef(null);
+  const [atTop, setAtTop] = useState(true);
+  const [atBottom, setAtBottom] = useState(false);
+
+  const updateScrollEdges = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setAtTop(el.scrollTop <= 0);
+    setAtBottom(el.scrollTop + el.clientHeight >= el.scrollHeight - 1);
+  };
+
+  // Runs once after the box's real content height is laid out, so the
+  // bottom fade/arrow show up immediately if there's more to scroll --
+  // without this, both would default to "at the edge" until the first
+  // scroll event.
+  useEffect(() => {
+    updateScrollEdges();
+  }, []);
 
   return (
     <section id="roadmap" className="py-28 bg-x-navy relative overflow-hidden">
@@ -79,75 +100,108 @@ export default function Roadmap() {
             wheel/trackpad scroll moves through the phases; only past the
             box's own top/bottom edge does it fall back to scrolling the
             page (native browser scroll-chaining, no JS needed for that). */}
-        <div className="relative overflow-y-auto scrollbar-hide" style={{ maxHeight: '640px' }}>
-          <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent md:left-1/2" />
-
-          <div className="space-y-8">
-            {PHASES.map((phase, i) => {
-              const cfg = STATUS_CONFIG[phase.status];
-              const StatusIcon = cfg.icon;
-              const isRight = i % 2 === 0;
-              const items = t(`roadmap.phase${phase.number}.items`, { returnObjects: true });
-              const allDone = phase.status === 'completed';
-
-              return (
-                <motion.div
-                  key={phase.number}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: i * 0.08 }}
-                  className={`relative flex gap-6 md:gap-0 ${isRight ? 'md:flex-row' : 'md:flex-row-reverse'}`}
-                >
-                  <div className={`flex-1 md:w-[calc(50%-2rem)] ${isRight ? 'md:pr-10' : 'md:pl-10'}`}>
-                    <div
-                      className={`p-6 rounded-2xl border ${cfg.cardBorder} ${cfg.cardBg} hover:scale-[1.01] transition-transform duration-300`}
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <span className={`font-cinzel text-xs px-2.5 py-1 rounded-full border ${cfg.badge}`}>
-                          <StatusIcon size={10} className="inline mr-1" />
-                          {t(cfg.labelKey)}
-                        </span>
-                        <span className="font-cinzel-dec text-3xl font-black text-white/8">
-                          0{phase.number}
-                        </span>
+        <div className="relative">
+          <div
+            ref={scrollRef}
+            onScroll={updateScrollEdges}
+            className="relative overflow-y-auto scrollbar-hide"
+            style={{ maxHeight: BOX_MAX_HEIGHT }}
+          >
+            <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent md:left-1/2" />
+  
+            <div className="space-y-8">
+              {PHASES.map((phase, i) => {
+                const cfg = STATUS_CONFIG[phase.status];
+                const StatusIcon = cfg.icon;
+                const isRight = i % 2 === 0;
+                const items = t(`roadmap.phase${phase.number}.items`, { returnObjects: true });
+                const allDone = phase.status === 'completed';
+  
+                return (
+                  <motion.div
+                    key={phase.number}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: i * 0.08 }}
+                    className={`relative flex gap-6 md:gap-0 ${isRight ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+                  >
+                    <div className={`flex-1 md:w-[calc(50%-2rem)] ${isRight ? 'md:pr-10' : 'md:pl-10'}`}>
+                      <div
+                        className={`p-6 rounded-2xl border ${cfg.cardBorder} ${cfg.cardBg} hover:scale-[1.01] transition-transform duration-300`}
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <span className={`font-cinzel text-xs px-2.5 py-1 rounded-full border ${cfg.badge}`}>
+                            <StatusIcon size={10} className="inline mr-1" />
+                            {t(cfg.labelKey)}
+                          </span>
+                          <span className="font-cinzel-dec text-3xl font-black text-white/8">
+                            0{phase.number}
+                          </span>
+                        </div>
+  
+                        <h3 className={`font-cinzel text-base ${cfg.titleColor} mb-2`}>
+                          Phase {phase.number}: {t(`roadmap.phase${phase.number}.title`)}
+                        </h3>
+                        <p className="text-gray-500 text-xs leading-relaxed mb-4">
+                          {t(`roadmap.phase${phase.number}.desc`)}
+                        </p>
+  
+                        <ul className="grid grid-cols-2 gap-1">
+                          {Array.isArray(items) && items.map((item, idx) => {
+                            const done = allDone || phase.doneItems.has(idx);
+                            return (
+                              <li key={item} className={`flex items-center gap-1.5 text-xs ${done ? 'text-emerald-400' : 'text-gray-500'}`}>
+                                <span className={`w-1 h-1 rounded-full flex-shrink-0 ${done ? 'bg-emerald-400' : cfg.dotColor}`} />
+                                {item}
+                              </li>
+                            );
+                          })}
+                        </ul>
                       </div>
-
-                      <h3 className={`font-cinzel text-base ${cfg.titleColor} mb-2`}>
-                        Phase {phase.number}: {t(`roadmap.phase${phase.number}.title`)}
-                      </h3>
-                      <p className="text-gray-500 text-xs leading-relaxed mb-4">
-                        {t(`roadmap.phase${phase.number}.desc`)}
-                      </p>
-
-                      <ul className="grid grid-cols-2 gap-1">
-                        {Array.isArray(items) && items.map((item, idx) => {
-                          const done = allDone || phase.doneItems.has(idx);
-                          return (
-                            <li key={item} className={`flex items-center gap-1.5 text-xs ${done ? 'text-emerald-400' : 'text-gray-500'}`}>
-                              <span className={`w-1 h-1 rounded-full flex-shrink-0 ${done ? 'bg-emerald-400' : cfg.dotColor}`} />
-                              {item}
-                            </li>
-                          );
-                        })}
-                      </ul>
                     </div>
-                  </div>
-
-                  <div className="absolute left-6 top-6 md:left-1/2 md:-translate-x-1/2 flex-shrink-0">
-                    <div
-                      className={`w-6 h-6 rounded-full border-2 flex items-center justify-center z-10 ${cfg.dotClass}`}
-                      style={{ boxShadow: cfg.dotGlow }}
-                    >
-                      <StatusIcon size={11} className="text-white" />
+  
+                    <div className="absolute left-6 top-6 md:left-1/2 md:-translate-x-1/2 flex-shrink-0">
+                      <div
+                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center z-10 ${cfg.dotClass}`}
+                        style={{ boxShadow: cfg.dotGlow }}
+                      >
+                        <StatusIcon size={11} className="text-white" />
+                      </div>
                     </div>
-                  </div>
-
-                  <div className="hidden md:block md:w-[calc(50%-2rem)]" />
-                </motion.div>
-              );
-            })}
+  
+                    <div className="hidden md:block md:w-[calc(50%-2rem)]" />
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
+
+          {/* Fade + bouncing chevron at each edge that still has more to
+              scroll -- fades out once that edge is reached, so the cut-off
+              card at the bottom (or the top once scrolled down) reads as
+              "more below/above" instead of a hard clip. */}
+          <div
+            className={`absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-x-navy to-transparent pointer-events-none transition-opacity duration-300 ${atTop ? 'opacity-0' : 'opacity-100'}`}
+          />
+          <motion.div
+            className={`absolute top-1 left-1/2 -translate-x-1/2 text-x-gold/60 pointer-events-none transition-opacity duration-300 ${atTop ? 'opacity-0' : 'opacity-100'}`}
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <ChevronUp size={20} />
+          </motion.div>
+
+          <div
+            className={`absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-x-navy to-transparent pointer-events-none transition-opacity duration-300 ${atBottom ? 'opacity-0' : 'opacity-100'}`}
+          />
+          <motion.div
+            className={`absolute bottom-1 left-1/2 -translate-x-1/2 text-x-gold/60 pointer-events-none transition-opacity duration-300 ${atBottom ? 'opacity-0' : 'opacity-100'}`}
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <ChevronDown size={20} />
+          </motion.div>
         </div>
       </div>
     </section>
