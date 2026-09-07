@@ -75,8 +75,11 @@ export default function Roadmap() {
           </p>
         </motion.div>
 
-        {/* Timeline */}
-        <div className="relative">
+        {/* Timeline -- internal scroll: once the cursor is over this box,
+            wheel/trackpad scroll moves through the phases; only past the
+            box's own top/bottom edge does it fall back to scrolling the
+            page (native browser scroll-chaining, no JS needed for that). */}
+        <div className="relative overflow-y-auto scrollbar-hide" style={{ maxHeight: '640px' }}>
           <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent md:left-1/2" />
 
           <div className="space-y-8">
