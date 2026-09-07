@@ -35,6 +35,15 @@
   .gold-divider {
     @apply w-24 h-px bg-gradient-to-r from-transparent via-x-gold to-transparent mx-auto;
   }
+  /* Scoped opt-out of the global scrollbar styling above -- the roadmap's
+     internal scroll box should stay scrollable without a visible track. */
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
   .btn-primary {
     @apply inline-flex items-center gap-2 px-7 py-3 font-cinzel text-sm tracking-wider text-black bg-x-gold border border-x-gold rounded transition-all duration-300;
     box-shadow: 0 4px 20px rgba(212,160,23,0.35);
