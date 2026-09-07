@@ -23,5 +23,13 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
+    build: {
+      rollupOptions: {
+        input: {
+          main: 'index.html',
+          downloads: 'downloads.html',
+        },
+      },
+    },
   }
 })
