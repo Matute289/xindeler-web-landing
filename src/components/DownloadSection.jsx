@@ -47,6 +47,26 @@ function navigateTo(url) {
   window.location.href = url;
 }
 
+// Safari and Chrome both report "Intel Mac OS X" in the User-Agent even on
+// Apple Silicon (M1-M5), for legacy compatibility -- the server has no
+// signal to tell an ARM64 Mac from a real Intel one, so it defaults to
+// x86_64 (see download.rs's detect_arch). The WebGL renderer string isn't
+// spoofed for compatibility the same way: Apple Silicon reports "Apple M1"
+// et al., while a real Intel Mac reports its actual GPU vendor (Intel Iris,
+// AMD Radeon, etc.) -- unlike User-Agent Client Hints, this also works in
+// Safari, which never implemented Client Hints.
+function detectAppleSiliconViaWebGL() {
+  try {
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    const debugInfo = gl?.getExtension('WEBGL_debug_renderer_info');
+    const renderer = debugInfo && gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+    return typeof renderer === 'string' && /Apple M\d|Apple GPU/i.test(renderer);
+  } catch {
+    return false;
+  }
+}
+
 async function resolveDownload(apiBase, params) {
   const query = params ? `?${new URLSearchParams(params).toString()}` : '';
   try {
@@ -68,7 +88,8 @@ export default function DownloadSection({ apiBase = DEFAULT_API_BASE, heading, e
   const handleAutoDownload = async () => {
     setAutoState('loading');
     setManualFailed(null);
-    const result = await resolveDownload(apiBase);
+    const params = detectAppleSiliconViaWebGL() ? { arch: 'arm64' } : undefined;
+    const result = await resolveDownload(apiBase, params);
     if (result.ok) {
       navigateTo(result.download_url);
       setAutoState('idle');
