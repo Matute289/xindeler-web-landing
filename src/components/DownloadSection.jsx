@@ -187,7 +187,7 @@ export default function DownloadSection() {
               </div>
 
               {/* Arch buttons */}
-              <div className={`grid ${archs.length > 1 ? 'grid-cols-2' : 'grid-cols-1 max-w-[10rem] mx-auto'} gap-2 mt-auto`}>
+              <div className="grid grid-cols-2 gap-2 mt-auto">
                 {archs.map(({ arch, os }) => {
                   const manifestArch = toManifestArch(arch);
                   const key = `${os}-${manifestArch}`;
