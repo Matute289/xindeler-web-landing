@@ -41,3 +41,6 @@ jobs:
           rsync -avz \
             -e "ssh -i ~/.ssh/deploy_key" \
             dist/assets/ "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.VPS_DOWNLOADS_DEPLOY_PATH }}/assets/"
+          rsync -avz \
+            -e "ssh -i ~/.ssh/deploy_key" \
+            dist/favicon.svg "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.VPS_DOWNLOADS_DEPLOY_PATH }}/favicon.svg"
