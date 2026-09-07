@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "lastRun": "2026-07-31T18:56:00Z",
-  "lastProcessedPR": 72,
+  "lastRun": "2026-09-07T00:00:00Z",
+  "lastProcessedPR": 277,
   "publishedNH": {
     "NH-2":  { "gate": 1, "lastPR": 2,  "date": "2026-07-24", "novedadWritten": true, "updateId": "ajustes-internos" },
     "NH-19": { "gate": 1, "lastPR": 5,  "date": "2026-07-25", "novedadWritten": true, "updateId": "inventario-mas-claro" },
@@ -10,7 +10,16 @@
     "NH-39": { "gate": 2, "lastPR": 36, "date": "2026-07-30", "novedadWritten": true, "updateId": "magia-nuevas-formas" },
     "NH-40": { "gate": 2, "lastPR": 32, "date": "2026-07-30", "novedadWritten": true, "updateId": "magia-nuevas-formas" },
     "NH-42": { "gate": 2, "lastPR": 38, "date": "2026-07-30", "novedadWritten": true, "updateId": "magia-nuevas-formas" },
-    "NH-53": { "gate": 2, "lastPR": 31, "date": "2026-07-30", "novedadWritten": true, "updateId": "bestiario-estructura" }
+    "NH-53": { "gate": 2, "lastPR": 31, "date": "2026-07-30", "novedadWritten": true, "updateId": "bestiario-estructura" },
+    "NH-58": { "gate": 1, "lastPR": 276, "date": "2026-09-07", "novedadWritten": true, "updateId": "descargas-multiplataforma" },
+    "NH-41": { "gate": 1, "lastPR": 147, "date": "2026-08-06", "novedadWritten": true, "updateId": "magia-ilusion-sigilo" },
+    "NH-26": { "gate": 1, "lastPR": 116, "date": "2026-08-01", "novedadWritten": true, "updateId": "maestria-arcana-tomos" },
+    "NH-76": { "gate": 1, "lastPR": 183, "date": "2026-08-11", "novedadWritten": false },
+    "NH-69": { "gate": 1, "lastPR": 117, "date": "2026-08-01", "novedadWritten": false },
+    "NH-68": { "gate": 1, "lastPR": 88,  "date": "2026-08-01", "novedadWritten": false },
+    "NH-27": { "gate": 2, "lastPR": 202, "date": "2026-08-20", "novedadWritten": false },
+    "NH-22": { "gate": 2, "lastPR": 97,  "date": "2026-08-01", "novedadWritten": false },
+    "NH-6":  { "gate": 2, "lastPR": 130, "date": "2026-08-06", "novedadWritten": false }
   },
   "skippedNH": {}
 }
