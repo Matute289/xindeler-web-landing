@@ -10,9 +10,11 @@ const OS_DEFS = [
     icon: Monitor,
     nameKey: 'download.windows',
     subKey: 'download.windowsSub',
+    // No ARM64 build offered: a dependency's own support statement flags
+    // Windows ARM64 as too easy to break right now (per Mati, 2026-09-07) --
+    // not a temporary gap, an intentional exclusion.
     archs: [
       { arch: 'x86_64', os: 'windows' },
-      { arch: 'ARM64',  os: 'windows' },
     ],
   },
   {
