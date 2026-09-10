@@ -226,7 +226,18 @@ export default function AuthModal({ mode, onClose, onLoggedIn }) {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password_prehash: prehash, email: email || null }),
                 });
-                if (res.ok) { setSuccess(t('auth.registerSuccess')); setPassword(''); setConfirm(''); }
+                if (res.ok) {
+                    // xindeler-auth requires an email on every /register call
+                    // (a missing one 400s before this branch is ever reached)
+                    // and answers 200 both when the account was really
+                    // created AND when that email was already taken
+                    // (deliberate anti-enumeration -- see xindeler-auth PR
+                    // #74). A 200 here is therefore never proof the account
+                    // exists, in every reachable case -- there's no
+                    // email-less path left to be unambiguous about.
+                    setSuccess(t('auth.registerSuccess'));
+                    setPassword(''); setConfirm('');
+                }
                 else {
                     let body = null;
                     try { body = await res.json(); } catch { /* fall through to generic error */ }
