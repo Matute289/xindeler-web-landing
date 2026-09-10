@@ -27,7 +27,7 @@ function formatDeadline(deadline) {
     }
 }
 
-function InputField({ label, hint, type, value, onChange, placeholder, autoComplete, status }) {
+function InputField({ label, hint, type, value, onChange, placeholder, autoComplete, status, required }) {
     const [show, setShow] = useState(false);
     const isPassword = type === 'password';
     return (
@@ -40,6 +40,7 @@ function InputField({ label, hint, type, value, onChange, placeholder, autoCompl
                     onChange={onChange}
                     placeholder={placeholder}
                     autoComplete={autoComplete}
+                    required={required}
                     className="w-full bg-black/40 border border-white/10 rounded px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-x-gold/50 transition-colors pr-10"
                 />
                 {isPassword && (
@@ -208,6 +209,10 @@ export default function AuthModal({ mode, onClose, onLoggedIn }) {
         // publicly-readable source for zero benefit — the server rejects an
         // unknown username exactly the same way either way.
         if (tab === 'register' && !isValidUsername(username)) { setError(t('auth.errorUsernameFormat')); return false; }
+        // xindeler-auth rejects /register with 400 INVALID_EMAIL if no email
+        // is given — it's never actually optional server-side, so catch it
+        // here instead of round-tripping to find that out.
+        if (tab === 'register' && !email.trim()) { setError(t('auth.errorEmailRequired')); return false; }
         if (password.length < 8) { setError(t('auth.errorPasswordShort')); return false; }
         if (tab === 'register' && password !== confirm) { setError(t('auth.errorPasswordMismatch')); return false; }
         return true;
@@ -624,12 +629,13 @@ export default function AuthModal({ mode, onClose, onLoggedIn }) {
                                 {tab === 'register' && (
                                     <InputField
                                         label={t('auth.email')}
-                                        hint={t('auth.emailOptional')}
+                                        hint={t('auth.emailRequiredHint')}
                                         type="email"
                                         value={email}
                                         onChange={e => setEmail(e.target.value)}
                                         placeholder={t('auth.emailPlaceholder')}
                                         autoComplete="email"
+                                        required
                                     />
                                 )}
                                 <InputField
