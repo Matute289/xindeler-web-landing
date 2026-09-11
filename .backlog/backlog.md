@@ -17,7 +17,7 @@
 | 006 | Visor de personajes en la pantalla de cuenta | [006-cuenta-jugador-personajes.md](tasks/006-cuenta-jugador-personajes.md) | `[x]` — cerrada, verificada end-to-end contra producción real 2026-08-21 (cuenta + personaje real, list/rename desde la UI real) |
 | 007 | Sesión web autenticada — cómo la landing recuerda quién está logueado | [007-sesion-web-autenticada.md](tasks/007-sesion-web-autenticada.md) | `[x]` — deployada en producción real el 2026-08-15 (`xindeler-web-api`, ver su `.backlog/README.md`) |
 | 008 | Navbar consciente de sesión — botón de usuario + menú desplegable a Cuenta | [008-navbar-sesion.md](tasks/008-navbar-sesion.md) | `[x]` — implementada y probada de punta a punta con una cuenta real (desktop + mobile) |
-| 010 | El botón de descarga pasa a bajar el launcher (`xindeler-updater`), no el juego crudo | [010-download-button-launcher.md](tasks/010-download-button-launcher.md) | `[ ]` — endpoint de `xindeler-web-api` mergeado ([PR #39](https://github.com/Matute289/xindeler-web-api/pull/39)), sin deployar; bloqueado además en que `xindeler-updater` publique su primer manifest real |
+| 010 | El botón de descarga pasa a bajar el launcher (`xindeler-updater`), no el juego crudo | [010-download-button-launcher.md](tasks/010-download-button-launcher.md) | `[x]` — verificado end-to-end contra producción real 2026-09-11 |
 
 ## Prioridad Media
 
