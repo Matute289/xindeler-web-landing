@@ -1,12 +1,19 @@
 # 010 — El botón de descarga pasa a bajar el launcher, no el juego crudo
 
-**Estado:** `[ ]` Pendiente — bloqueado en `xindeler-web-api` (ver abajo)
+**Estado:** `[ ]` Pendiente — endpoint de `xindeler-web-api` mergeado
+([PR #39](https://github.com/Matute289/xindeler-web-api/pull/39), 2026-09-11), sin deployar
+todavía; bloqueado además en que `xindeler-updater` publique su primer manifest real (ver abajo)
 **Prioridad:** Alta
 **Esfuerzo estimado:** S — probablemente solo texto/copy una vez que el backend tenga el nuevo
 endpoint; no hay lógica de resolución de plataforma/URL en este repo, vive toda en
 `xindeler-web-api`
-**Depende de:** `xindeler-web-api` agregando un nuevo endpoint (decisión de Matías: endpoint
-nuevo, no reapuntar el existente — ver más abajo). Bloqueado hasta que ese endpoint exista.
+**Depende de:**
+1. `xindeler-web-api` agregando un nuevo endpoint (decisión de Matías: endpoint nuevo, no
+   reapuntar el existente) — **listo, mergeado, `GET /api/download-launcher`**. Falta que se
+   deploye (ese repo no tiene CD automático).
+2. `xindeler-updater` publicando su manifest real (`updater-latest.json`) al VPS — **todavía no**:
+   su primer tag real (`v0.1.0`) corrió, Linux/macOS OK, Windows falló (`makensis` no estaba en el
+   PATH del runner, fix en su PR #4) y falta que Matías cargue los secrets de firma de Apple.
 
 ---
 
@@ -39,9 +46,9 @@ falta el detalle completo.
 
 ## Qué hace falta acá, concretamente
 
-- [ ] Una vez que `xindeler-web-api` tenga el endpoint nuevo (nombre a confirmar con ese repo,
-  ej. `/api/download-launcher`), cambiar el botón de descarga de la landing para llamarlo en vez
-  de `/api/download`.
+- [ ] Una vez que el endpoint (`GET /api/download-launcher`, ya mergeado) esté deployado y
+  `updater-latest.json` responda con datos reales, cambiar el botón de descarga de la landing
+  para llamarlo en vez de `/api/download`.
 - [ ] Actualizar el copy del botón/sección de descargas si hace falta ("Descargá el launcher" en
   vez de "Descargá el juego", o similar — confirmar wording con Matías, no inventar tono).
 - [ ] Confirmar que el resto del contrato (`{ok, download_url, version}` o lo que el endpoint
