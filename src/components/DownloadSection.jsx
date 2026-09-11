@@ -67,10 +67,15 @@ function detectAppleSiliconViaWebGL() {
   }
 }
 
+// NH-145: this section now hands out xindeler-updater's own installer (the
+// launcher), which pulls the actual game itself, instead of the raw game
+// client -- resolved against /api/download-launcher, not /api/download.
+// Same manifest shape, same 5-platform matrix (no Windows ARM64, same
+// reason as the game's own build matrix), so OS_DEFS above needs no change.
 async function resolveDownload(apiBase, params) {
   const query = params ? `?${new URLSearchParams(params).toString()}` : '';
   try {
-    const res = await fetch(`${apiBase}/download${query}`);
+    const res = await fetch(`${apiBase}/download-launcher${query}`);
     if (!res.ok) return { ok: false };
     return await res.json();
   } catch {

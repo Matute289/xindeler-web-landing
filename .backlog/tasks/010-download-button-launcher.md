@@ -1,19 +1,7 @@
 # 010 — El botón de descarga pasa a bajar el launcher, no el juego crudo
 
-**Estado:** `[ ]` Pendiente — endpoint de `xindeler-web-api` mergeado
-([PR #39](https://github.com/Matute289/xindeler-web-api/pull/39), 2026-09-11), sin deployar
-todavía; bloqueado además en que `xindeler-updater` publique su primer manifest real (ver abajo)
-**Prioridad:** Alta
-**Esfuerzo estimado:** S — probablemente solo texto/copy una vez que el backend tenga el nuevo
-endpoint; no hay lógica de resolución de plataforma/URL en este repo, vive toda en
-`xindeler-web-api`
-**Depende de:**
-1. `xindeler-web-api` agregando un nuevo endpoint (decisión de Matías: endpoint nuevo, no
-   reapuntar el existente) — **listo, mergeado, `GET /api/download-launcher`**. Falta que se
-   deploye (ese repo no tiene CD automático).
-2. `xindeler-updater` publicando su manifest real (`updater-latest.json`) al VPS — **todavía no**:
-   su primer tag real (`v0.1.0`) corrió, Linux/macOS OK, Windows falló (`makensis` no estaba en el
-   PATH del runner, fix en su PR #4) y falta que Matías cargue los secrets de firma de Apple.
+**Estado:** `[x]` Completo (2026-09-11) — verificado end-to-end contra producción real
+(`xindeler-web-api` deployado en `v2.3.1`, manifest real de `xindeler-updater` v0.1.0 en vivo).
 
 ---
 
@@ -44,18 +32,20 @@ falta el detalle completo.
   consuma. Ver la tarea correspondiente en el backlog de `xindeler-web-api`
   (`.backlog/PLAN.md`).
 
-## Qué hace falta acá, concretamente
+## Qué se hizo
 
-- [ ] Una vez que el endpoint (`GET /api/download-launcher`, ya mergeado) esté deployado y
-  `updater-latest.json` responda con datos reales, cambiar el botón de descarga de la landing
-  para llamarlo en vez de `/api/download`.
-- [ ] Actualizar el copy del botón/sección de descargas si hace falta ("Descargá el launcher" en
-  vez de "Descargá el juego", o similar — confirmar wording con Matías, no inventar tono).
-- [ ] Confirmar que el resto del contrato (`{ok, download_url, version}` o lo que el endpoint
-  nuevo devuelva) no rompe la detección de OS/arch que ya existe en este repo para el botón de
-  descarga (el detector de plataforma es el mismo, solo cambia a qué URL apunta).
-
-## No hacer todavía
-
-- No tocar nada hasta que el endpoint de `xindeler-web-api` exista y esté confirmado — este
-  archivo es el placeholder para no perder la tarea, no luz verde para implementar ya.
+- [x] `DownloadSection.jsx`'s `resolveDownload()` pasó de pegarle a `${apiBase}/download` a
+  `${apiBase}/download-launcher` — un único cambio de string, ya que la lógica de detección de
+  OS/arch y la forma de la respuesta (`{ok, download_url, version}`) son idénticas. Afecta tanto
+  al botón automático como a los 6 manuales, y a las dos superficies que usan este componente
+  (la landing principal y `downloads.xindeler.com`), ya que es el mismo componente compartido.
+- [x] `OS_DEFS` no necesitó ningún cambio — confirmado contra el manifest real de
+  `xindeler-updater` (`updater-latest.json`) que expone exactamente la misma matriz de 5
+  plataformas que el juego (sin Windows ARM64, misma razón).
+- [x] Copy actualizado (wording confirmado con Matías): `download.description` ("Descargá el
+  launcher..." en vez de "Descarga el cliente...") y `download.launcherNote` ("El launcher se
+  actualiza solo..." en vez de "El soporte del launcher... llegará pronto", que ya estaba
+  desactualizado).
+- [x] Verificado en vivo contra producción real (`xindeler-web-api` en `v2.3.1`, manifest real de
+  `xindeler-updater` v0.1.0): el botón automático resolvió correctamente macOS ARM64 y arrancó la
+  descarga real del instalador del launcher (`xindeler-updater-macos-aarch64.zip`).
