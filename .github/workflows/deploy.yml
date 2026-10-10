@@ -22,25 +22,39 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy to VPS
+      # Deploy through the restricted `deploy` user (MyServerVPS Stage 8): this key can only rsync
+      # (write-only) into this site's directory on the server and cannot open a shell.
+      # Two keys: one for the landing (www) and one for the downloads page (a separate directory).
+      - name: Prepare SSH
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_SSH_KEY_SITE_WWW }}
+          KNOWN_HOSTS: ${{ vars.VPS_KNOWN_HOSTS }}
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null
-          rsync -avz --delete \
-            -e "ssh -i ~/.ssh/deploy_key" \
-            dist/ \
-            "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.VPS_DEPLOY_PATH }}"
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/deploy_key_www
+          chmod 600 ~/.ssh/deploy_key_www
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Prepare SSH (downloads)
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_SSH_KEY_SITE_DOWNLOADS }}
+        run: |
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/deploy_key_downloads
+          chmod 600 ~/.ssh/deploy_key_downloads
+
+      - name: Deploy landing to VPS
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+        run: |
+          rsync -rltvz --delete --no-owner --no-group --chmod=D2775,F664 \
+            -e "ssh -i $HOME/.ssh/deploy_key_www -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes" \
+            dist/ "deploy@${VPS_HOST}:"
 
       - name: Deploy downloads page to VPS
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
         run: |
-          rsync -avz \
-            -e "ssh -i ~/.ssh/deploy_key" \
-            dist/downloads.html "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.VPS_DOWNLOADS_DEPLOY_PATH }}/index.html"
-          rsync -avz \
-            -e "ssh -i ~/.ssh/deploy_key" \
-            dist/assets/ "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.VPS_DOWNLOADS_DEPLOY_PATH }}/assets/"
-          rsync -avz \
-            -e "ssh -i ~/.ssh/deploy_key" \
-            dist/favicon.svg "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.VPS_DOWNLOADS_DEPLOY_PATH }}/favicon.svg"
+          DL="ssh -i $HOME/.ssh/deploy_key_downloads -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes"
+          rsync -rltvz --no-owner --no-group --chmod=D2775,F664 -e "$DL" dist/downloads.html "deploy@${VPS_HOST}:index.html"
+          rsync -rltvz --no-owner --no-group --chmod=D2775,F664 -e "$DL" dist/assets/ "deploy@${VPS_HOST}:assets/"
+          rsync -rltvz --no-owner --no-group --chmod=D2775,F664 -e "$DL" dist/favicon.svg "deploy@${VPS_HOST}:favicon.svg"
