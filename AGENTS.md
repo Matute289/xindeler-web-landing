@@ -28,7 +28,7 @@ Diseño/assets privados: `Matute289/xindeler-design` (repo privado)
 | `VPS_DEPLOY_PATH` | Ruta destino del rsync |
 
 ## VPS — greenmountain.dev
-- SSH: `ssh -i ~/.ssh/id_ed25519 mgrinberg@216.238.126.97`
+- SSH: `ssh -i ~/.ssh/id_ed25519 mgrinberg@greenmountain.dev`
 - Deploy path: `/srv/xindeler/www/public/`
 - **Backend API** — FastAPI en `/srv/xindeler/waitlist-api/main.py`, puerto 8010
   - Servicio systemd: `xindeler-waitlist.service`
