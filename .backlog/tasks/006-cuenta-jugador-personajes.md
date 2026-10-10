@@ -8,7 +8,7 @@ rename inline con manejo de error mostrando el mensaje real del server.
 
 **Verificación final en producción (2026-08-21):** cuenta de prueba real registrada en
 `xindeler.com`, verificada por email de verdad, personaje real creado contra el game server
-productivo (`216.238.126.97:14004`) por el protocolo real del juego (cliente headless, no un
+productivo (`server.xindeler.com:14004`) por el protocolo real del juego (cliente headless, no un
 insert de SQL a mano), listado y renombrado desde la UI real de `/account` (no simulado), y
 finalmente el personaje y la cuenta se eliminaron. Sin blockers pendientes.
 
