@@ -46,7 +46,7 @@ jobs:
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
         run: |
-          rsync -rltvz --delete --no-owner --no-group --chmod=D2775,F664 \
+          rsync -rltvzO --delete --no-owner --no-group --chmod=D2775,F664 \
             -e "ssh -i $HOME/.ssh/deploy_key_www -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes" \
             dist/ "deploy@${VPS_HOST}:"
 
@@ -55,6 +55,6 @@ jobs:
           VPS_HOST: ${{ secrets.VPS_HOST }}
         run: |
           DL="ssh -i $HOME/.ssh/deploy_key_downloads -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes"
-          rsync -rltvz --no-owner --no-group --chmod=D2775,F664 -e "$DL" dist/downloads.html "deploy@${VPS_HOST}:index.html"
-          rsync -rltvz --no-owner --no-group --chmod=D2775,F664 -e "$DL" dist/assets/ "deploy@${VPS_HOST}:assets/"
-          rsync -rltvz --no-owner --no-group --chmod=D2775,F664 -e "$DL" dist/favicon.svg "deploy@${VPS_HOST}:favicon.svg"
+          rsync -rltvzO --no-owner --no-group --chmod=D2775,F664 -e "$DL" dist/downloads.html "deploy@${VPS_HOST}:index.html"
+          rsync -rltvzO --no-owner --no-group --chmod=D2775,F664 -e "$DL" dist/assets/ "deploy@${VPS_HOST}:assets/"
+          rsync -rltvzO --no-owner --no-group --chmod=D2775,F664 -e "$DL" dist/favicon.svg "deploy@${VPS_HOST}:favicon.svg"
